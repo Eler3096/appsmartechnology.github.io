@@ -9,74 +9,158 @@
   <meta name="robots" content="index, follow">
   <style>
     body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fafafa; color: #222; }
-    header { 
-  background: #1a1a1a; 
-  color: white; 
-  text-align: center; 
-  padding: 50px 20px; 
-}
-header .logo-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  text-align: left;
-}
-header img.logo {
-  width: 120px;
-  height: 120px;
-  border-radius: 12px;
-}
-header .title-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  align-items: center;
-}
-header h1 { 
-  margin: 0; 
-  font-size: 2.8em; 
-}
-header p { 
-  font-size: 1.1em; 
-  margin: 5px 0 0 0;
-  opacity: 0.8;
-  text-align: center;
-}
 
-    .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
-    .app-card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    /* ===== HEADER ===== */
+    header { 
+      background: #1a1a1a; 
+      color: white; 
+      text-align: center; 
+      padding: 40px 20px 20px 20px; 
+    }
+    header .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    header img.logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 12px;
+    }
+    header .title-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header h1 { 
+      margin: 0; 
+      font-size: 2.5em; 
+    }
+    header p { 
+      font-size: 1.1em; 
+      margin: 5px 0 0 0;
+      opacity: 0.8;
+      text-align: center;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      background: #2a2a2a;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 10px 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 8px 12px;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      background: #2196f3;
+    }
+    nav a.active {
+      background: #34a853;
+    }
+
+    /* ===== CONTENIDO ===== */
+    .container { 
+      max-width: 1000px; 
+      margin: 40px auto; 
+      padding: 0 20px; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .app-card { 
+      background: white; 
+      padding: 20px; 
+      margin-bottom: 20px; 
+      border-radius: 12px; 
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
+      width: 100%;
+      transition: 0.3s;
+    }
     .app-card h2 { margin-top: 0; }
-    .btn { display: inline-block; padding: 10px 20px; margin: 10px 5px 0; border-radius: 6px; color: white; text-decoration: none; font-weight: 600; }
+    .btn { 
+      display: inline-block; 
+      padding: 10px 20px; 
+      margin: 10px 5px 0; 
+      border-radius: 6px; 
+      color: white; 
+      text-decoration: none; 
+      font-weight: 600; 
+    }
     .google { background: #34a853; }
     .uptodown { background: #2196f3; }
+
+    /* ===== FOOTER ===== */
     footer { text-align: center; padding: 40px 20px; font-size: 0.9em; color: #555; }
     footer a { color: #2196f3; text-decoration: none; }
     footer a:hover { text-decoration: underline; }
+
   </style>
 </head>
 <body>
 
- <header>
-  <div class="logo-container">
-    <!-- 🔹 Cambia la URL de la imagen por el enlace de tu logo -->
-    <img src="https://github.com/Eler3096/Eler.github.io/blob/main/logo%20appsmart.png?raw=true" alt="Logo AppsMart" class="logo">
-    <div class="title-group">
-      <h1>AppsMart Technology</h1>
-      <p>IA, Innovación & Diseño Digital.</p>
+  <header>
+    <div class="logo-container">
+      <img src="https://github.com/Eler3096/Eler.github.io/blob/main/logo%20appsmart.png?raw=true" alt="Logo AppsMart" class="logo">
+      <div class="title-group">
+        <h1>AppsMart Technology</h1>
+        <p>IA, Innovación & Diseño Digital.</p>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
+  <!-- ===== BARRA DE NAVEGACIÓN ===== -->
+  <nav>
+    <a href="#" class="active" data-category="all">Inicio</a>
+    <a href="#" data-category="educacion">Educación</a>
+    <a href="#" data-category="musica">Música y Audio</a>
+    <a href="#" data-category="productividad">Productividad</a>
+    <a href="#" data-category="herramientas">Herramientas</a>
+    <a href="#" data-category="estilo">Estilo de vida</a>
+  </nav>
 
+  <!-- ===== CONTENIDO ===== -->
   <div class="container">
-    <div class="app-card">
+
+    <div class="app-card" data-category="educacion">
       <h2>Biblia Universal</h2>
       <p>Lee, escucha y comparte la Palabra de Dios con una interfaz limpia, moderna y sin distracciones.</p>
       <a href="https://play.google.com/store/apps/details?id=com.tuapp" class="btn google">Google Play</a>
       <a href="https://biblia-universal.uptodown.com/android" class="btn uptodown">Uptodown</a>
     </div>
+
+    <div class="app-card" data-category="musica">
+      <h2>MusicFlow</h2>
+      <p>Escucha tu música favorita sin conexión con una interfaz moderna y fluida.</p>
+      <a href="#" class="btn google">Google Play</a>
+      <a href="#" class="btn uptodown">Uptodown</a>
+    </div>
+
+    <div class="app-card" data-category="herramientas">
+      <h2>Smart Cleaner</h2>
+      <p>Optimiza tu teléfono con limpieza rápida y mejora el rendimiento con un solo toque.</p>
+      <a href="#" class="btn google">Google Play</a>
+      <a href="#" class="btn uptodown">Uptodown</a>
+    </div>
+
+    <div class="app-card" data-category="productividad">
+      <h2>TaskMaster</h2>
+      <p>Administra tus tareas diarias fácilmente con notificaciones inteligentes y diseño elegante.</p>
+      <a href="#" class="btn google">Google Play</a>
+      <a href="#" class="btn uptodown">Uptodown</a>
+    </div>
+
   </div>
 
   <footer>
@@ -84,6 +168,30 @@ header p {
     <a href="mailto:appsmarttechnology@gmail.com">Contacto</a> |
     © 2025 AppsMart Technology
   </footer>
+
+  <!-- ===== SCRIPT DE FILTRADO ===== -->
+  <script>
+    const buttons = document.querySelectorAll('nav a');
+    const cards = document.querySelectorAll('.app-card');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const category = btn.getAttribute('data-category');
+
+        cards.forEach(card => {
+          if (category === 'all' || card.getAttribute('data-category') === category) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>
