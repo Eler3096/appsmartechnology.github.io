@@ -11,19 +11,8 @@
     body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fafafa; color: #222; }
 
     /* ===== HEADER ===== */
-    header { 
-      background: #1a1a1a; 
-      color: white; 
-      text-align: center; 
-      padding: 40px 20px 20px 20px; 
-    }
-    header .logo-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
+    header { background: #1a1a1a; color: white; text-align: center; padding: 40px 20px 20px 20px; }
+    header .logo-container { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
     header img.logo { width: 120px; height: 120px; border-radius: 12px; }
     header .title-group { display: flex; flex-direction: column; align-items: center; }
     header h1 { margin: 0; font-size: 2.5em; }
@@ -31,93 +20,31 @@
 
     /* ===== NAVBAR ===== */
     nav {
-      background: #2a2a2a;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      padding: 10px 0;
+      background: #2a2a2a; display: flex; justify-content: center; flex-wrap: wrap; padding: 10px 0;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
     nav a {
-      color: white;
-      text-decoration: none;
-      margin: 8px 12px;
-      padding: 10px 18px;
-      border-radius: 6px;
-      font-weight: 600;
-      transition: 0.3s;
+      color: white; text-decoration: none; margin: 8px 12px; padding: 10px 18px; border-radius: 6px; font-weight: 600; transition: 0.3s;
     }
     nav a:hover { background: #2196f3; }
     nav a.active { background: #34a853; }
 
     /* ===== CONTENIDO ===== */
-    .container { 
-      max-width: 1000px; 
-      margin: 40px auto; 
-      padding: 0 20px; 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .app-card { 
-      background: white; 
-      padding: 20px; 
-      margin-bottom: 20px; 
-      border-radius: 12px; 
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
-      width: 100%;
-      transition: 0.3s;
-    }
-    .app-header {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
+    .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; display: flex; flex-direction: column; align-items: center; }
+    .app-card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); width: 100%; transition: 0.3s; }
+    .app-header { display: flex; align-items: center; gap: 15px; }
     .app-header img.app-icon { width: 80px; height: 80px; border-radius: 12px; flex-shrink: 0; }
     .app-header h2 { margin: 0; }
-
     .app-description { margin: 10px 0; }
 
     /* ===== SCREENS ===== */
-    .screenshots-wrapper {
-      position: relative;
-      width: 100%;
-      margin: 10px 0;
-    }
-    .screenshots-container {
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      padding: 10px 0;
-    }
-    .screenshots {
-      display: flex;
-      gap: 10px;
-    }
-    .screenshots img {
-      width: 150px;
-      height: 300px;
-      border-radius: 8px;
-      object-fit: cover;
-      flex-shrink: 0;
-      transition: transform 0.3s;
-      cursor: pointer;
-    }
+    .screenshots-wrapper { position: relative; width: 100%; margin: 10px 0; }
+    .screenshots-container { overflow-x: auto; scroll-behavior: smooth; padding: 10px 0; }
+    .screenshots { display: flex; gap: 10px; }
+    .screenshots img { width: 150px; height: 300px; border-radius: 8px; object-fit: cover; flex-shrink: 0; transition: transform 0.3s; cursor: pointer; }
     .screenshots img:hover { transform: scale(1.05); }
 
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      cursor: pointer;
-      font-size: 18px;
-      z-index: 10;
-    }
+    .arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-size: 18px; z-index: 10; }
     .arrow-left { left: 0; }
     .arrow-right { right: 0; }
 
@@ -129,113 +56,216 @@
     footer a { color: #2196f3; text-decoration: none; }
     footer a:hover { text-decoration: underline; }
 
+    /* ===== MODAL ===== */
+    .modal { display: none; position: fixed; z-index: 999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; overflow-y: auto; padding: 20px; }
+    .modal img { max-width: 90%; max-height: 90%; transition: transform 0.3s ease; }
+    .modal-buttons { margin-top: 20px; position: sticky; top: 10px; display: flex; justify-content: center; gap: 20px; z-index: 1000; }
+    .zoom-btn { background: rgba(255,255,255,0.2); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 20px; cursor: pointer; }
+    .zoom-btn:hover { background: rgba(255,255,255,0.4); }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo-container">
-      <img src="https://github.com/Eler3096/Eler.github.io/blob/main/logo%20appsmart.png?raw=true" alt="Logo AppsMart" class="logo">
-      <div class="title-group">
-        <h1>AppsMart Technology</h1>
-        <p>IA, Innovación & Diseño Digital.</p>
-      </div>
+<header>
+  <div class="logo-container">
+    <img src="https://github.com/Eler3096/Eler.github.io/blob/main/logo%20appsmart.png?raw=true" alt="Logo AppsMart" class="logo">
+    <div class="title-group">
+      <h1>AppsMart Technology</h1>
+      <p>IA, Innovación & Diseño Digital.</p>
     </div>
-  </header>
+  </div>
+</header>
 
-  <nav>
-    <a href="#" class="active" data-category="all">Inicio</a>
-    <a href="#" data-category="educacion">Educación</a>
-    <a href="#" data-category="musica">Música y Audio</a>
-    <a href="#" data-category="productividad">Productividad</a>
-    <a href="#" data-category="herramientas">Herramientas</a>
-    <a href="#" data-category="estilo">Estilo de vida</a>
-  </nav>
+<nav>
+  <a href="#" class="active" data-category="all">Inicio</a>
+  <a href="#" data-category="educacion">Educación</a>
+  <a href="#" data-category="musica">Música y Audio</a>
+  <a href="#" data-category="productividad">Productividad</a>
+  <a href="#" data-category="herramientas">Herramientas</a>
+  <a href="#" data-category="estilo">Estilo de vida</a>
+</nav>
 
-  <div class="container">
+<div class="container">
 
-    <div class="app-card" data-category="educacion">
-      <div class="app-header">
-        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/logo_biblia_universal.png?raw=true" alt="Biblia Universal" class="app-icon">
-        <h2>Biblia Universal</h2>
-      </div>
-      <p class="app-description">Lee, escucha y comparte la Palabra de Dios con una interfaz limpia, moderna y sin distracciones.</p>
-
-      <div class="screenshots-wrapper">
-        <button class="arrow arrow-left">&#10094;</button>
-        <div class="screenshots-container">
-          <div class="screenshots">
-            <img src="ruta-captura1.png" alt="Captura 1">
-            <img src="ruta-captura2.png" alt="Captura 2">
-            <img src="ruta-captura3.png" alt="Captura 3">
-            <img src="ruta-captura4.png" alt="Captura 4">
-            <img src="ruta-captura5.png" alt="Captura 5">
-          </div>
+  <!-- Educación -->
+  <div class="app-card" data-category="educacion">
+    <div class="app-header">
+      <img src="https://github.com/Eler3096/Eler.github.io/blob/main/logo_biblia_universal.png?raw=true" alt="Biblia Universal" class="app-icon">
+      <h2>Biblia Universal</h2>
+    </div>
+    <p class="app-description">Lee, escucha y comparte la Palabra de Dios con una interfaz limpia, moderna y sin distracciones.</p>
+    <div class="screenshots-wrapper">
+      <button class="arrow arrow-left">&#10094;</button>
+      <div class="screenshots-container">
+        <div class="screenshots">
+          <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_1_Universal%20Bible.jpg?raw=true" alt="Captura 1">
+          <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_2_Universal%20Bible.jpg?raw=true" alt="Captura 2">
+          <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_3_Universal%20Bible.jpg?raw=true" alt="Captura 3">
         </div>
-        <button class="arrow arrow-right">&#10095;</button>
       </div>
-
-      <a href="https://play.google.com/store/apps/details?id=com.tuapp" class="btn google">Google Play</a>
-      <a href="https://biblia-universal.uptodown.com/android" class="btn uptodown">Uptodown</a>
+      <button class="arrow arrow-right">&#10095;</button>
     </div>
-
-    <!-- Repite para otras apps -->
-    <div class="app-card" data-category="musica">
-      <div class="app-header">
-        <img src="ruta-icono-musicflow.png" alt="MusicFlow" class="app-icon">
-        <h2>MusicFlow</h2>
-      </div>
-      <p class="app-description">Escucha tu música favorita sin conexión con una interfaz moderna y fluida.</p>
-
-      <div class="screenshots-wrapper">
-        <button class="arrow arrow-left">&#10094;</button>
-        <div class="screenshots-container">
-          <div class="screenshots">
-            <img src="ruta-captura1.png" alt="Captura 1">
-            <img src="ruta-captura2.png" alt="Captura 2">
-            <img src="ruta-captura3.png" alt="Captura 3">
-            <img src="ruta-captura4.png" alt="Captura 4">
-            <img src="ruta-captura5.png" alt="Captura 5">
-          </div>
-        </div>
-        <button class="arrow arrow-right">&#10095;</button>
-      </div>
-
-      <a href="#" class="btn google">Google Play</a>
-      <a href="#" class="btn uptodown">Uptodown</a>
-    </div>
-
+    <a href="#" class="btn google">Google Play</a>
+    <a href="#" class="btn uptodown">Uptodown</a>
   </div>
 
-  <footer>
-    <a href="politica.html">Política de privacidad</a> |
-    <a href="mailto:appsmarttechnology@gmail.com">Contacto</a> |
-    © 2025 AppsMart Technology
-  </footer>
+  <!-- Música y Audio -->
+  <div class="app-card" data-category="musica">
+    <div class="app-header">
+      <img src="ruta-icono-musicflow.png" alt="MusicFlow" class="app-icon">
+      <h2>MusicFlow</h2>
+    </div>
+    <p class="app-description">Escucha tu música favorita sin conexión con una interfaz moderna y fluida.</p>
+    <div class="screenshots-wrapper">
+      <button class="arrow arrow-left">&#10094;</button>
+      <div class="screenshots-container">
+        <div class="screenshots">
+          <img src="ruta-captura1.png" alt="Captura 1">
+          <img src="ruta-captura2.png" alt="Captura 2">
+        </div>
+      </div>
+      <button class="arrow arrow-right">&#10095;</button>
+    </div>
+    <a href="#" class="btn google">Google Play</a>
+    <a href="#" class="btn uptodown">Uptodown</a>
+  </div>
 
-  <script>
-    // Filtrado de apps
-    const buttons = document.querySelectorAll('nav a');
-    const cards = document.querySelectorAll('.app-card');
-    buttons.forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const category = btn.getAttribute('data-category');
-        cards.forEach(card => {
-          card.style.display = (category === 'all' || card.getAttribute('data-category') === category) ? 'block' : 'none';
-        });
+  <!-- Productividad -->
+  <div class="app-card" data-category="productividad">
+    <div class="app-header">
+      <img src="ruta-icono-taskmaster.png" alt="TaskMaster" class="app-icon">
+      <h2>TaskMaster</h2>
+    </div>
+    <p class="app-description">Administra tus tareas diarias fácilmente con notificaciones inteligentes y diseño elegante.</p>
+    <div class="screenshots-wrapper">
+      <button class="arrow arrow-left">&#10094;</button>
+      <div class="screenshots-container">
+        <div class="screenshots">
+          <img src="ruta-task1.png" alt="Captura 1">
+          <img src="ruta-task2.png" alt="Captura 2">
+        </div>
+      </div>
+      <button class="arrow arrow-right">&#10095;</button>
+    </div>
+    <a href="#" class="btn google">Google Play</a>
+    <a href="#" class="btn uptodown">Uptodown</a>
+  </div>
+
+  <!-- Herramientas -->
+  <div class="app-card" data-category="herramientas">
+    <div class="app-header">
+      <img src="ruta-icono-smartcleaner.png" alt="Smart Cleaner" class="app-icon">
+      <h2>Smart Cleaner</h2>
+    </div>
+    <p class="app-description">Optimiza tu teléfono con limpieza rápida y mejora el rendimiento con un solo toque.</p>
+    <div class="screenshots-wrapper">
+      <button class="arrow arrow-left">&#10094;</button>
+      <div class="screenshots-container">
+        <div class="screenshots">
+          <img src="ruta-clean1.png" alt="Captura 1">
+          <img src="ruta-clean2.png" alt="Captura 2">
+        </div>
+      </div>
+      <button class="arrow arrow-right">&#10095;</button>
+    </div>
+    <a href="#" class="btn google">Google Play</a>
+    <a href="#" class="btn uptodown">Uptodown</a>
+  </div>
+
+  <!-- Estilo de vida -->
+  <div class="app-card" data-category="estilo">
+    <div class="app-header">
+      <img src="ruta-icono-fitness.png" alt="FitLife" class="app-icon">
+      <h2>FitLife</h2>
+    </div>
+    <p class="app-description">Sigue tu entrenamiento diario y controla tu progreso físico con estadísticas detalladas.</p>
+    <div class="screenshots-wrapper">
+      <button class="arrow arrow-left">&#10094;</button>
+      <div class="screenshots-container">
+        <div class="screenshots">
+          <img src="ruta-fit1.png" alt="Captura 1">
+          <img src="ruta-fit2.png" alt="Captura 2">
+        </div>
+      </div>
+      <button class="arrow arrow-right">&#10095;</button>
+    </div>
+    <a href="#" class="btn google">Google Play</a>
+    <a href="#" class="btn uptodown">Uptodown</a>
+  </div>
+
+</div>
+
+<footer>
+  <a href="politica.html">Política de privacidad</a> |
+  <a href="mailto:appsmarttechnology@gmail.com">Contacto</a> |
+  © 2025 AppsMart Technology
+</footer>
+
+<!-- Modal -->
+<div id="imageModal" class="modal">
+  <div class="modal-buttons">
+    <button class="zoom-btn" id="zoomIn">+</button>
+    <button class="zoom-btn" id="zoomOut">−</button>
+  </div>
+  <img id="modalImage" src="" alt="Zoom Imagen">
+</div>
+
+<script>
+  // Filtrado de apps
+  const buttons = document.querySelectorAll('nav a');
+  const cards = document.querySelectorAll('.app-card');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const category = btn.getAttribute('data-category');
+      cards.forEach(card => {
+        card.style.display = (category === 'all' || card.getAttribute('data-category') === category) ? 'block' : 'none';
       });
     });
+  });
 
-    // Flechas scroll para capturas
-    document.querySelectorAll('.screenshots-wrapper').forEach(wrapper => {
-      const container = wrapper.querySelector('.screenshots-container');
-      wrapper.querySelector('.arrow-left').addEventListener('click', () => { container.scrollBy({ left: -160, behavior: 'smooth' }); });
-      wrapper.querySelector('.arrow-right').addEventListener('click', () => { container.scrollBy({ left: 160, behavior: 'smooth' }); });
+  // Flechas scroll para capturas
+  document.querySelectorAll('.screenshots-wrapper').forEach(wrapper => {
+    const container = wrapper.querySelector('.screenshots-container');
+    wrapper.querySelector('.arrow-left').addEventListener('click', () => { container.scrollBy({ left: -160, behavior: 'smooth' }); });
+    wrapper.querySelector('.arrow-right').addEventListener('click', () => { container.scrollBy({ left: 160, behavior: 'smooth' }); });
+  });
+
+  // Modal Zoom
+  const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImage');
+  let scale = 1;
+
+  document.querySelectorAll('.screenshots img').forEach(img => {
+    img.addEventListener('click', () => {
+      modal.style.display = 'flex';
+      modalImg.src = img.src;
+      scale = 1;
+      modalImg.style.transform = `scale(${scale})`;
+      window.scrollTo(0, 0);
     });
-  </script>
+  });
+
+  document.getElementById('zoomIn').addEventListener('click', () => {
+    scale += 0.2;
+    modalImg.style.transform = `scale(${scale})`;
+  });
+
+  document.getElementById('zoomOut').addEventListener('click', () => {
+    scale = Math.max(0.5, scale - 0.2);
+    modalImg.style.transform = `scale(${scale})`;
+  });
+
+  modal.addEventListener('click', e => {
+    if (e.target === modal) modal.style.display = 'none';
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') modal.style.display = 'none';
+  });
+</script>
 
 </body>
 </html>
