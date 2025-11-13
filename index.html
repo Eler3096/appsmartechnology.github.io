@@ -102,6 +102,26 @@
       transition: transform 0.3s;
       cursor: pointer;
     }
+    .zoom-controls {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .zoom-btn {
+      background: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .zoom-btn:hover {
+      background: #1769aa;
+    }
     .screenshots img:hover { transform: scale(1.05); }
 
     .arrow {
@@ -171,6 +191,48 @@
             <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_4_Universal%20Bible.jpg?raw=true" alt="4">
             <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_5_Universal%20Bible.jpg?raw=true" alt="5">
             <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_6_Universal%20Bible.jpg?raw=true" alt="6">
+            <div class="screenshot-item">
+              <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_1_Universal%20Bible.jpg?raw=true" alt="1">
+              <div class="zoom-controls">
+                <button class="zoom-btn" data-action="zoom-in">+</button>
+                <button class="zoom-btn" data-action="zoom-out">-</button>
+              </div>
+            </div>
+            <div class="screenshot-item">
+              <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_2_Universal%20Bible.jpg?raw=true" alt="2">
+              <div class="zoom-controls">
+                <button class="zoom-btn" data-action="zoom-in">+</button>
+                <button class="zoom-btn" data-action="zoom-out">-</button>
+              </div>
+            </div>
+            <div class="screenshot-item">
+              <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_3_Universal%20Bible.jpg?raw=true" alt="3">
+              <div class="zoom-controls">
+                <button class="zoom-btn" data-action="zoom-in">+</button>
+                <button class="zoom-btn" data-action="zoom-out">-</button>
+              </div>
+            </div>
+            <div class="screenshot-item">
+              <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_4_Universal%20Bible.jpg?raw=true" alt="4">
+              <div class="zoom-controls">
+                <button class="zoom-btn" data-action="zoom-in">+</button>
+                <button class="zoom-btn" data-action="zoom-out">-</button>
+              </div>
+            </div>
+            <div class="screenshot-item">
+              <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_5_Universal%20Bible.jpg?raw=true" alt="5">
+              <div class="zoom-controls">
+                <button class="zoom-btn" data-action="zoom-in">+</button>
+                <button class="zoom-btn" data-action="zoom-out">-</button>
+              </div>
+            </div>
+            <div class="screenshot-item">
+              <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_6_Universal%20Bible.jpg?raw=true" alt="6">
+              <div class="zoom-controls">
+                <button class="zoom-btn" data-action="zoom-in">+</button>
+                <button class="zoom-btn" data-action="zoom-out">-</button>
+              </div>
+            </div>
           </div>
         </div>
         <button class="arrow arrow-right">&#10095;</button>
@@ -198,6 +260,48 @@
             <img src="ruta-captura4.png" alt="Captura 4">
             <img src="ruta-captura5.png" alt="Captura 5">
             <img src="ruta-captura6.png" alt="Captura 6">
+            <div class="screenshot-item">
+              <img src="ruta-captura1.png" alt="Captura 1">
+              <div class="zoom-controls">
+                <button class="zoom-btn" data-action="zoom-in">+</button>
+                <button class="zoom-btn" data-action="zoom-out">-</button>
+              </div>
+            </div>
+            <div class="screenshot-item">
+              <img src="ruta-captura2.png" alt="Captura 2">
+              <div class="zoom-controls">
+                <button class="zoom-btn" data-action="zoom-in">+</button>
+                <button class="zoom-btn" data-action="zoom-out">-</button>
+              </div>
+            </div>
+            <div class="screenshot-item">
+              <img src="ruta-captura3.png" alt="Captura 3">
+              <div class="zoom-controls">
+                <button class="zoom-btn" data-action="zoom-in">+</button>
+                <button class="zoom-btn" data-action="zoom-out">-</button>
+              </div>
+            </div>
+            <div class="screenshot-item">
+              <img src="ruta-captura4.png" alt="Captura 4">
+              <div class="zoom-controls">
+                <button class="zoom-btn" data-action="zoom-in">+</button>
+                <button class="zoom-btn" data-action="zoom-out">-</button>
+              </div>
+            </div>
+            <div class="screenshot-item">
+              <img src="ruta-captura5.png" alt="Captura 5">
+              <div class="zoom-controls">
+                <button class="zoom-btn" data-action="zoom-in">+</button>
+                <button class="zoom-btn" data-action="zoom-out">-</button>
+              </div>
+            </div>
+            <div class="screenshot-item">
+              <img src="ruta-captura6.png" alt="Captura 6">
+              <div class="zoom-controls">
+                <button class="zoom-btn" data-action="zoom-in">+</button>
+                <button class="zoom-btn" data-action="zoom-out">-</button>
+              </div>
+            </div>
           </div>
         </div>
         <button class="arrow arrow-right">&#10095;</button>
@@ -238,25 +342,22 @@
       wrapper.querySelector('.arrow-right').addEventListener('click', () => { container.scrollBy({ left: 160, behavior: 'smooth' }); });
     });
 
-    document.getElementById('zoomIn').addEventListener('click', e => {
-      e.stopPropagation();
-      scale += 0.2;
-      modalImg.style.transform = `scale(${scale})`;
-    });
-
-    document.getElementById('zoomOut').addEventListener('click', e => {
-      e.stopPropagation();
-      scale = Math.max(0.5, scale - 0.2);
-      modalImg.style.transform = `scale(${scale})`;
-    });
-
-    modal.addEventListener('click', e => {
-      if (e.target === modal) modal.style.display = 'none';
-    });
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') modal.style.display = 'none';
-    });
+      // Zoom para screenshots
+      document.querySelectorAll('.screenshots .screenshot-item').forEach(item => {
+        const img = item.querySelector('img');
+        const zoomInBtn = item.querySelector('button[data-action="zoom-in"]');
+        const zoomOutBtn = item.querySelector('button[data-action="zoom-out"]');
+        let scale = 1;
+        zoomInBtn.addEventListener('click', () => {
+          scale = Math.min(scale + 0.2, 2.5);
+          img.style.transform = `scale(${scale})`;
+        });
+        zoomOutBtn.addEventListener('click', () => {
+          scale = Math.max(scale - 0.2, 0.5);
+          img.style.transform = `scale(${scale})`;
+        });
+      });
+    
   </script>
 
 </body>
