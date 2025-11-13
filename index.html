@@ -1,68 +1,57 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AppsMart Technology</title>
-  <meta name="description" content="AppsMart Technology - Desarrollador de aplicaciones Android como Biblia Universal. Descarga nuestras apps desde Google Play y Uptodown.">
-  <meta name="keywords" content="AppsMart Technology, Biblia Universal, aplicaciones Android, Uptodown, Google Play">
-  <meta name="robots" content="index, follow">
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fafafa; color: #222; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AppsMart Technology</title>
+<style>
+body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fafafa; color: #222; }
 
-    /* ===== HEADER ===== */
-    header { background: #1a1a1a; color: white; text-align: center; padding: 40px 20px 20px 20px; }
-    header .logo-container { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
-    header img.logo { width: 120px; height: 120px; border-radius: 12px; }
-    header .title-group { display: flex; flex-direction: column; align-items: center; }
-    header h1 { margin: 0; font-size: 2.5em; }
-    header p { font-size: 1.1em; margin: 5px 0 0 0; opacity: 0.8; text-align: center; }
+header { background: #1a1a1a; color: white; text-align: center; padding: 40px 20px 20px; }
+header .logo-container { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
+header img.logo { width: 120px; height: 120px; border-radius: 12px; }
+header .title-group { display: flex; flex-direction: column; align-items: center; }
+header h1 { margin: 0; font-size: 2.5em; }
+header p { font-size: 1.1em; margin: 5px 0 0 0; opacity: 0.8; text-align: center; }
 
-    /* ===== NAVBAR ===== */
-    nav {
-      background: #2a2a2a; display: flex; justify-content: center; flex-wrap: wrap; padding: 10px 0;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    nav a {
-      color: white; text-decoration: none; margin: 8px 12px; padding: 10px 18px; border-radius: 6px; font-weight: 600; transition: 0.3s;
-    }
-    nav a:hover { background: #2196f3; }
-    nav a.active { background: #34a853; }
+nav { background: #2a2a2a; display: flex; justify-content: center; flex-wrap: wrap; padding: 10px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+nav a { color: white; text-decoration: none; margin: 8px 12px; padding: 10px 18px; border-radius: 6px; font-weight: 600; transition: 0.3s; }
+nav a:hover { background: #2196f3; }
+nav a.active { background: #34a853; }
 
-    /* ===== CONTENIDO ===== */
-    .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; display: flex; flex-direction: column; align-items: center; }
-    .app-card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); width: 100%; transition: 0.3s; }
-    .app-header { display: flex; align-items: center; gap: 15px; }
-    .app-header img.app-icon { width: 80px; height: 80px; border-radius: 12px; flex-shrink: 0; }
-    .app-header h2 { margin: 0; }
-    .app-description { margin: 10px 0; }
+.container { max-width: 1000px; margin: 40px auto; padding: 0 20px; display: flex; flex-direction: column; align-items: center; }
+.app-card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); width: 100%; transition: 0.3s; }
+.app-header { display: flex; align-items: center; gap: 15px; }
+.app-header img.app-icon { width: 80px; height: 80px; border-radius: 12px; flex-shrink: 0; }
+.app-header h2 { margin: 0; }
+.app-description { margin: 10px 0; }
 
-    /* ===== SCREENS ===== */
-    .screenshots-wrapper { position: relative; width: 100%; margin: 10px 0; }
-    .screenshots-container { overflow-x: auto; scroll-behavior: smooth; padding: 10px 0; }
-    .screenshots { display: flex; gap: 10px; }
-    .screenshots img { width: 150px; height: 300px; border-radius: 8px; object-fit: cover; flex-shrink: 0; transition: transform 0.3s; cursor: pointer; }
-    .screenshots img:hover { transform: scale(1.05); }
+.screenshots-wrapper { position: relative; width: 100%; margin: 10px 0; }
+.screenshots-container { overflow-x: auto; scroll-behavior: smooth; padding: 10px 0; }
+.screenshots { display: flex; gap: 10px; }
+.screenshots img { width: 150px; height: 300px; border-radius: 8px; object-fit: cover; flex-shrink: 0; transition: transform 0.3s; cursor: pointer; }
+.screenshots img:hover { transform: scale(1.05); }
 
-    .arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-size: 18px; z-index: 10; }
-    .arrow-left { left: 0; }
-    .arrow-right { right: 0; }
+.arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-size: 18px; z-index: 10; }
+.arrow-left { left: 0; }
+.arrow-right { right: 0; }
 
-    .btn { display: inline-block; padding: 10px 20px; margin: 10px 5px 0; border-radius: 6px; color: white; text-decoration: none; font-weight: 600; }
-    .google { background: #34a853; }
-    .uptodown { background: #2196f3; }
+.btn { display: inline-block; padding: 10px 20px; margin: 10px 5px 0; border-radius: 6px; color: white; text-decoration: none; font-weight: 600; }
+.google { background: #34a853; }
+.uptodown { background: #2196f3; }
 
-    footer { text-align: center; padding: 40px 20px; font-size: 0.9em; color: #555; }
-    footer a { color: #2196f3; text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+footer { text-align: center; padding: 40px 20px; font-size: 0.9em; color: #555; }
+footer a { color: #2196f3; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
 
-    /* ===== MODAL ===== */
-    .modal { display: none; position: fixed; z-index: 999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; overflow-y: auto; padding: 20px; }
-    .modal img { max-width: 90%; max-height: 90%; transition: transform 0.3s ease; }
-    .modal-buttons { margin-top: 20px; position: sticky; top: 10px; display: flex; justify-content: center; gap: 20px; z-index: 1000; }
-    .zoom-btn { background: rgba(255,255,255,0.2); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 20px; cursor: pointer; }
-    .zoom-btn:hover { background: rgba(255,255,255,0.4); }
-  </style>
+/* MODAL */
+.modal { display: none; position: fixed; z-index: 999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; overflow-y: auto; }
+.modal img { max-width: 90%; max-height: none; transition: transform 0.3s ease; margin: 40px 0; }
+
+.modal-buttons { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; z-index: 1000; }
+.zoom-btn { background: rgba(255,255,255,0.2); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 20px; cursor: pointer; }
+.zoom-btn:hover { background: rgba(255,255,255,0.4); }
+</style>
 </head>
 <body>
 
@@ -87,111 +76,62 @@
 
 <div class="container">
 
-  <!-- Educación -->
-  <div class="app-card" data-category="educacion">
-    <div class="app-header">
-      <img src="https://github.com/Eler3096/Eler.github.io/blob/main/logo_biblia_universal.png?raw=true" alt="Biblia Universal" class="app-icon">
-      <h2>Biblia Universal</h2>
-    </div>
-    <p class="app-description">Lee, escucha y comparte la Palabra de Dios con una interfaz limpia, moderna y sin distracciones.</p>
-    <div class="screenshots-wrapper">
-      <button class="arrow arrow-left">&#10094;</button>
-      <div class="screenshots-container">
-        <div class="screenshots">
-          <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_1_Universal%20Bible.jpg?raw=true" alt="Captura 1">
-          <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_2_Universal%20Bible.jpg?raw=true" alt="Captura 2">
-          <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_3_Universal%20Bible.jpg?raw=true" alt="Captura 3">
-        </div>
-      </div>
-      <button class="arrow arrow-right">&#10095;</button>
-    </div>
-    <a href="#" class="btn google">Google Play</a>
-    <a href="#" class="btn uptodown">Uptodown</a>
+<!-- EDUCACIÓN -->
+<div class="app-card" data-category="educacion">
+  <div class="app-header">
+    <img src="https://github.com/Eler3096/Eler.github.io/blob/main/logo_biblia_universal.png?raw=true" alt="Biblia Universal" class="app-icon">
+    <h2>Biblia Universal</h2>
   </div>
+  <p class="app-description">Lee, escucha y comparte la Palabra de Dios con una interfaz limpia, moderna y sin distracciones.</p>
+  <div class="screenshots-wrapper">
+    <button class="arrow arrow-left">&#10094;</button>
+    <div class="screenshots-container">
+      <div class="screenshots">
+        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_1_Universal%20Bible.jpg?raw=true" alt="Captura 1">
+        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_2_Universal%20Bible.jpg?raw=true" alt="Captura 2">
+      </div>
+    </div>
+    <button class="arrow arrow-right">&#10095;</button>
+  </div>
+  <a href="#" class="btn google">Google Play</a>
+  <a href="#" class="btn uptodown">Uptodown</a>
+</div>
 
-  <!-- Música y Audio -->
-  <div class="app-card" data-category="musica">
-    <div class="app-header">
-      <img src="ruta-icono-musicflow.png" alt="MusicFlow" class="app-icon">
-      <h2>MusicFlow</h2>
-    </div>
-    <p class="app-description">Escucha tu música favorita sin conexión con una interfaz moderna y fluida.</p>
-    <div class="screenshots-wrapper">
-      <button class="arrow arrow-left">&#10094;</button>
-      <div class="screenshots-container">
-        <div class="screenshots">
-          <img src="ruta-captura1.png" alt="Captura 1">
-          <img src="ruta-captura2.png" alt="Captura 2">
-        </div>
-      </div>
-      <button class="arrow arrow-right">&#10095;</button>
-    </div>
-    <a href="#" class="btn google">Google Play</a>
-    <a href="#" class="btn uptodown">Uptodown</a>
+<!-- MÚSICA -->
+<div class="app-card" data-category="musica">
+  <div class="app-header">
+    <img src="ruta-icono-musicflow.png" alt="MusicFlow" class="app-icon">
+    <h2>MusicFlow</h2>
   </div>
+  <p class="app-description">Escucha tu música favorita sin conexión con una interfaz moderna y fluida.</p>
+</div>
 
-  <!-- Productividad -->
-  <div class="app-card" data-category="productividad">
-    <div class="app-header">
-      <img src="ruta-icono-taskmaster.png" alt="TaskMaster" class="app-icon">
-      <h2>TaskMaster</h2>
-    </div>
-    <p class="app-description">Administra tus tareas diarias fácilmente con notificaciones inteligentes y diseño elegante.</p>
-    <div class="screenshots-wrapper">
-      <button class="arrow arrow-left">&#10094;</button>
-      <div class="screenshots-container">
-        <div class="screenshots">
-          <img src="ruta-task1.png" alt="Captura 1">
-          <img src="ruta-task2.png" alt="Captura 2">
-        </div>
-      </div>
-      <button class="arrow arrow-right">&#10095;</button>
-    </div>
-    <a href="#" class="btn google">Google Play</a>
-    <a href="#" class="btn uptodown">Uptodown</a>
+<!-- PRODUCTIVIDAD -->
+<div class="app-card" data-category="productividad">
+  <div class="app-header">
+    <img src="ruta-icono-taskmaster.png" alt="TaskMaster" class="app-icon">
+    <h2>TaskMaster</h2>
   </div>
+  <p class="app-description">Administra tus tareas diarias fácilmente con notificaciones inteligentes y diseño elegante.</p>
+</div>
 
-  <!-- Herramientas -->
-  <div class="app-card" data-category="herramientas">
-    <div class="app-header">
-      <img src="ruta-icono-smartcleaner.png" alt="Smart Cleaner" class="app-icon">
-      <h2>Smart Cleaner</h2>
-    </div>
-    <p class="app-description">Optimiza tu teléfono con limpieza rápida y mejora el rendimiento con un solo toque.</p>
-    <div class="screenshots-wrapper">
-      <button class="arrow arrow-left">&#10094;</button>
-      <div class="screenshots-container">
-        <div class="screenshots">
-          <img src="ruta-clean1.png" alt="Captura 1">
-          <img src="ruta-clean2.png" alt="Captura 2">
-        </div>
-      </div>
-      <button class="arrow arrow-right">&#10095;</button>
-    </div>
-    <a href="#" class="btn google">Google Play</a>
-    <a href="#" class="btn uptodown">Uptodown</a>
+<!-- HERRAMIENTAS -->
+<div class="app-card" data-category="herramientas">
+  <div class="app-header">
+    <img src="ruta-icono-smartcleaner.png" alt="Smart Cleaner" class="app-icon">
+    <h2>Smart Cleaner</h2>
   </div>
+  <p class="app-description">Optimiza tu teléfono con limpieza rápida y mejora el rendimiento con un solo toque.</p>
+</div>
 
-  <!-- Estilo de vida -->
-  <div class="app-card" data-category="estilo">
-    <div class="app-header">
-      <img src="ruta-icono-fitness.png" alt="FitLife" class="app-icon">
-      <h2>FitLife</h2>
-    </div>
-    <p class="app-description">Sigue tu entrenamiento diario y controla tu progreso físico con estadísticas detalladas.</p>
-    <div class="screenshots-wrapper">
-      <button class="arrow arrow-left">&#10094;</button>
-      <div class="screenshots-container">
-        <div class="screenshots">
-          <img src="ruta-fit1.png" alt="Captura 1">
-          <img src="ruta-fit2.png" alt="Captura 2">
-        </div>
-      </div>
-      <button class="arrow arrow-right">&#10095;</button>
-    </div>
-    <a href="#" class="btn google">Google Play</a>
-    <a href="#" class="btn uptodown">Uptodown</a>
+<!-- ESTILO DE VIDA -->
+<div class="app-card" data-category="estilo">
+  <div class="app-header">
+    <img src="ruta-icono-fitness.png" alt="FitLife" class="app-icon">
+    <h2>FitLife</h2>
   </div>
+  <p class="app-description">Sigue tu entrenamiento diario y controla tu progreso físico con estadísticas detalladas.</p>
+</div>
 
 </div>
 
@@ -211,60 +151,57 @@
 </div>
 
 <script>
-  // Filtrado de apps
-  const buttons = document.querySelectorAll('nav a');
-  const cards = document.querySelectorAll('.app-card');
-  buttons.forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.preventDefault();
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const category = btn.getAttribute('data-category');
-      cards.forEach(card => {
-        card.style.display = (category === 'all' || card.getAttribute('data-category') === category) ? 'block' : 'none';
-      });
+// Filtrado de apps
+const buttons = document.querySelectorAll('nav a');
+const cards = document.querySelectorAll('.app-card');
+buttons.forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const category = btn.getAttribute('data-category');
+    cards.forEach(card => {
+      card.style.display = (category === 'all' || card.getAttribute('data-category') === category) ? 'block' : 'none';
     });
   });
+});
 
-  // Flechas scroll para capturas
-  document.querySelectorAll('.screenshots-wrapper').forEach(wrapper => {
-    const container = wrapper.querySelector('.screenshots-container');
-    wrapper.querySelector('.arrow-left').addEventListener('click', () => { container.scrollBy({ left: -160, behavior: 'smooth' }); });
-    wrapper.querySelector('.arrow-right').addEventListener('click', () => { container.scrollBy({ left: 160, behavior: 'smooth' }); });
-  });
+// Flechas scroll
+document.querySelectorAll('.screenshots-wrapper').forEach(wrapper => {
+  const container = wrapper.querySelector('.screenshots-container');
+  wrapper.querySelector('.arrow-left').addEventListener('click', () => { container.scrollBy({ left: -160, behavior: 'smooth' }); });
+  wrapper.querySelector('.arrow-right').addEventListener('click', () => { container.scrollBy({ left: 160, behavior: 'smooth' }); });
+});
 
-  // Modal Zoom
-  const modal = document.getElementById('imageModal');
-  const modalImg = document.getElementById('modalImage');
-  let scale = 1;
+// Modal Zoom
+const modal = document.getElementById('imageModal');
+const modalImg = document.getElementById('modalImage');
+let scale = 1;
 
-  document.querySelectorAll('.screenshots img').forEach(img => {
-    img.addEventListener('click', () => {
-      modal.style.display = 'flex';
-      modalImg.src = img.src;
-      scale = 1;
-      modalImg.style.transform = `scale(${scale})`;
-      window.scrollTo(0, 0);
-    });
-  });
-
-  document.getElementById('zoomIn').addEventListener('click', () => {
-    scale += 0.2;
+document.querySelectorAll('.screenshots img').forEach(img => {
+  img.addEventListener('click', () => {
+    modal.style.display = 'flex';
+    modalImg.src = img.src;
+    scale = 1;
     modalImg.style.transform = `scale(${scale})`;
+    window.scrollTo(0,0);
   });
+});
 
-  document.getElementById('zoomOut').addEventListener('click', () => {
-    scale = Math.max(0.5, scale - 0.2);
-    modalImg.style.transform = `scale(${scale})`;
-  });
+document.getElementById('zoomIn').addEventListener('click', e => {
+  e.stopPropagation();
+  scale += 0.2;
+  modalImg.style.transform = `scale(${scale})`;
+});
 
-  modal.addEventListener('click', e => {
-    if (e.target === modal) modal.style.display = 'none';
-  });
+document.getElementById('zoomOut').addEventListener('click', e => {
+  e.stopPropagation();
+  scale = Math.max(0.5, scale - 0.2);
+  modalImg.style.transform = `scale(${scale})`;
+});
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') modal.style.display = 'none';
-  });
+modal.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.style.display = 'none'; });
 </script>
 
 </body>
