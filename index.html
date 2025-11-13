@@ -237,6 +237,26 @@
       wrapper.querySelector('.arrow-left').addEventListener('click', () => { container.scrollBy({ left: -160, behavior: 'smooth' }); });
       wrapper.querySelector('.arrow-right').addEventListener('click', () => { container.scrollBy({ left: 160, behavior: 'smooth' }); });
     });
+
+    document.getElementById('zoomIn').addEventListener('click', e => {
+      e.stopPropagation();
+      scale += 0.2;
+      modalImg.style.transform = `scale(${scale})`;
+    });
+
+    document.getElementById('zoomOut').addEventListener('click', e => {
+      e.stopPropagation();
+      scale = Math.max(0.5, scale - 0.2);
+      modalImg.style.transform = `scale(${scale})`;
+    });
+
+    modal.addEventListener('click', e => {
+      if (e.target === modal) modal.style.display = 'none';
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') modal.style.display = 'none';
+    });
   </script>
 
 </body>
