@@ -45,11 +45,40 @@ footer a { color: #2196f3; text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 
 /* MODAL */
-.modal { display: none; position: fixed; z-index: 999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; overflow-y: auto; }
-.modal img { max-width: 90%; max-height: none; transition: transform 0.3s ease; margin: 40px 0; }
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.9);
+  overflow-y: auto;
+}
 
-.modal-buttons { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; z-index: 1000; }
-.zoom-btn { background: rgba(255,255,255,0.2); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 20px; cursor: pointer; }
+.modal img {
+  display: block;
+  margin: 20px auto;
+  max-width: 90%;
+  transition: transform 0.3s ease;
+}
+
+.modal-buttons {
+  position: fixed;
+  top: 20px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 20px;
+  z-index: 1000;
+}
+
+.zoom-btn {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
 .zoom-btn:hover { background: rgba(255,255,255,0.4); }
 </style>
 </head>
@@ -76,7 +105,7 @@ footer a:hover { text-decoration: underline; }
 
 <div class="container">
 
-<!-- EDUCACIÓN -->
+<!-- EJEMPLO APP EDUCACIÓN -->
 <div class="app-card" data-category="educacion">
   <div class="app-header">
     <img src="https://github.com/Eler3096/Eler.github.io/blob/main/logo_biblia_universal.png?raw=true" alt="Biblia Universal" class="app-icon">
@@ -89,10 +118,6 @@ footer a:hover { text-decoration: underline; }
       <div class="screenshots">
         <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_1_Universal%20Bible.jpg?raw=true" alt="Captura 1">
         <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_2_Universal%20Bible.jpg?raw=true" alt="Captura 2">
-        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_3_Universal%20Bible.jpg?raw=true" alt="Captura 3">
-        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_4_Universal%20Bible.jpg?raw=true" alt="Captura 4">
-        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_5_Universal%20Bible.jpg?raw=true" alt="Captura 5">
-        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_6_Universal%20Bible.jpg?raw=true" alt="Captura 6">
       </div>
     </div>
     <button class="arrow arrow-right">&#10095;</button>
@@ -101,7 +126,7 @@ footer a:hover { text-decoration: underline; }
   <a href="#" class="btn uptodown">Uptodown</a>
 </div>
 
-<!-- MÚSICA -->
+<!-- EJEMPLO APP MÚSICA -->
 <div class="app-card" data-category="musica">
   <div class="app-header">
     <img src="ruta-icono-musicflow.png" alt="MusicFlow" class="app-icon">
@@ -110,7 +135,7 @@ footer a:hover { text-decoration: underline; }
   <p class="app-description">Escucha tu música favorita sin conexión con una interfaz moderna y fluida.</p>
 </div>
 
-<!-- PRODUCTIVIDAD -->
+<!-- EJEMPLO APP PRODUCTIVIDAD -->
 <div class="app-card" data-category="productividad">
   <div class="app-header">
     <img src="ruta-icono-taskmaster.png" alt="TaskMaster" class="app-icon">
@@ -119,7 +144,7 @@ footer a:hover { text-decoration: underline; }
   <p class="app-description">Administra tus tareas diarias fácilmente con notificaciones inteligentes y diseño elegante.</p>
 </div>
 
-<!-- HERRAMIENTAS -->
+<!-- EJEMPLO APP HERRAMIENTAS -->
 <div class="app-card" data-category="herramientas">
   <div class="app-header">
     <img src="ruta-icono-smartcleaner.png" alt="Smart Cleaner" class="app-icon">
@@ -128,7 +153,7 @@ footer a:hover { text-decoration: underline; }
   <p class="app-description">Optimiza tu teléfono con limpieza rápida y mejora el rendimiento con un solo toque.</p>
 </div>
 
-<!-- ESTILO DE VIDA -->
+<!-- EJEMPLO APP ESTILO DE VIDA -->
 <div class="app-card" data-category="estilo">
   <div class="app-header">
     <img src="ruta-icono-fitness.png" alt="FitLife" class="app-icon">
@@ -170,7 +195,7 @@ buttons.forEach(btn => {
   });
 });
 
-// Flechas scroll
+// Scroll horizontal
 document.querySelectorAll('.screenshots-wrapper').forEach(wrapper => {
   const container = wrapper.querySelector('.screenshots-container');
   wrapper.querySelector('.arrow-left').addEventListener('click', () => { container.scrollBy({ left: -160, behavior: 'smooth' }); });
@@ -184,11 +209,11 @@ let scale = 1;
 
 document.querySelectorAll('.screenshots img').forEach(img => {
   img.addEventListener('click', () => {
-    modal.style.display = 'flex';
+    modal.style.display = 'block';
     modalImg.src = img.src;
     scale = 1;
     modalImg.style.transform = `scale(${scale})`;
-    window.scrollTo(0,0);
+    modal.scrollTop = 0;
   });
 });
 
@@ -204,8 +229,8 @@ document.getElementById('zoomOut').addEventListener('click', e => {
   modalImg.style.transform = `scale(${scale})`;
 });
 
-modal.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.style.display = 'none'; });
+modal.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') modal.style.display = 'none'; });
 </script>
 
 </body>
