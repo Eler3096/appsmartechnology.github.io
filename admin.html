@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Administrador</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div class="admin-container">
+
+  <header class="admin-header">
+    <div class="admin-header-left">
+      <h1><span class="icon">⚙️</span> AppsMart Admin</h1>
+      <p>Subir, editar y manejar aplicaciones</p>
+    </div>
+    <button class="btn-logout" onclick="logout()">Cerrar sesión</button>
+  </header>
+
+  <h3 class="panel-section-title">➕ Nueva Aplicación</h3>
+
+  <div class="form-card">
+
+    <div class="form-main-fields">
+      <div class="form-group">
+        <label>Nombre</label>
+        <input id="nombre" type="text">
+      </div>
+
+      <div class="form-group">
+        <label>Descripción</label>
+        <textarea id="descripcion"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Versión</label>
+        <input id="version" type="text">
+      </div>
+
+    </div>
+
+    <div class="form-side-fields">
+
+      <div class="form-group">
+        <label>Categoría</label>
+        <select id="categoria">
+          <option>Educación</option>
+          <option>Juegos</option>
+          <option>Sociales</option>
+          <option>Herramientas</option>
+          <option>Productividad</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Idioma</label>
+        <input id="idioma" type="text">
+      </div>
+
+      <div class="form-group">
+        <label>Tipo</label>
+        <select id="tipo">
+          <option>Gratis</option>
+          <option>Pagada</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>APK</label>
+        <input id="apk" type="file" accept=".apk">
+      </div>
+
+      <div class="form-group">
+        <label>Imagen</label>
+        <input id="imagen" type="file" accept="image/*">
+      </div>
+
+      <button id="subirBtn" class="btn-primary" onclick="subirApp(event)">SUBIR APP</button>
+
+      <p class="status-text" id="estado"></p>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script src="firebase.js"></script>
+<script src="admin.js"></script>
+
+</body>
+</html>
