@@ -3,7 +3,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyApdnTXHE7O6AoU9ldEV4yzsCVBGdsWuRg",
   authDomain: "web-appsmart-technology.firebaseapp.com",
   projectId: "web-appsmart-technology",
-  storageBucket: "web-appsmart-technology.appspot.com",
+  storageBucket: "web-appsmart-technology.firebasestorage.app",
   messagingSenderId: "595885713972",
   appId: "1:595885713972:web:9ab9dd4072db0101207861"
 };
