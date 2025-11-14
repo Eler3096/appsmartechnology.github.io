@@ -1,6 +1,3 @@
-// Importar SDK v8 desde HTML, NO aquí.
-
-// Configuración Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyApdnTXHE7O6AoU9ldEV4yzsCVBGdsWuRg",
   authDomain: "web-appsmart-technology.firebaseapp.com",
@@ -10,10 +7,8 @@ const firebaseConfig = {
   appId: "1:595885713972:web:9ab9dd4072db0101207861"
 };
 
-// Inicializa Firebase
 firebase.initializeApp(firebaseConfig);
 
-// REFERENCIAS
 const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
