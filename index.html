@@ -2,197 +2,76 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AppsMart Technology — Tienda</title>
+  <title>AppsMart Technology — Tienda de Apps</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <link rel="stylesheet" href="styles.css">
-  <!-- Firebase (v8) -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
-  <header class="site-header">
+  <!-- HEADER -->
+  <header class="store-header">
     <div class="brand">
-      <!-- Pon aquí tu logo: reemplaza logo.png por el que quieras -->
-      <img src="logo.png" alt="AppsMart Technology" class="logo">
+      <img src="logo appsmart.png" alt="AppsMart Technology" class="brand-logo">
       <div>
         <h1>AppsMart Technology</h1>
-        <p class="tagline">IA, Innovación & Diseño Digital</p>
+        <p class="brand-tagline">Desarrollador Android • IA • Innovación</p>
       </div>
     </div>
-    <div class="controls">
-      <input id="search" placeholder="Buscar apps..." />
-      <select id="categoryFilter">
-        <option value="all">Todas las categorías</option>
-      </select>
+
+    <div class="header-right">
+      <div class="search-box">
+        <span class="icon">🔍</span>
+        <input id="searchInput" type="text" placeholder="Buscar apps, juegos, herramientas..." />
+      </div>
+      <a class="admin-link" href="admin-login.html" target="_blank" rel="noreferrer">
+        Panel Admin
+      </a>
     </div>
   </header>
 
-  <main class="container">
-    <section id="appsList" class="apps-grid">
-      <!-- Aquí se cargan las tarjetas -->
+  <!-- CATEGORÍAS -->
+  <section class="categories-bar">
+    <button class="chip active" data-cat="all">Todas</button>
+    <button class="chip" data-cat="Educación">Educación</button>
+    <button class="chip" data-cat="Juegos">Juegos</button>
+    <button class="chip" data-cat="Productividad">Productividad</button>
+    <button class="chip" data-cat="Sociales">Sociales</button>
+    <button class="chip" data-cat="Herramientas">Herramientas</button>
+  </section>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="store-main">
+    <section class="apps-section">
+      <h2 class="section-title">Apps destacadas</h2>
+      <p class="section-subtitle">Explora las últimas aplicaciones publicadas por AppsMart Technology.</p>
+
+      <div id="appsGrid" class="apps-grid">
+        <!-- Aquí se pintan las tarjetas desde index.js -->
+      </div>
+
+      <p id="emptyState" class="empty-state" style="display:none;">
+        No se encontraron apps para esta búsqueda o categoría.
+      </p>
     </section>
-    <p id="emptyMsg" class="empty" style="display:none">No hay apps publicadas aún.</p>
   </main>
 
-  <footer class="site-footer">
-    © 2025 AppsMart Technology — IA, Innovación & Diseño Digital
+  <!-- FOOTER -->
+  <footer class="store-footer">
+    <div>© <span id="year"></span> AppsMart Technology — Desarrollador de aplicaciones Android.</div>
+    <div class="footer-right">
+      <span>Hecho con ❤️ y Firebase</span>
+    </div>
   </footer>
 
-  <script>
-    // TU CONFIG DE FIREBASE: reemplaza si hace falta
-    var firebaseConfig = {
-      apiKey: "AIzaSyApdnTXHE7O6AoU9ldEV4yzsCVBGdsWuRg",
-      authDomain: "web-appsmart-technology.firebaseapp.com",
-      databaseURL: "https://web-appsmart-technology-default-rtdb.firebaseio.com",
-      projectId: "web-appsmart-technology",
-      storageBucket: "web-appsmart-technology.appspot.com",
-      messagingSenderId: "595885713972",
-      appId: "1:595885713972:web:9ab9dd4072db0101207861",
-      measurementId: "G-15MEV555W5"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
-    // Helpers
-    function formatDate(ts){
-      const d = new Date(ts);
-      return d.toLocaleDateString();
-    }
+  <!-- Tu config (ya creada) -->
+  <script src="firebase.js"></script>
 
-    // Render
-    const appsListEl = document.getElementById('appsList');
-    const emptyMsg = document.getElementById('emptyMsg');
-    const categoryFilter = document.getElementById('categoryFilter');
-    const searchInput = document.getElementById('search');
-
-    let appsData = {}; // cache
-    let categories = new Set();
-
-    // keep track of liked apps in localStorage
-    const likedKey = 'apps_liked';
-    function getLiked(){ try { return JSON.parse(localStorage.getItem(likedKey) || '[]'); } catch(e){ return []; } }
-    function setLiked(arr){ localStorage.setItem(likedKey, JSON.stringify(arr)); }
-
-    function renderApps(){
-      const q = searchInput.value.trim().toLowerCase();
-      const selectedCategory = categoryFilter.value;
-      appsListEl.innerHTML = '';
-      const list = Object.values(appsData);
-      const filtered = list.filter(a => {
-        if(!a) return false;
-        if(selectedCategory !== 'all' && (a.categoria || '').toLowerCase() !== selectedCategory.toLowerCase()) return false;
-        if(q === '') return true;
-        return (a.nombre && a.nombre.toLowerCase().includes(q)) ||
-               (a.descripcion && a.descripcion.toLowerCase().includes(q));
-      }).sort((x,y) => (y.fecha||0) - (x.fecha||0)); // recientes primero
-
-      if(filtered.length === 0){
-        emptyMsg.style.display = 'block';
-        return;
-      } else emptyMsg.style.display = 'none';
-
-      filtered.forEach(a => {
-        const card = document.createElement('article');
-        card.className = 'app-card';
-
-        card.innerHTML = `
-          <img class="app-thumb" src="${a.imagen || 'placeholder.png'}" alt="${escapeHtml(a.nombre)}">
-          <div class="app-body">
-            <h3 class="app-title">${escapeHtml(a.nombre)}</h3>
-            <div class="meta">
-              <span>${escapeHtml(a.categoria || '')}</span> •
-              <span>v${escapeHtml(a.version || '—')}</span> •
-              <span>${escapeHtml(a.idioma || '')}</span>
-            </div>
-            <p class="desc">${escapeHtml(a.descripcion || '')}</p>
-            <div class="controls-row">
-              <div class="stats">
-                <button class="like-btn" data-id="${a.id}">👍 <span class="likes-count">${a.likes||0}</span></button>
-                <span class="downloads">⬇️ <span class="dl-count">${a.descargas||0}</span></span>
-              </div>
-              <div class="actions">
-                <a class="btn btn-download" data-id="${a.id}" href="${a.apk || '#'}" target="_blank" rel="noreferrer">Descargar APK</a>
-                <a class="btn btn-play" href="${a.playUrl || '#'}" target="_blank" rel="noreferrer">Google Play</a>
-              </div>
-            </div>
-          </div>
-        `;
-
-        // like button handler
-        const likeBtn = card.querySelector('.like-btn');
-        likeBtn.addEventListener('click', () => {
-          const id = likeBtn.getAttribute('data-id');
-          const liked = getLiked();
-          if(liked.includes(id)){
-            alert('Ya votaste esta app desde este navegador.');
-            return;
-          }
-          // transaction for likes
-          const likesRef = db.ref('apps/' + id + '/likes');
-          likesRef.transaction(curr => (curr || 0) + 1);
-          liked.push(id);
-          setLiked(liked);
-        });
-
-        // download handler increments descargas via transaction
-        const dlBtn = card.querySelector('.btn-download');
-        dlBtn.addEventListener('click', async (ev) => {
-          const id = ev.currentTarget.getAttribute('data-id');
-          // increment safely
-          const dlRef = db.ref('apps/' + id + '/descargas');
-          dlRef.transaction(curr => (curr || 0) + 1);
-          // note: the link will open in a new tab because we set target="_blank"
-        });
-
-        appsListEl.appendChild(card);
-      });
-    }
-
-    function escapeHtml(str){
-      if(!str) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    // Build category select
-    function refreshCategories(){
-      const selVal = categoryFilter.value;
-      categoryFilter.innerHTML = '<option value="all">Todas las categorías</option>';
-      Array.from(categories).sort().forEach(cat => {
-        const opt = document.createElement('option');
-        opt.value = cat;
-        opt.textContent = cat;
-        categoryFilter.appendChild(opt);
-      });
-      if(selVal) categoryFilter.value = selVal;
-    }
-
-    // listen DB
-    const appsRef = db.ref('apps');
-    appsRef.on('value', snapshot => {
-      const val = snapshot.val() || {};
-      appsData = val;
-      // recompute categories
-      categories = new Set(Object.values(val || {}).map(a => (a && a.categoria) ? a.categoria : '').filter(Boolean));
-      refreshCategories();
-      renderApps();
-    });
-
-    // search & filter handlers
-    searchInput.addEventListener('input', () => renderApps());
-    categoryFilter.addEventListener('change', () => renderApps());
-
-    // initial placeholder if no logo
-    document.addEventListener('DOMContentLoaded', () => {
-      // if logo.png doesn't exist, browser will show broken image.
-      // you can replace public/logo.png with your real logo image.
-    });
-  </script>
-
-  <script src="app.js" defer></script>
+  <!-- Lógica de la tienda -->
+  <script src="index.js"></script>
 </body>
 </html>
