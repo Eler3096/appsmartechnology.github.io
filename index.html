@@ -44,6 +44,31 @@ footer { text-align: center; padding: 40px 20px; font-size: 0.9em; color: #555; 
 footer a { color: #2196f3; text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 
+/* INFO BOX */
+.app-info {
+  background: #f4f4f4;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-size: 0.95em;
+  width: 100%;
+  box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
+}
+.app-info h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  color: #222;
+}
+.app-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.app-info li {
+  margin: 6px 0;
+}
+
 /* MODAL */
 .modal {
   display: none;
@@ -54,14 +79,12 @@ footer a:hover { text-decoration: underline; }
   background: rgba(0,0,0,0.9);
   overflow-y: auto;
 }
-
 .modal img {
   display: block;
   margin: 20px auto;
   max-width: 90%;
   transition: transform 0.3s ease;
 }
-
 .modal-buttons {
   position: fixed;
   top: 20px; left: 50%;
@@ -69,7 +92,6 @@ footer a:hover { text-decoration: underline; }
   display: flex; gap: 20px;
   z-index: 1000;
 }
-
 .zoom-btn {
   background: rgba(255,255,255,0.2);
   color: white;
@@ -105,32 +127,88 @@ footer a:hover { text-decoration: underline; }
 
 <div class="container">
 
-<!-- EJEMPLO APP EDUCACIÓN -->
+<!-- ===========================================================
+       APP 1 — BIBLIA UNIVERSAL
+=========================================================== -->
 <div class="app-card" data-category="educacion">
   <div class="app-header">
     <img src="https://github.com/Eler3096/Eler.github.io/blob/main/logo_biblia_universal.png?raw=true" alt="Biblia Universal" class="app-icon">
     <h2>Biblia Universal [Es] con Audio</h2>
   </div>
   <p class="app-description">Lee, escucha y comparte la Palabra de Dios con una interfaz limpia, moderna y sin distracciones.</p>
+
   <div class="screenshots-wrapper">
     <button class="arrow arrow-left">&#10094;</button>
     <div class="screenshots-container">
       <div class="screenshots">
-        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_1_Universal%20Bible.jpg?raw=true" alt="Captura 1">
-        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_2_Universal%20Bible.jpg?raw=true" alt="Captura 2">
-        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_3_Universal%20Bible.jpg?raw=true" alt="Captura 3">
-        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_4_Universal%20Bible.jpg?raw=true" alt="Captura 4">
-        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_5_Universal%20Bible.jpg?raw=true" alt="Captura 5">
-        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_6_Universal%20Bible.jpg?raw=true" alt="Captura 6">
+        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_1_Universal%20Bible.jpg?raw=true">
+        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_2_Universal%20Bible.jpg?raw=true">
+        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_3_Universal%20Bible.jpg?raw=true">
+        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_4_Universal%20Bible.jpg?raw=true">
+        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_5_Universal%20Bible.jpg?raw=true">
+        <img src="https://github.com/Eler3096/Eler.github.io/blob/main/Screenshot_6_Universal%20Bible.jpg?raw=true">
       </div>
     </div>
     <button class="arrow arrow-right">&#10095;</button>
   </div>
+
   <a href="#" class="btn google">Google Play</a>
   <a href="#" class="btn descargar">Descargar</a>
 </div>
 
-<!-- EJEMPLO APP MÚSICA -->
+
+<!-- ===========================================================
+       APP 2 — GLOBAL CITY (COMPLETA)
+=========================================================== -->
+<div class="app-card" data-category="juegos">
+  <div class="app-header">
+    <img src="https://play-lh.googleusercontent.com/4eAyxWx_wA-uvQVw1Gc7YCOUMIqFZ3VAb9YSEuxsjjXNMTvEihQ6UkNzxaz2YsmiSg=s180" 
+         alt="Global City" class="app-icon">
+    <h2>Global City</h2>
+  </div>
+
+  <p class="app-description">
+    Construye la ciudad del futuro: administra recursos, expande tu territorio y completa misiones mientras desarrollas una metrópoli moderna.
+  </p>
+
+  <div class="screenshots-wrapper">
+    <button class="arrow arrow-left">&#10094;</button>
+    <div class="screenshots-container">
+      <div class="screenshots">
+        <img src="https://play-lh.googleusercontent.com/7YBHQsbO_BQwSx3H2m4ZqkYv6xB5h5Vf--iF7kKIhx7W8e6vTavsQJvPBjsmEe8nhg=w2560-h1440">
+        <img src="https://play-lh.googleusercontent.com/9I2GxUQH3P8KyfyeTzVxO_3Vqiv8lJdF8o5Wq7mIGWSAaObxGc5iDhv1Jp1YVgkTuw=w2560-h1440">
+        <img src="https://play-lh.googleusercontent.com/yN0vyoFJfe2gHqgu6tVf6HmdYFUXPqk1l1TDrA-9vn6p_nEnpCI4W-A-1p5p8MhUIg=w2560-h1440">
+      </div>
+    </div>
+    <button class="arrow arrow-right">&#10095;</button>
+  </div>
+
+  <!-- INFO COMPLETA DE LA APP -->
+  <div class="app-info">
+    <h3>Información de la App</h3>
+    <ul>
+      <li><strong>Nombre:</strong> Global City</li>
+      <li><strong>Versión:</strong> 0.7.8666</li>
+      <li><strong>Paquete:</strong> com.rbx.city.android</li>
+      <li><strong>Licencia:</strong> Gratis</li>
+      <li><strong>Sistema operativo:</strong> Android</li>
+      <li><strong>Categoría:</strong> Estrategia</li>
+      <li><strong>Idioma:</strong> Español</li>
+      <li><strong>Autor:</strong> UPWAKE.ME</li>
+      <li><strong>Descargas:</strong> 35,146</li>
+      <li><strong>Fecha:</strong> 13 nov. 2025</li>
+      <li><strong>Clasificación:</strong> +3</li>
+      <li><strong>Publicidad:</strong> No especificado</li>
+    </ul>
+  </div>
+
+  <a href="#" class="btn google">Google Play</a>
+  <a href="#" class="btn descargar">Descargar</a>
+</div>
+
+
+<!-- APPs restantes (las tuyas) -->
+
 <div class="app-card" data-category="musica">
   <div class="app-header">
     <img src="ruta-icono-musicflow.png" alt="MusicFlow" class="app-icon">
@@ -139,7 +217,6 @@ footer a:hover { text-decoration: underline; }
   <p class="app-description">Escucha tu música favorita sin conexión con una interfaz moderna y fluida.</p>
 </div>
 
-<!-- EJEMPLO APP PRODUCTIVIDAD -->
 <div class="app-card" data-category="productividad">
   <div class="app-header">
     <img src="ruta-icono-taskmaster.png" alt="TaskMaster" class="app-icon">
@@ -148,7 +225,6 @@ footer a:hover { text-decoration: underline; }
   <p class="app-description">Administra tus tareas diarias fácilmente con notificaciones inteligentes y diseño elegante.</p>
 </div>
 
-<!-- EJEMPLO APP HERRAMIENTAS -->
 <div class="app-card" data-category="herramientas">
   <div class="app-header">
     <img src="ruta-icono-smartcleaner.png" alt="Smart Cleaner" class="app-icon">
@@ -157,7 +233,6 @@ footer a:hover { text-decoration: underline; }
   <p class="app-description">Optimiza tu teléfono con limpieza rápida y mejora el rendimiento con un solo toque.</p>
 </div>
 
-<!-- EJEMPLO APP ESTILO DE VIDA -->
 <div class="app-card" data-category="estilo">
   <div class="app-header">
     <img src="ruta-icono-fitness.png" alt="FitLife" class="app-icon">
