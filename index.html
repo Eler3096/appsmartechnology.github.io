@@ -1,255 +1,121 @@
-// ====== Referencias DOM ======
-const appsGrid = document.getElementById("appsGrid");
-const emptyState = document.getElementById("emptyState");
-const searchInput = document.getElementById("searchInput");
-const chips = document.querySelectorAll(".chip");
-document.getElementById("year").textContent = new Date().getFullYear();
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>AppsMart Technology — Tienda de Apps</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-// Overlay detalle
-const overlay = document.getElementById("detailOverlay");
-const overlayBackdrop = document.getElementById("detailBackdrop");
-const detailIcon = document.getElementById("detailIcon");
-const detailName = document.getElementById("detailName");
-const detailCategory = document.getElementById("detailCategory");
-const detailSize = document.getElementById("detailSize");
-const detailInternet = document.getElementById("detailInternet");
-const detailStats = document.getElementById("detailStats");
-const detailDesc = document.getElementById("detailDesc");
-const detailScreens = document.getElementById("detailScreens");
-const installBtn = document.getElementById("installBtn");
-const likeBtn = document.getElementById("likeBtn");
-const starsRow = document.getElementById("starsRow");
-const ratingLabel = document.getElementById("ratingLabel");
+  <link rel="stylesheet" href="styles.css">
+</head>
 
-let allApps = [];
-let currentCat = "all";
-let currentApp = null;
-
-// ====== LocalStorage para votos anónimos ======
-const VOTES_KEY = "appsmart_votes";
-
-function getVotes() {
-  try {
-    return JSON.parse(localStorage.getItem(VOTES_KEY) || "{}");
-  } catch (e) {
-    return {};
-  }
-}
-function saveVotes(v) {
-  localStorage.setItem(VOTES_KEY, JSON.stringify(v));
-}
-
-// ====== Cargar apps desde Firestore ======
-db.collection("apps").orderBy("fecha", "desc").onSnapshot(snap => {
-  allApps = snap.docs.map(d => d.data());
-  renderApps();
-}, err => {
-  console.error(err);
-  emptyState.style.display = "block";
-  emptyState.textContent = "Error cargando apps. Intenta más tarde.";
-});
-
-// ====== Render lista ======
-function renderApps() {
-  const q = (searchInput.value || "").toLowerCase();
-  appsGrid.innerHTML = "";
-
-  let list = allApps;
-
-  if (currentCat !== "all") {
-    list = list.filter(a => a.categoria === currentCat);
-  }
-
-  if (q) {
-    list = list.filter(a =>
-      (a.nombre || "").toLowerCase().includes(q) ||
-      (a.descripcion || "").toLowerCase().includes(q)
-    );
-  }
-
-  if (!list.length) {
-    emptyState.style.display = "block";
-    return;
-  }
-  emptyState.style.display = "none";
-
-  const votes = getVotes();
-
-  list.forEach(app => {
-    const card = document.createElement("article");
-    card.className = "play-card";
-
-    const myVote = votes[app.id] || {};
-    const ratingAvg = app.ratingAvg || 0;
-    const ratingCount = app.ratingCount || 0;
-    const likes = app.likes || 0;
-    const descargas = app.descargas || 0;
-    const internet = app.internet === "offline"
-      ? "📴 Sin Internet"
-      : "🌐 Con Internet";
-
-    const size = app.size || "—";
-
-    const starsText = ratingCount
-      ? `⭐ ${ratingAvg.toFixed(1)} (${ratingCount})`
-      : "⭐ Sin valoraciones";
-
-    card.innerHTML = `
-      <img class="play-icon" src="${app.imagen}" alt="${app.nombre}">
-      <div class="play-info">
-        <h3 class="play-name">${app.nombre}</h3>
-        <p class="play-line1">${internet}</p>
-        <p class="play-line2">
-          ${starsText} • ❤️ ${likes} • ${size} • ${descargas} descargas
-        </p>
+<body>
+  <!-- HEADER -->
+  <header class="store-header">
+    <div class="brand">
+      <img src="logo appsmart.png" alt="AppsMart Technology" class="brand-logo">
+      <div>
+        <h1>AppsMart Technology</h1>
+        <p class="brand-tagline">Desarrollador Android • IA • Innovación</p>
       </div>
-    `;
+    </div>
 
-    card.addEventListener("click", () => openDetails(app));
+    <div class="header-right">
+      <div class="search-box">
+        <span class="icon">🔍</span>
+        <input id="searchInput" type="text" placeholder="Buscar apps, juegos, herramientas..." />
+      </div>
+      <a class="admin-link" href="admin-login.html" target="_blank" rel="noreferrer">
+        Panel Admin
+      </a>
+    </div>
+  </header>
 
-    appsGrid.appendChild(card);
-  });
-}
+  <!-- CATEGORÍAS -->
+  <section class="categories-bar">
+    <button class="chip active" data-cat="all">Todas</button>
+    <button class="chip" data-cat="Educación">Educación</button>
+    <button class="chip" data-cat="Libros">Libros</button>
+    <button class="chip" data-cat="Juegos">Juegos</button>
+    <button class="chip" data-cat="Música y Audio">Música y Audio</button>
+    <button class="chip" data-cat="Productividad">Productividad</button>
+    <button class="chip" data-cat="Sociales">Sociales</button>
+    <button class="chip" data-cat="Fotografía y Video">Fotografía y Video</button>
+    <button class="chip" data-cat="Entretenimiento">Entretenimiento</button>
+    <button class="chip" data-cat="Herramientas">Herramientas</button>
+  </section>
 
-// ====== Eventos de filtros & búsqueda ======
-searchInput.addEventListener("input", renderApps);
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="store-main">
+    <section class="apps-section">
+      <h2 class="section-title">Apps destacadas</h2>
+      <p class="section-subtitle">Explora las últimas aplicaciones publicadas por AppsMart Technology.</p>
 
-chips.forEach(chip => {
-  chip.addEventListener("click", () => {
-    document.querySelector(".chip.active").classList.remove("active");
-    chip.classList.add("active");
-    currentCat = chip.dataset.cat;
-    renderApps();
-  });
-});
+      <div id="appsGrid" class="apps-grid"></div>
 
-// ====== Detalle tipo Play Store ======
-function openDetails(app) {
-  currentApp = app;
-  const votes = getVotes();
-  const myVote = votes[app.id] || {};
+      <p id="emptyState" class="empty-state" style="display:none;">
+        No se encontraron apps para esta búsqueda o categoría.
+      </p>
+    </section>
+  </main>
 
-  overlay.classList.remove("hidden");
+  <!-- FOOTER -->
+  <footer class="store-footer">
+    <div>© <span id="year"></span> AppsMart Technology — Desarrollador de aplicaciones Android.</div>
+    <div class="footer-right"><span>Hecho con ❤️ y Firebase</span></div>
+  </footer>
 
-  detailIcon.src = app.imagen;
-  detailName.textContent = app.nombre;
-  detailCategory.textContent = app.categoria || "";
-  detailSize.textContent = app.size || "—";
-  detailInternet.textContent = app.internet === "offline"
-    ? "📴 Funciona sin Internet"
-    : "🌐 Requiere Internet";
-  detailDesc.textContent = app.descripcion || "";
 
-  const ratingAvg = app.ratingAvg || 0;
-  const ratingCount = app.ratingCount || 0;
-  ratingLabel.textContent = ratingCount
-    ? `Valoración: ${ratingAvg.toFixed(1)} (${ratingCount} votos)`
-    : "Sin valoraciones todavía";
+  <!-- ===================== OVERLAY DETALLE (Play Store) ===================== -->
+  <div id="detailOverlay" class="overlay hidden">
+    <div id="detailBackdrop" class="overlay-backdrop"></div>
 
-  detailStats.textContent =
-    `Descargas: ${app.descargas || 0} • Likes: ${app.likes || 0}`;
+    <div class="overlay-panel">
 
-  // Capturas (si tienes un array app.imgSecundarias en Firestore)
-  detailScreens.innerHTML = "";
-  (app.imgSecundarias || []).forEach(url => {
-    const img = document.createElement("img");
-    img.src = url;
-    detailScreens.appendChild(img);
-  });
+      <button id="detailClose" class="overlay-close">✕</button>
 
-  // Botón instalar
-  installBtn.onclick = () => {
-    if (app.apk) {
-      // Incrementar descargas
-      db.collection("apps").doc(app.id).update({
-        descargas: firebase.firestore.FieldValue.increment(1)
-      }).catch(console.error);
-      window.open(app.apk, "_blank");
-    }
-  };
+      <div class="overlay-header">
+        <img id="detailIcon" class="overlay-icon" src="" alt="App">
+        <div>
+          <h1 id="detailName"></h1>
+          <p id="detailCategory"></p>
+          <p id="detailSize"></p>
+          <p id="detailInternet"></p>
+        </div>
+      </div>
 
-  // Like
-  likeBtn.textContent = myVote.liked ? "❤️ Ya te gusta" : "❤️ Me gusta";
-  likeBtn.disabled = !!myVote.liked;
-  likeBtn.onclick = () => handleLike(app);
+      <button id="installBtn" class="install-btn">Instalar</button>
 
-  // Estrellas
-  renderStars(app, myVote.stars || 0);
-}
+      <p id="detailStats" class="detail-stats"></p>
 
-function closeDetails() {
-  overlay.classList.add("hidden");
-}
+      <div class="rating-block">
+        <p id="ratingLabel" class="rating-label"></p>
 
-overlayBackdrop.addEventListener("click", closeDetails);
-document.getElementById("detailClose").addEventListener("click", closeDetails);
+        <div id="starsRow" class="stars-row"></div>
 
-// ====== Likes (una vez por usuario) ======
-function handleLike(app) {
-  const votes = getVotes();
-  const myVote = votes[app.id] || {};
+        <button id="likeBtn" class="like-btn">❤️ Me gusta</button>
+      </div>
 
-  if (myVote.liked) {
-    alert("Ya votaste con 'Me gusta' esta app desde este navegador.");
-    return;
-  }
+      <h2>Descripción</h2>
+      <p id="detailDesc" class="detail-desc"></p>
 
-  db.collection("apps").doc(app.id).update({
-    likes: firebase.firestore.FieldValue.increment(1)
-  }).then(() => {
-    myVote.liked = true;
-    votes[app.id] = myVote;
-    saveVotes(votes);
+      <h2>Capturas de pantalla</h2>
+      <div id="detailScreens" class="screenshots-row"></div>
 
-    currentApp.likes = (currentApp.likes || 0) + 1;
-    detailStats.textContent =
-      `Descargas: ${currentApp.descargas || 0} • Likes: ${currentApp.likes}`;
-    likeBtn.textContent = "❤️ Ya te gusta";
-    likeBtn.disabled = true;
-    renderApps(); // refrescar lista
-  }).catch(console.error);
-}
+    </div>
+  </div>
+  <!-- ======================================================================== -->
 
-// ====== Estrellas (una vez por usuario) ======
-function renderStars(app, myStars) {
-  starsRow.innerHTML = "";
-  for (let i = 1; i <= 5; i++) {
-    const btn = document.createElement("button");
-    btn.className = "star-btn";
-    btn.textContent = i <= myStars ? "★" : "☆";
-    btn.disabled = myStars > 0;
-    btn.addEventListener("click", () => handleStarClick(app, i));
-    starsRow.appendChild(btn);
-  }
-}
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
-function handleStarClick(app, stars) {
-  const votes = getVotes();
-  const myVote = votes[app.id] || {};
-  if (myVote.stars) {
-    alert("Ya calificaste esta app desde este navegador.");
-    return;
-  }
+  <!-- Configuración Firebase de tu proyecto -->
+  <script src="firebase.js"></script>
 
-  const prevAvg = app.ratingAvg || 0;
-  const prevCount = app.ratingCount || 0;
-  const newCount = prevCount + 1;
-  const newAvg = (prevAvg * prevCount + stars) / newCount;
+  <!-- Lógica de la tienda -->
+  <script src="index.js"></script>
 
-  db.collection("apps").doc(app.id).update({
-    ratingAvg: newAvg,
-    ratingCount: newCount
-  }).then(() => {
-    myVote.stars = stars;
-    votes[app.id] = myVote;
-    saveVotes(votes);
-
-    currentApp.ratingAvg = newAvg;
-    currentApp.ratingCount = newCount;
-    ratingLabel.textContent =
-      `Valoración: ${newAvg.toFixed(1)} (${newCount} votos)`;
-
-    renderStars(app, stars);
-    renderApps();
-  }).catch(console.error);
-}
+</body>
+</html>
