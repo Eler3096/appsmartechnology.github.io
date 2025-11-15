@@ -79,6 +79,10 @@ function cargarParaEditar(id) {
     document.getElementById("anuncios").value = a.anuncios || "no";
     document.getElementById("privacidad").value = a.privacidadUrl || "";
 
+    // Campos URL
+    document.getElementById("imagenUrl").value = a.imagen || "";
+    document.getElementById("capturasUrl").value = a.imgSecundarias ? a.imgSecundarias.join(",") : "";
+
     prevSize = a.size || null;
 
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -121,7 +125,6 @@ function guardarApp() {
   const tipo = document.getElementById("tipo").value.trim();
   const internet = document.getElementById("internet").value;
 
-  // ❗ IDs corregidos
   const sistema = document.getElementById("sistema").value.trim();
   const requisitos = document.getElementById("requisitos").value.trim();
   const fechaAct = document.getElementById("fechaAct").value;
@@ -129,8 +132,11 @@ function guardarApp() {
   const anuncios = document.getElementById("anuncios").value;
   const privacidad = document.getElementById("privacidad").value.trim();
 
-  const capturas = document.getElementById("capturas").files;
+  // NUEVOS CAMPOS
+  const imagenUrl = document.getElementById("imagenUrl").value.trim();
+  const capturasUrl = document.getElementById("capturasUrl").value.trim();
 
+  const capturas = document.getElementById("capturas").files;
   const apkFile = document.getElementById("apk").files[0];
   const imgFile = document.getElementById("imagen").files[0];
 
@@ -162,7 +168,15 @@ function guardarApp() {
   }
 
   // Imagen principal
-  let promesaImg = imgFile ? upload(storage.ref(`imagenes/${id}.jpg`), imgFile) : Promise.resolve(null);
+  let promesaImg;
+
+  if (imgFile) {
+    promesaImg = upload(storage.ref(`imagenes/${id}.jpg`), imgFile);
+  } else if (imagenUrl !== "") {
+    promesaImg = Promise.resolve(imagenUrl);
+  } else {
+    promesaImg = Promise.resolve(null);
+  }
 
   // APK
   let promesaApk;
@@ -173,22 +187,16 @@ function guardarApp() {
       size: (apkFile.size / 1024 / 1024).toFixed(1) + " MB"
     }));
   } else {
-    const ref = storage.ref(`apks/${id}.apk`);
-    promesaApk = ref
-      .getMetadata()
-      .then(meta => ({
-        url: null,
-        size: (meta.size / 1024 / 1024).toFixed(1) + " MB"
-      }))
-      .catch(() => ({
-        url: null,
-        size: prevSize
-      }));
+    promesaApk = Promise.resolve({
+      url: null,
+      size: prevSize
+    });
   }
 
   // Capturas
   let capturasURLS = [];
 
+  // archivos
   const promisesCapturas = [];
 
   for (let i = 0; i < capturas.length; i++) {
@@ -197,6 +205,12 @@ function guardarApp() {
     promisesCapturas.push(
       upload(ref, file).then(url => capturasURLS.push(url))
     );
+  }
+
+  // URLs externas
+  if (capturasUrl !== "") {
+    const urlsDesdeTexto = capturasUrl.split(",").map(u => u.trim());
+    capturasURLS.push(...urlsDesdeTexto);
   }
 
   Promise.all([promesaImg, promesaApk, ...promisesCapturas]).then(([imgURL, apkData]) => {
@@ -210,14 +224,12 @@ function guardarApp() {
       idioma,
       tipo,
       internet,
-
       sistemaOperativo: sistema,
       requisitos,
       fechaActualizacion: fechaAct,
       edad,
       anuncios,
       privacidadUrl: privacidad,
-
       fecha: Date.now()
     };
 
@@ -271,6 +283,9 @@ function limpiarFormulario() {
   document.getElementById("edad").value = "";
   document.getElementById("anuncios").value = "no";
   document.getElementById("privacidad").value = "";
+
+  document.getElementById("imagenUrl").value = "";
+  document.getElementById("capturasUrl").value = "";
 
   document.getElementById("apk").value = "";
   document.getElementById("imagen").value = "";
