@@ -540,6 +540,39 @@ body {
   transition: width 0.4s ease;
 }
 
+/* INFORMACIÓN DE LA APP */
+.info-app {
+  margin: 10px 0 16px;
+  font-size: 0.85rem;
+  color: #e5e7eb;
+}
+.info-app p {
+  margin-bottom: 4px;
+}
+.info-app a {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+.info-app a:hover {
+  color: #bfdbfe;
+}
+
+/* BOTÓN COMPARTIR */
+.share-btn {
+  margin-bottom: 16px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(59,130,246,0.9);
+  background: rgba(15,23,42,0.9);
+  color: #bfdbfe;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.share-btn:hover {
+  background: rgba(59,130,246,0.5);
+  color: white;
+}
+
 /* Reseñas */
 .review-form {
   background: rgba(255,255,255,0.04);
