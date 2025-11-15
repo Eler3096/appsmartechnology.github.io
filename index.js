@@ -91,7 +91,6 @@ function renderApps() {
     const likes = app.likes || 0;
     const descargas = app.descargas || 0;
 
-    // 🔥 CORREGIDO: tamaño siempre existe
     const size = app.size && app.size.length > 0 ? app.size : "—";
 
     const internet =
@@ -118,7 +117,7 @@ function renderApps() {
   });
 }
 
-// ====== Eventos de filtros & búsqueda ======
+// ====== Eventos ======
 searchInput.addEventListener("input", renderApps);
 
 chips.forEach(chip => {
@@ -130,8 +129,8 @@ chips.forEach(chip => {
   });
 });
 
-// ====== Detalle tipo Play Store ======
-function openDetails(app) {
+// ====== 🔥 Detalle con IMÁGENES DIRECTO DESDE GITHUB ======
+async function openDetails(app) {
   currentApp = app;
 
   const votes = getVotes();
@@ -143,7 +142,6 @@ function openDetails(app) {
   detailName.textContent = app.nombre;
   detailCategory.textContent = app.categoria || "";
 
-  // 🔥 TAMAÑO SIEMPRE MOSTRADO
   detailSize.textContent =
     app.size && app.size.length > 0
       ? `📦 Tamaño: ${app.size}`
@@ -163,16 +161,42 @@ function openDetails(app) {
     ? `Valoración: ${ratingAvg.toFixed(1)} (${ratingCount} votos)`
     : "Sin valoraciones todavía";
 
-  detailStats.textContent = `Descargas: ${
-    app.descargas || 0
-  } • Likes: ${app.likes || 0}`;
+  detailStats.textContent =
+    `Descargas: ${app.descargas || 0} • Likes: ${app.likes || 0}`;
 
-  detailScreens.innerHTML = "";
-  (app.imgSecundarias || []).forEach(url => {
-    const img = document.createElement("img");
-    img.src = url;
-    detailScreens.appendChild(img);
-  });
+  // ==================================================================
+  // 🔥 Cargar imágenes directamente desde el repositorio GitHub (raíz)
+  // ==================================================================
+  detailScreens.innerHTML = "Cargando capturas…";
+
+  try {
+    const response = await fetch(
+      "https://api.github.com/repos/Eler3096/eler3096.github.io/contents/"
+    );
+
+    const files = await response.json();
+
+    const images = files
+      .filter(f =>
+        f.name.toLowerCase().endsWith(".jpg") ||
+        f.name.toLowerCase().endsWith(".png")
+      )
+      .map(f => f.download_url);
+
+    detailScreens.innerHTML = "";
+
+    images.forEach(url => {
+      const img = document.createElement("img");
+      img.src = url;
+      img.loading = "lazy";
+      detailScreens.appendChild(img);
+    });
+
+  } catch (err) {
+    detailScreens.innerHTML = "<p>Error cargando imágenes.</p>";
+    console.error(err);
+  }
+  // ==================================================================
 
   installBtn.onclick = () => {
     if (app.apk) {
@@ -221,9 +245,8 @@ function handleLike(app) {
 
       currentApp.likes = (currentApp.likes || 0) + 1;
 
-      detailStats.textContent = `Descargas: ${
-        currentApp.descargas || 0
-      } • Likes: ${currentApp.likes}`;
+      detailStats.textContent =
+        `Descargas: ${currentApp.descargas || 0} • Likes: ${currentApp.likes}`;
 
       likeBtn.textContent = "❤️ Ya te gusta";
       likeBtn.disabled = true;
@@ -274,9 +297,8 @@ function handleStarClick(app, stars) {
       currentApp.ratingAvg = newAvg;
       currentApp.ratingCount = newCount;
 
-      ratingLabel.textContent = `Valoración: ${newAvg.toFixed(
-        1
-      )} (${newCount} votos)`;
+      ratingLabel.textContent =
+        `Valoración: ${newAvg.toFixed(1)} (${newCount} votos)`;
 
       renderStars(app, stars);
       renderApps();
