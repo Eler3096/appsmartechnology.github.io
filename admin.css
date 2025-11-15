@@ -184,3 +184,26 @@ textarea {
   margin-top: 5px;
   color: #9ca3af;
 }
+
+
+
+.hidden {
+  display: none;
+}
+
+.btn-toggle {
+  background: rgba(59,130,246,0.3);
+  border: 1px solid #3b82f6;
+  color: #bfdbfe;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: inline-block;
+}
+
+.btn-toggle:hover {
+  background: rgba(59,130,246,0.5);
+}
+
