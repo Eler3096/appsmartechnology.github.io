@@ -173,7 +173,8 @@ function openDetails(app) {
   detailScreens.innerHTML = "";
 
   const capturas = [
-    "https://github.com/Eler3096/eler3096.github.io/blob/main/Screenshot_1_Universal%20Bible.jpg?raw=true"
+    "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_1_Universal%20Bible.jpg
+"
   ];
 
   capturas.forEach(url => {
@@ -293,3 +294,4 @@ function handleStarClick(app, stars) {
     })
     .catch(console.error);
 }
+
