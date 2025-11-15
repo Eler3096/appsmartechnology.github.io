@@ -52,7 +52,7 @@ const VOTES_KEY = "appsmart_votes";
 function getVotes() {
   try {
     return JSON.parse(localStorage.getItem(VOTES_KEY) || "{}");
-  } catch (e) {
+  } catch {
     return {};
   }
 }
@@ -67,8 +67,7 @@ db.collection("apps").orderBy("fecha", "desc").onSnapshot(
     allApps = snap.docs.map(d => ({ ...d.data(), id: d.id }));
     renderApps();
   },
-  err => {
-    console.error(err);
+  () => {
     emptyState.style.display = "block";
     emptyState.textContent = "Error cargando apps. Intenta más tarde.";
   }
@@ -81,9 +80,7 @@ function renderApps() {
 
   let list = [...allApps];
 
-  if (currentCat !== "all") {
-    list = list.filter(a => a.categoria === currentCat);
-  }
+  if (currentCat !== "all") list = list.filter(a => a.categoria === currentCat);
 
   if (q) {
     list = list.filter(
@@ -144,6 +141,7 @@ function renderApps() {
 
 // ====== Eventos ======
 searchInput.addEventListener("input", renderApps);
+
 chips.forEach(chip => {
   chip.onclick = () => {
     document.querySelector(".chip.active")?.classList.remove("active");
@@ -156,7 +154,6 @@ chips.forEach(chip => {
 // ====== Abrir detalles ======
 function openDetails(app) {
   currentApp = app;
-
   const votes = getVotes();
   const myVote = votes[app.id] || {};
 
@@ -167,9 +164,7 @@ function openDetails(app) {
   detailCategory.textContent = app.categoria || "";
   detailSize.textContent = app.size ? `📦 Tamaño: ${app.size}` : "📦 Tamaño: —";
   detailInternet.textContent =
-    app.internet === "offline"
-      ? "📴 Funciona sin Internet"
-      : "🌐 Requiere Internet";
+    app.internet === "offline" ? "📴 Funciona sin Internet" : "🌐 Requiere Internet";
 
   detailDesc.textContent = app.descripcion || "";
 
@@ -209,7 +204,6 @@ function openDetails(app) {
 
   const ts = app.fechaActualizacion || app.fecha;
   infoFechaAct.textContent = ts ? new Date(ts).toLocaleDateString("es-ES") : "—";
-
   infoEdad.textContent = app.edad || "—";
   infoAnuncios.textContent = app.anuncios === "si" ? "Sí" :
                               app.anuncios === "no" ? "No" : "—";
@@ -220,6 +214,40 @@ function openDetails(app) {
   infoTamañoApk.textContent = app.size || "—";
   infoDescargas.textContent = descReal.toLocaleString("es-ES");
 
+  // ===== Descargar APK =====
+  installBtn.textContent = "Descargar";
+  installBtn.onclick = () => {
+    const url = app.apk;
+
+    if (!url) {
+      alert("🚫 No hay archivo APK disponible.");
+      return;
+    }
+
+    installBtn.textContent = "Descargando...";
+    installBtn.disabled = true;
+
+    db.collection("apps").doc(app.id)
+      .update({ descargasReales: firebase.firestore.FieldValue.increment(1) })
+      .then(() => {
+        currentApp.descargasReales = (currentApp.descargasReales || 0) + 1;
+        infoDescargas.textContent = currentApp.descargasReales.toLocaleString("es-ES");
+
+        detailStats.textContent =
+          `Descargas: ${currentApp.descargasReales.toLocaleString("es-ES")} • Likes: ${(currentApp.likes || 0).toLocaleString("es-ES")}`;
+
+        renderApps();
+
+        window.open(url, "_blank");
+
+        setTimeout(() => {
+          installBtn.disabled = false;
+          installBtn.textContent = "Descargar";
+        }, 1000);
+      });
+  };
+
+  // compartir
   shareBtn.onclick = () => {
     const url = window.location.origin + window.location.pathname + "?app=" + encodeURIComponent(app.id);
     const shareData = { title: app.nombre, text: app.descripcion || "", url };
@@ -236,8 +264,8 @@ function openDetails(app) {
   });
 
   likeBtn.textContent = myVote.liked
-  ? `❤️ Ya te gusta (${app.likes || 0})`
-  : `❤️ Me gusta (${app.likes || 0})`;
+    ? `❤️ Ya te gusta (${app.likes || 0})`
+    : `❤️ Me gusta (${app.likes || 0})`;
 
   likeBtn.disabled = !!myVote.liked;
   likeBtn.onclick = () => handleLike(app);
@@ -248,7 +276,6 @@ function openDetails(app) {
   reviewText.value = "";
   reviewStarsSelected = 0;
   loadReviews(app.id);
-
   sendReviewBtn.onclick = handleSendReview;
 }
 
@@ -268,9 +295,7 @@ function handleLike(app) {
 
   db.collection("apps")
     .doc(app.id)
-    .update({
-      likes: firebase.firestore.FieldValue.increment(1)
-    })
+    .update({ likes: firebase.firestore.FieldValue.increment(1) })
     .then(() => {
       myVote.liked = true;
       votes[app.id] = myVote;
@@ -289,17 +314,16 @@ function handleLike(app) {
     });
 }
 
-// ====== ⭐ ESTRELLAS (SOLO VISUAL, NO SE PUEDE VOTAR) ======
+// ====== ⭐ ESTRELLAS (NO VOTABLES) ======
 function renderStars(app) {
   starsRow.innerHTML = "";
 
   const avg = app.ratingAvg || 0;
 
-  const full = Math.floor(avg);                                // llenas
-  const half = avg % 1 >= 0.25 && avg % 1 < 0.75 ? 1 : 0;      // media
-  const empty = 5 - full - half;                               // vacías
+  const full = Math.floor(avg);
+  const half = avg % 1 >= 0.25 && avg % 1 < 0.75 ? 1 : 0;
+  const empty = 5 - full - half;
 
-  // ★ Estrellas llenas
   for (let i = 0; i < full; i++) {
     const s = document.createElement("span");
     s.className = "star-static";
@@ -307,7 +331,6 @@ function renderStars(app) {
     starsRow.appendChild(s);
   }
 
-  // ⯨ Media estrella
   if (half === 1) {
     const s = document.createElement("span");
     s.className = "star-static";
@@ -315,7 +338,6 @@ function renderStars(app) {
     starsRow.appendChild(s);
   }
 
-  // ☆ Estrellas vacías
   for (let i = 0; i < empty; i++) {
     const s = document.createElement("span");
     s.className = "star-static";
@@ -323,8 +345,6 @@ function renderStars(app) {
     starsRow.appendChild(s);
   }
 }
-
-
 
 // ====== Reseñas ======
 function renderReviewStars() {
@@ -355,8 +375,7 @@ function loadReviews(appId) {
       reviewsList.innerHTML = "";
 
       if (snap.empty) {
-        reviewsList.innerHTML =
-          "<p>No hay reseñas todavía. Sé el primero en comentar.</p>";
+        reviewsList.innerHTML = "<p>No hay reseñas todavía. Sé el primero en comentar.</p>";
         return;
       }
 
@@ -435,5 +454,3 @@ function handleSendReview() {
     alert("¡Tu reseña fue publicada!");
   });
 }
-
-
