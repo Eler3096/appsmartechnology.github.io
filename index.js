@@ -293,15 +293,37 @@ function handleLike(app) {
 function renderStars(app) {
   starsRow.innerHTML = "";
 
-  const valueToShow = Math.round(app.ratingAvg || 0);
+  const avg = app.ratingAvg || 0;
 
-  for (let i = 1; i <= 5; i++) {
-    const star = document.createElement("span");
-    star.className = "star-static";
-    star.textContent = i <= valueToShow ? "★" : "☆";
-    starsRow.appendChild(star);
+  const full = Math.floor(avg);               // Estrellas llenas
+  const half = avg % 1 >= 0.25 && avg % 1 < 0.75 ? 1 : 0; // Media estrella
+  const empty = 5 - full - half;              // Estrellas vacías
+
+  // Estrellas llenas
+  for (let i = 0; i < full; i++) {
+    const s = document.createElement("span");
+    s.className = "star-static";
+    s.textContent = "★";
+    starsRow.appendChild(s);
+  }
+
+  // Media estrella
+  if (half === 1) {
+    const s = document.createElement("span");
+    s.className = "star-static";
+    s.textContent = "⯨"; // Símbolo de media estrella
+    starsRow.appendChild(s);
+  }
+
+  // Estrellas vacías
+  for (let i = 0; i < empty; i++) {
+    const s = document.createElement("span");
+    s.className = "star-static";
+    s.textContent = "☆";
+    starsRow.appendChild(s);
   }
 }
+
 
 // ====== Reseñas ======
 function renderReviewStars() {
@@ -412,3 +434,4 @@ function handleSendReview() {
     alert("¡Tu reseña fue publicada!");
   });
 }
+
