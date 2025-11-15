@@ -237,7 +237,10 @@ function openDetails(app) {
     detailScreens.appendChild(img);
   });
 
-  likeBtn.textContent = myVote.liked ? "❤️ Ya te gusta" : "❤️ Me gusta";
+  likeBtn.textContent = myVote.liked
+  ? `❤️ Ya te gusta (${app.likes || 0})`
+  : `❤️ Me gusta (${app.likes || 0})`;
+
   likeBtn.disabled = !!myVote.liked;
   likeBtn.onclick = () => handleLike(app);
 
@@ -281,8 +284,9 @@ function handleLike(app) {
       detailStats.textContent =
         `Descargas: ${descReal.toLocaleString("es-ES")} • Likes: ${currentApp.likes.toLocaleString("es-ES")}`;
 
-      likeBtn.textContent = "❤️ Ya te gusta";
+      likeBtn.textContent = `❤️ Ya te gusta (${currentApp.likes})`;
       likeBtn.disabled = true;
+
       renderApps();
     });
 }
@@ -456,3 +460,4 @@ function handleSendReview() {
     alert("¡Tu reseña fue publicada!");
   });
 }
+
