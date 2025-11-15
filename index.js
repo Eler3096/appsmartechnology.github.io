@@ -27,8 +27,7 @@ const sendReviewBtn = document.getElementById("sendReviewBtn");
 const reviewText = document.getElementById("reviewText");
 const reviewStarsContainer = document.getElementById("reviewStars");
 
-// Nuevo contenedor de estrellas del promedio
-const ratingStars = document.getElementById("ratingStars");
+// (REMOVIDO) ratingStars
 
 // Info de la app
 const infoIdioma = document.getElementById("infoIdioma");
@@ -64,19 +63,6 @@ function saveVotes(v) {
   localStorage.setItem(VOTES_KEY, JSON.stringify(v));
 }
 
-// ====== Función NUEVA para mostrar estrellas del promedio ======
-function renderAverageStars(avg) {
-  if (!ratingStars) return;
-  let html = "";
-  const rounded = Math.round(avg);
-
-  for (let i = 1; i <= 5; i++) {
-    html += (i <= rounded ? "★" : "☆");
-  }
-
-  ratingStars.innerHTML = html;
-}
-
 // ====== Cargar apps ======
 db.collection("apps").orderBy("fecha", "desc").onSnapshot(
   snap => {
@@ -109,7 +95,6 @@ function renderApps() {
     );
   }
 
-  // Orden por valoración
   list.sort((a, b) => {
     const ra = a.ratingAvg || 0;
     const rb = b.ratingAvg || 0;
@@ -123,8 +108,6 @@ function renderApps() {
   }
 
   emptyState.style.display = "none";
-
-  const votes = getVotes();
 
   list.forEach(app => {
     const card = document.createElement("article");
@@ -199,16 +182,11 @@ function openDetails(app) {
     ? `Valoración: ${ratingAvg.toFixed(1)} (${ratingCount} votos)`
     : "Sin valoraciones todavía";
 
-  // ⭐ Mostrar estrellas del promedio (nuevo)
-  renderAverageStars(ratingAvg);
-
-  // resumen
   const descReal = app.descargasReales ?? app.descargas ?? 0;
   detailStats.textContent =
     `Descargas: ${descReal.toLocaleString("es-ES")} • Likes: ${(app.likes || 0).toLocaleString("es-ES")}`;
 
-  // gráfico de barras
-  let breakdown = app.starsBreakdown || { 1:0, 2:0, 3:0, 4:0, 5:0 };
+  let breakdown = app.starsBreakdown || {1:0,2:0,3:0,4:0,5:0};
   let total = Object.values(breakdown).reduce((a,b)=>a+b,0);
 
   if (!total && ratingCount) {
@@ -224,7 +202,7 @@ function openDetails(app) {
     document.getElementById(`bar${star}`).style.width = percent + "%";
   });
 
-  // info extra
+  // info
   infoIdioma.textContent = app.idioma || "—";
   infoVersion.textContent = app.version || "—";
   infoTipo.textContent = app.tipo || "—";
@@ -244,19 +222,13 @@ function openDetails(app) {
   infoTamañoApk.textContent = app.size || "—";
   infoDescargas.textContent = descReal.toLocaleString("es-ES");
 
-  // compartir
   shareBtn.onclick = () => {
     const url = window.location.origin + window.location.pathname + "?app=" + encodeURIComponent(app.id);
-    const shareData = {
-      title: app.nombre,
-      text: app.descripcion || "",
-      url
-    };
+    const shareData = { title: app.nombre, text: app.descripcion || "", url };
     if (navigator.share) navigator.share(shareData).catch(()=>{});
     else navigator.clipboard?.writeText(url);
   };
 
-  // capturas
   detailScreens.innerHTML = "";
   (app.imgSecundarias || []).forEach(url => {
     const img = document.createElement("img");
@@ -270,6 +242,7 @@ function openDetails(app) {
   likeBtn.onclick = () => handleLike(app);
 
   renderStars(app, myVote.stars || 0);
+
   renderReviewStars();
   reviewText.value = "";
   reviewStarsSelected = 0;
@@ -314,15 +287,24 @@ function handleLike(app) {
     });
 }
 
-// ====== Estrellas para votar ======
+// ====== ⭐ ESTRELLAS (UNA SOLA FILA, ESTILO GOOGLE PLAY) ======
 function renderStars(app, myStars) {
   starsRow.innerHTML = "";
+
+  const valueToShow =
+    myStars > 0 ? myStars : Math.round(app.ratingAvg || 0);
+
   for (let i = 1; i <= 5; i++) {
     const btn = document.createElement("button");
     btn.className = "star-btn";
-    btn.textContent = i <= myStars ? "★" : "☆";
-    btn.disabled = myStars > 0;
-    btn.onclick = () => handleStarClick(app, i);
+    btn.textContent = i <= valueToShow ? "★" : "☆";
+
+    if (myStars === 0) {
+      btn.onclick = () => handleStarClick(app, i);
+    } else {
+      btn.disabled = true;
+    }
+
     starsRow.appendChild(btn);
   }
 }
@@ -335,7 +317,6 @@ function handleStarClick(app, stars) {
 
   const prevAvg = app.ratingAvg || 0;
   const prevCount = app.ratingCount || 0;
-
   const newCount = prevCount + 1;
   const newAvg = (prevAvg * prevCount + stars) / newCount;
 
@@ -358,7 +339,6 @@ function handleStarClick(app, stars) {
     ratingLabel.textContent =
       `Valoración: ${newAvg.toFixed(1)} (${newCount} votos)`;
 
-    renderAverageStars(newAvg); // ⬅ actualizar promedio
     renderStars(app, stars);
     renderApps();
     openDetails(currentApp);
@@ -466,7 +446,7 @@ function handleSendReview() {
     ratingLabel.textContent =
       `Valoración: ${newAvg.toFixed(1)} (${newCount} votos)`;
 
-    renderAverageStars(newAvg);
+    renderStars(app, 0);
     loadReviews(app.id);
     renderApps();
     openDetails(currentApp);
