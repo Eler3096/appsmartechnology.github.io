@@ -89,7 +89,13 @@
       <!-- Bloque estrellas + like -->
       <div class="rating-block">
         <p id="ratingLabel" class="rating-label"></p>
+
+        <!-- ★★★★☆ (Promedio real) -->
+        <div id="ratingStars" class="rating-stars" style="font-size:22px; margin-bottom:10px;"></div>
+
+        <!-- Estrellas para votar -->
         <div id="starsRow" class="stars-row"></div>
+
         <button id="likeBtn" class="like-btn">❤️ Me gusta</button>
       </div>
 
@@ -125,7 +131,7 @@
         </div>
       </div>
 
-      <!-- INFORMACIÓN DE LA APP (OPCIÓN A) -->
+      <!-- INFORMACIÓN DE LA APP -->
       <h2>Información de la app</h2>
       <div class="info-app">
         <p><strong>Idioma:</strong> <span id="infoIdioma">—</span></p>
@@ -169,7 +175,6 @@
 
     </div>
   </div>
-  <!-- ======================================================= -->
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -177,10 +182,10 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
-  <!-- Configuración Firebase de tu proyecto -->
+  <!-- Configuración Firebase -->
   <script src="firebase.js"></script>
 
-  <!-- Lógica de la tienda -->
+  <!-- Lógica -->
   <script src="index.js"></script>
 
 </body>
