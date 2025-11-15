@@ -415,7 +415,7 @@ body {
 .install-btn {
   background:linear-gradient(to right,#22c55e,#16a34a);
   border:none;
-  border-radius:999px;
+  border-radius:99px;
   padding:10px 20px;
   color:white;
   font-size:0.95rem;
@@ -693,6 +693,7 @@ body {
   color: #e5e7eb;
   margin-top: 2px;
 }
+
 
 
 
