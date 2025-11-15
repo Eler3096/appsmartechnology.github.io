@@ -9,8 +9,8 @@ function logout() { auth.signOut(); }
 // =======================
 // VARIABLES GLOBALES
 // =======================
-let editId = null; // null = nueva app | id = editar app
-let prevSize = null; // tamaño anterior de APK si no se sube uno nuevo
+let editId = null; 
+let prevSize = null; 
 
 // =======================
 // MOSTRAR / OCULTAR LISTA
@@ -72,7 +72,13 @@ function cargarParaEditar(id) {
     document.getElementById("tipo").value = a.tipo;
     document.getElementById("internet").value = a.internet;
 
-    // Guardamos tamaño previo si existe
+    document.getElementById("sistema").value = a.sistema || "";
+    document.getElementById("requisitos").value = a.requisitos || "";
+    document.getElementById("fechaAct").value = a.fechaAct || "";
+    document.getElementById("edad").value = a.edad || "";
+    document.getElementById("anuncios").value = a.anuncios || "no";
+    document.getElementById("privacidad").value = a.privacidad || "";
+
     prevSize = a.size || null;
 
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -80,15 +86,15 @@ function cargarParaEditar(id) {
 }
 
 // =======================
-// ELIMINAR APP COMPLETA
+// ELIMINAR APP
 // =======================
 function eliminarApp(id) {
-  if (!confirm("¿Eliminar esta aplicación? Esta acción no se puede deshacer.")) return;
+  if (!confirm("¿Eliminar esta aplicación?")) return;
 
   const ref = db.collection("apps").doc(id);
 
   ref.get().then(doc => {
-    if (!doc.exists) return alert("No existe la app.");
+    if (!doc.exists) return;
 
     const imgRef = storage.ref(`imagenes/${id}.jpg`);
     const apkRef = storage.ref(`apks/${id}.apk`);
@@ -103,7 +109,7 @@ function eliminarApp(id) {
 }
 
 // =======================
-// GUARDAR (CREAR / EDITAR)
+// GUARDAR / EDITAR APP
 // =======================
 function guardarApp() {
 
@@ -114,6 +120,15 @@ function guardarApp() {
   const idioma = document.getElementById("idioma").value.trim();
   const tipo = document.getElementById("tipo").value.trim();
   const internet = document.getElementById("internet").value;
+
+  const sistema = document.getElementById("sistema").value.trim();
+  const requisitos = document.getElementById("requisitos").value.trim();
+  const fechaAct = document.getElementById("fechaAct").value;
+  const edad = document.getElementById("edad").value.trim();
+  const anuncios = document.getElementById("anuncios").value;
+  const privacidad = document.getElementById("privacidad").value.trim();
+
+  const capturas = document.getElementById("capturas").files;
 
   const apkFile = document.getElementById("apk").files[0];
   const imgFile = document.getElementById("imagen").files[0];
@@ -129,8 +144,7 @@ function guardarApp() {
   btn.disabled = true;
   estado.textContent = "Procesando…";
 
-  let docRef;
-  let id;
+  let docRef, id;
 
   if (editId === null) {
     docRef = db.collection("apps").doc();
@@ -146,10 +160,10 @@ function guardarApp() {
     });
   }
 
-  // === Imagen
+  // Imagen principal
   let promesaImg = imgFile ? upload(storage.ref(`imagenes/${id}.jpg`), imgFile) : Promise.resolve(null);
 
-  // === APK (nuevo o buscar tamaño existente)
+  // APK
   let promesaApk;
 
   if (apkFile) {
@@ -158,7 +172,6 @@ function guardarApp() {
       size: (apkFile.size / 1024 / 1024).toFixed(1) + " MB"
     }));
   } else {
-    // Buscar tamaño real del APK ya existente en Firebase Storage
     const ref = storage.ref(`apks/${id}.apk`);
     promesaApk = ref
       .getMetadata()
@@ -168,12 +181,24 @@ function guardarApp() {
       }))
       .catch(() => ({
         url: null,
-        size: prevSize // último tamaño conocido
+        size: prevSize
       }));
   }
 
-  // === Guardar todo
-  Promise.all([promesaImg, promesaApk]).then(([imgURL, apkData]) => {
+  // Capturas
+  let capturasURLS = [];
+
+  const promisesCapturas = [];
+
+  for (let i = 0; i < capturas.length; i++) {
+    const file = capturas[i];
+    const ref = storage.ref(`screens/${id}-${i}.jpg`);
+    promisesCapturas.push(
+      upload(ref, file).then(url => capturasURLS.push(url))
+    );
+  }
+
+  Promise.all([promesaImg, promesaApk, ...promisesCapturas]).then(([imgURL, apkData]) => {
 
     const data = {
       id,
@@ -184,12 +209,25 @@ function guardarApp() {
       idioma,
       tipo,
       internet,
+      sistema,
+      requisitos,
+      fechaAct,
+      edad,
+      anuncios,
+      privacidad,
       fecha: Date.now()
     };
 
+    if (capturasURLS.length > 0) data.capturas = capturasURLS;
     if (imgURL) data.imagen = imgURL;
     if (apkData.url) data.apk = apkData.url;
     if (apkData.size) data.size = apkData.size;
+
+    // valores iniciales
+    data.ratingAvg = 0;
+    data.ratingCount = 0;
+    data.starsBreakdown = {1:0,2:0,3:0,4:0,5:0};
+    data.descargasReales = 0;
 
     return docRef.set(data, { merge: true });
   })
@@ -222,6 +260,15 @@ function limpiarFormulario() {
   document.getElementById("idioma").value = "";
   document.getElementById("tipo").value = "Gratis";
   document.getElementById("internet").value = "offline";
+
+  document.getElementById("sistema").value = "";
+  document.getElementById("requisitos").value = "";
+  document.getElementById("fechaAct").value = "";
+  document.getElementById("edad").value = "";
+  document.getElementById("anuncios").value = "no";
+  document.getElementById("privacidad").value = "";
+
   document.getElementById("apk").value = "";
   document.getElementById("imagen").value = "";
+  document.getElementById("capturas").value = "";
 }
