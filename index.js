@@ -291,8 +291,9 @@ function handleLike(app) {
 function renderStars(app, myStars) {
   starsRow.innerHTML = "";
 
+  // ⬅ Usa floor para que 2.9 muestre 2 estrellas
   const valueToShow =
-    myStars > 0 ? myStars : Math.round(app.ratingAvg || 0);
+    myStars > 0 ? myStars : Math.floor(app.ratingAvg || 0);
 
   for (let i = 1; i <= 5; i++) {
     const btn = document.createElement("button");
@@ -308,6 +309,7 @@ function renderStars(app, myStars) {
     starsRow.appendChild(btn);
   }
 }
+
 
 function handleStarClick(app, stars) {
   const votes = getVotes();
