@@ -173,8 +173,12 @@ function openDetails(app) {
   detailScreens.innerHTML = "";
 
   const capturas = [
-    "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_1_Universal%20Bible.jpg
-"
+    "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_1_Universal%20Bible.jpg"
+    "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_2_Universal%20Bible.jpg"
+    "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_3_Universal%20Bible.jpg"
+    "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_4_Universal%20Bible.jpg"
+    "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_5_Universal%20Bible.jpg"
+    "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_6_Universal%20Bible.jpg"
   ];
 
   capturas.forEach(url => {
@@ -294,4 +298,5 @@ function handleStarClick(app, stars) {
     })
     .catch(console.error);
 }
+
 
