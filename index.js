@@ -238,7 +238,9 @@ function openDetails(app) {
 
         renderApps();
 
-        window.open(url, "_blank");
+       // AHORA:
+          window.location.href = url;
+
 
         setTimeout(() => {
           installBtn.disabled = false;
@@ -454,3 +456,4 @@ function handleSendReview() {
     alert("¡Tu reseña fue publicada!");
   });
 }
+
