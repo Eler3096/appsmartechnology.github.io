@@ -40,12 +40,12 @@ body {
 }
 
 .brand h1 {
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 5rem;
+  font-weight: 600;
 }
 
 .brand-tagline {
-  font-size: 0.8rem;
+  font-size: 2rem;
   color: #9ca3af;
 }
 
@@ -137,8 +137,8 @@ body {
 }
 
 .section-title {
-  font-size: 8.5rem;
-  font-weight: 60;
+  font-size: 3rem;
+  font-weight: 600;
   margin-bottom: 4px;
 }
 
@@ -492,6 +492,7 @@ body {
 .store-footer {
   margin-top: auto;
 }
+
 
 
 
