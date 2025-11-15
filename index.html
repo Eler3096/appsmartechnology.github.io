@@ -86,26 +86,42 @@
 
       <p id="detailStats" class="detail-stats"></p>
 
+      <!-- Bloque estrellas + like -->
       <div class="rating-block">
         <p id="ratingLabel" class="rating-label"></p>
         <div id="starsRow" class="stars-row"></div>
         <button id="likeBtn" class="like-btn">❤️ Me gusta</button>
       </div>
 
-      <!-- 🔥 Resumen de valoraciones tipo Google Play -->
+      <!-- Resumen valoraciones tipo Google Play -->
       <h2>Valoraciones y reseñas</h2>
-      <div class="rating-summary">
-        <div class="rating-left">
-          <h1 id="ratingBig" class="rating-big">0.0</h1>
-          <p id="ratingTotal" class="rating-total">0 reseñas</p>
+      <div class="stars-graph">
+        <div class="stars-left">
+          <div id="ratingBig" class="rating-big">0.0</div>
+          <div id="ratingTotal" class="rating-total">0 reseñas</div>
         </div>
 
-        <div class="rating-bars">
-          <div class="bar-row"><span>5</span><div class="bar"><div id="bar5"></div></div></div>
-          <div class="bar-row"><span>4</span><div class="bar"><div id="bar4"></div></div></div>
-          <div class="bar-row"><span>3</span><div class="bar"><div id="bar3"></div></div></div>
-          <div class="bar-row"><span>2</span><div class="bar"><div id="bar2"></div></div></div>
-          <div class="bar-row"><span>1</span><div class="bar"><div id="bar1"></div></div></div>
+        <div class="stars-bars">
+          <div class="bar-row">
+            <span>5</span>
+            <div class="bar"><div id="bar5" class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row">
+            <span>4</span>
+            <div class="bar"><div id="bar4" class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row">
+            <span>3</span>
+            <div class="bar"><div id="bar3" class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row">
+            <span>2</span>
+            <div class="bar"><div id="bar2" class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row">
+            <span>1</span>
+            <div class="bar"><div id="bar1" class="bar-fill"></div></div>
+          </div>
         </div>
       </div>
 
@@ -114,6 +130,22 @@
 
       <h2>Capturas de pantalla</h2>
       <div id="detailScreens" class="screenshots-row"></div>
+
+      <h2>Reseñas de usuarios</h2>
+
+      <!-- Formulario reseña -->
+      <div class="review-form">
+        <h3>Escribe una reseña</h3>
+        <label>Tu puntuación:</label>
+        <div id="reviewStars" class="stars-row"></div>
+        <textarea id="reviewText" placeholder="Escribe tu comentario..." maxlength="280"></textarea>
+        <button id="sendReviewBtn" class="install-btn" style="margin-top:10px;">
+          Enviar reseña
+        </button>
+      </div>
+
+      <!-- Lista reseñas -->
+      <div id="reviewsList" class="reviews-list"></div>
 
     </div>
   </div>
