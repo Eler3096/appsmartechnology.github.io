@@ -657,6 +657,13 @@ body {
   pointer-events: none; /* evita clics */
 }
 
+/* instalacion */
+.install-share-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
 
 
 
