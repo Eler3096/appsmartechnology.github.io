@@ -170,23 +170,25 @@ function openDetails(app) {
   // ==========================================================
   // 🔥 🔥 🔥 CAPTURAS DIRECTO DESDE GITHUB (TU URL EXACTA)
   // ==========================================================
-  detailScreens.innerHTML = "";
+  // Capturas desde GitHub RAW
+detailScreens.innerHTML = "";
 
-  const capturas = [
+const capturas = [
     "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_1_Universal%20Bible.jpg",
     "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_2_Universal%20Bible.jpg",
     "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_3_Universal%20Bible.jpg",
     "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_4_Universal%20Bible.jpg",
     "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_5_Universal%20Bible.jpg",
     "https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/Screenshot_6_Universal%20Bible.jpg"
-  ];
+];
 
-  capturas.forEach(url => {
+capturas.forEach(url => {
     const img = document.createElement("img");
     img.src = url;
     img.loading = "lazy";
     detailScreens.appendChild(img);
-  });
+});
+
   // ==========================================================
 
   installBtn.onclick = () => {
@@ -298,6 +300,7 @@ function handleStarClick(app, stars) {
     })
     .catch(console.error);
 }
+
 
 
 
