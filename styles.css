@@ -649,4 +649,12 @@ body {
 .store-footer {
   margin-top: auto;
 }
+//color estrellas
+.star-static {
+  color: #FFD700;/* amarillo Google Play */
+  font-size: 26px; 
+  margin-right: 4px;
+  pointer-events: none; /* evita clics */
+}
+
 
