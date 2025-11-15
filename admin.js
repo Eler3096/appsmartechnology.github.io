@@ -13,18 +13,6 @@ let editId = null;
 let prevSize = null; 
 
 // =======================
-// CONVERTIR GITHUB A RAW
-// =======================
-function convertirGithubRAW(url) {
-  if (!url) return null;
-  if (!url.includes("github.com")) return url;
-
-  return url
-    .replace("https://github.com/", "https://raw.githubusercontent.com/")
-    .replace("/blob/", "/");
-}
-
-// =======================
 // MOSTRAR / OCULTAR LISTA
 // =======================
 function toggleApps() {
@@ -103,9 +91,21 @@ function cargarParaEditar(id) {
 function eliminarApp(id) {
   if (!confirm("¿Eliminar esta aplicación?")) return;
 
-  db.collection("apps").doc(id).delete()
-    .then(() => alert("Aplicación eliminada ✔"))
-    .catch(err => alert("Error: " + err.message));
+  const ref = db.collection("apps").doc(id);
+
+  ref.get().then(doc => {
+    if (!doc.exists) return;
+
+    const imgRef = storage.ref(`imagenes/${id}.jpg`);
+    const apkRef = storage.ref(`apks/${id}.apk`);
+
+    imgRef.delete().catch(() => {});
+    apkRef.delete().catch(() => {});
+
+    return ref.delete();
+  })
+  .then(() => alert("Aplicación eliminada ✔"))
+  .catch(err => alert("Error: " + err.message));
 }
 
 // =======================
@@ -113,32 +113,26 @@ function eliminarApp(id) {
 // =======================
 function guardarApp() {
 
-  const nombre = nombre.value.trim();
-  const descripcion = descripcion.value.trim();
-  const version = version.value.trim();
-  const categoria = categoria.value.trim();
-  const idioma = idioma.value.trim();
-  const tipo = tipo.value.trim();
-  const internet = internet.value;
+  const nombre = document.getElementById("nombre").value.trim();
+  const descripcion = document.getElementById("descripcion").value.trim();
+  const version = document.getElementById("version").value.trim();
+  const categoria = document.getElementById("categoria").value.trim();
+  const idioma = document.getElementById("idioma").value.trim();
+  const tipo = document.getElementById("tipo").value.trim();
+  const internet = document.getElementById("internet").value;
 
-  const sistema = sistema.value.trim();
-  const requisitos = requisitos.value.trim();
-  const fechaAct = fechaAct.value;
-  const edad = edad.value.trim();
-  const anuncios = anuncios.value;
-  const privacidad = privacidad.value.trim();
+  // ❗ IDs corregidos
+  const sistema = document.getElementById("sistema").value.trim();
+  const requisitos = document.getElementById("requisitos").value.trim();
+  const fechaAct = document.getElementById("fechaAct").value;
+  const edad = document.getElementById("edad").value.trim();
+  const anuncios = document.getElementById("anuncios").value;
+  const privacidad = document.getElementById("privacidad").value.trim();
 
-  // SOPORTE PARA URLs DIRECTAS DESDE GITHUB
-  let imgUrl = convertirGithubRAW(document.getElementById("imagenUrl")?.value || null);
-  let apkUrl = convertirGithubRAW(document.getElementById("apkUrl")?.value || null);
+  const capturas = document.getElementById("capturas").files;
 
-  // Archivos en caso de no usar URL
   const apkFile = document.getElementById("apk").files[0];
   const imgFile = document.getElementById("imagen").files[0];
-
-  // Capturas desde URL o archivos
-  let capturasUrl = convertirGithubRAW(document.getElementById("capturasUrl")?.value || "");
-  const capturasFiles = document.getElementById("capturas").files;
 
   const estado = document.getElementById("estado");
   const btn = document.getElementById("subirBtn");
@@ -153,7 +147,7 @@ function guardarApp() {
 
   let docRef, id;
 
-  if (!editId) {
+  if (editId === null) {
     docRef = db.collection("apps").doc();
     id = docRef.id;
   } else {
@@ -161,42 +155,51 @@ function guardarApp() {
     id = editId;
   }
 
-  // FUNCIÓN SUBIR ARCHIVOS
-  function upload(path, file) {
-    return storage.ref(path).put(file).then(() => 
-      storage.ref(path).getDownloadURL()
-    );
+  function upload(ref, file) {
+    return new Promise(res => {
+      ref.put(file).then(() => ref.getDownloadURL().then(url => res(url)));
+    });
   }
 
-  // SUBIR IMAGEN SOLO SI NO HAY URL
-  let promesaImg =
-    imgUrl ? Promise.resolve(imgUrl)
-    : imgFile ? upload(`imagenes/${id}.jpg`, imgFile)
-    : Promise.resolve(null);
+  // Imagen principal
+  let promesaImg = imgFile ? upload(storage.ref(`imagenes/${id}.jpg`), imgFile) : Promise.resolve(null);
 
-  // SUBIR APK SOLO SI NO HAY URL
-  let promesaApk =
-    apkUrl ? Promise.resolve(apkUrl)
-    : apkFile ? upload(`apks/${id}.apk`, apkFile)
-    : Promise.resolve(null);
+  // APK
+  let promesaApk;
 
-  // CAPTURAS
-  let promesaCapturas;
-
-  if (capturasUrl) {
-    promesaCapturas = Promise.resolve(
-      capturasUrl.split(",").map(u => convertirGithubRAW(u.trim()))
-    );
+  if (apkFile) {
+    promesaApk = upload(storage.ref(`apks/${id}.apk`), apkFile).then(url => ({
+      url,
+      size: (apkFile.size / 1024 / 1024).toFixed(1) + " MB"
+    }));
   } else {
-    let uploads = [];
-    for (let i = 0; i < capturasFiles.length; i++) {
-      uploads.push(upload(`screens/${id}-${i}.jpg`, capturasFiles[i]));
-    }
-    promesaCapturas = Promise.all(uploads);
+    const ref = storage.ref(`apks/${id}.apk`);
+    promesaApk = ref
+      .getMetadata()
+      .then(meta => ({
+        url: null,
+        size: (meta.size / 1024 / 1024).toFixed(1) + " MB"
+      }))
+      .catch(() => ({
+        url: null,
+        size: prevSize
+      }));
   }
 
-  // GUARDAR TODO
-  Promise.all([promesaImg, promesaApk, promesaCapturas]).then(([imgURL, apkURL, capturasFinal]) => {
+  // Capturas
+  let capturasURLS = [];
+
+  const promisesCapturas = [];
+
+  for (let i = 0; i < capturas.length; i++) {
+    const file = capturas[i];
+    const ref = storage.ref(`screens/${id}-${i}.jpg`);
+    promisesCapturas.push(
+      upload(ref, file).then(url => capturasURLS.push(url))
+    );
+  }
+
+  Promise.all([promesaImg, promesaApk, ...promisesCapturas]).then(([imgURL, apkData]) => {
 
     const data = {
       id,
@@ -207,23 +210,26 @@ function guardarApp() {
       idioma,
       tipo,
       internet,
+
       sistemaOperativo: sistema,
       requisitos,
       fechaActualizacion: fechaAct,
       edad,
       anuncios,
       privacidadUrl: privacidad,
+
       fecha: Date.now()
     };
 
+    if (capturasURLS.length > 0) data.imgSecundarias = capturasURLS;
     if (imgURL) data.imagen = imgURL;
-    if (apkURL) data.apk = apkURL;
-    if (capturasFinal?.length) data.imgSecundarias = capturasFinal;
+    if (apkData.url) data.apk = apkData.url;
+    if (apkData.size) data.size = apkData.size;
 
     if (!editId) {
       data.ratingAvg = 0;
       data.ratingCount = 0;
-      data.starsBreakdown = { 1:0,2:0,3:0,4:0,5:0 };
+      data.starsBreakdown = {1:0,2:0,3:0,4:0,5:0};
       data.descargasReales = 0;
     }
 
@@ -232,10 +238,13 @@ function guardarApp() {
   .then(() => {
     estado.textContent = "Guardado ✔";
     btn.disabled = false;
+
     editId = null;
     prevSize = null;
+
     document.getElementById("formTitle").textContent = "➕ Nueva Aplicación";
     document.getElementById("subirBtn").textContent = "SUBIR APP";
+
     limpiarFormulario();
   })
   .catch(err => {
@@ -248,26 +257,22 @@ function guardarApp() {
 // LIMPIAR FORMULARIO
 // =======================
 function limpiarFormulario() {
-  nombre.value = "";
-  descripcion.value = "";
-  version.value = "";
-  categoria.value = "Educación";
-  idioma.value = "";
-  tipo.value = "Gratis";
-  internet.value = "offline";
+  document.getElementById("nombre").value = "";
+  document.getElementById("descripcion").value = "";
+  document.getElementById("version").value = "";
+  document.getElementById("categoria").value = "Educación";
+  document.getElementById("idioma").value = "";
+  document.getElementById("tipo").value = "Gratis";
+  document.getElementById("internet").value = "offline";
 
-  sistema.value = "";
-  requisitos.value = "";
-  fechaAct.value = "";
-  edad.value = "";
-  anuncios.value = "no";
-  privacidad.value = "";
+  document.getElementById("sistema").value = "";
+  document.getElementById("requisitos").value = "";
+  document.getElementById("fechaAct").value = "";
+  document.getElementById("edad").value = "";
+  document.getElementById("anuncios").value = "no";
+  document.getElementById("privacidad").value = "";
 
-  if (document.getElementById("imagenUrl")) document.getElementById("imagenUrl").value = "";
-  if (document.getElementById("apkUrl")) document.getElementById("apkUrl").value = "";
-  if (document.getElementById("capturasUrl")) document.getElementById("capturasUrl").value = "";
-
-  imagen.value = "";
-  apk.value = "";
-  capturas.value = "";
+  document.getElementById("apk").value = "";
+  document.getElementById("imagen").value = "";
+  document.getElementById("capturas").value = "";
 }
