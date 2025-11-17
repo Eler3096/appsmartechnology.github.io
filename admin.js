@@ -216,9 +216,5 @@ function limpiarFormulario() {
   document.getElementById("capturasUrl").value = "";
   document.getElementById("iconoUrl").value = "";  // Limpiar campo del icono
   document.getElementById("apkUrl").value = "";  // Limpiar campo del APK
-
-  // Desactivar los campos de carga de archivos
-  document.getElementById("apk").value = "";
-  document.getElementById("imagen").value = "";
-  document.getElementById("capturas").value = "";
 }
+
