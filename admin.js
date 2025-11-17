@@ -82,6 +82,8 @@ function cargarParaEditar(id) {
     // Campos URL
     document.getElementById("imagenUrl").value = a.imagen || "";
     document.getElementById("capturasUrl").value = a.imgSecundarias ? a.imgSecundarias.join(",") : "";
+    document.getElementById("iconoUrl").value = a.icono || "";  // Campo para el icono
+    document.getElementById("apkUrl").value = a.apk || "";  // Campo para el APK
 
     prevSize = a.size || null;
 
@@ -97,17 +99,7 @@ function eliminarApp(id) {
 
   const ref = db.collection("apps").doc(id);
 
-  ref.get().then(doc => {
-    if (!doc.exists) return;
-
-    const imgRef = storage.ref(`imagenes/${id}.jpg`);
-    const apkRef = storage.ref(`apks/${id}.apk`);
-
-    imgRef.delete().catch(() => {});
-    apkRef.delete().catch(() => {});
-
-    return ref.delete();
-  })
+  ref.delete()
   .then(() => alert("Aplicación eliminada ✔"))
   .catch(err => alert("Error: " + err.message));
 }
@@ -135,10 +127,8 @@ function guardarApp() {
   // NUEVOS CAMPOS
   const imagenUrl = document.getElementById("imagenUrl").value.trim();
   const capturasUrl = document.getElementById("capturasUrl").value.trim();
-
-  const capturas = document.getElementById("capturas").files;
-  const apkFile = document.getElementById("apk").files[0];
-  const imgFile = document.getElementById("imagen").files[0];
+  const iconoUrl = document.getElementById("iconoUrl").value.trim(); // Enlace del icono
+  const apkUrl = document.getElementById("apkUrl").value.trim();  // Enlace del APK
 
   const estado = document.getElementById("estado");
   const btn = document.getElementById("subirBtn");
@@ -161,92 +151,30 @@ function guardarApp() {
     id = editId;
   }
 
-  function upload(ref, file) {
-    return new Promise(res => {
-      ref.put(file).then(() => ref.getDownloadURL().then(url => res(url)));
-    });
-  }
+  const data = {
+    id,
+    nombre,
+    descripcion,
+    version,
+    categoria,
+    idioma,
+    tipo,
+    internet,
+    sistemaOperativo: sistema,
+    requisitos,
+    fechaActualizacion: fechaAct,
+    edad,
+    anuncios,
+    privacidadUrl: privacidad,
+    fecha: Date.now(),
+    imagen: imagenUrl,
+    imgSecundarias: capturasUrl.split(",").map(u => u.trim()),
+    icono: iconoUrl,
+    apk: apkUrl,
+    size: prevSize || "N/A"
+  };
 
-  // Imagen principal
-  let promesaImg;
-
-  if (imgFile) {
-    promesaImg = upload(storage.ref(`imagenes/${id}.jpg`), imgFile);
-  } else if (imagenUrl !== "") {
-    promesaImg = Promise.resolve(imagenUrl);
-  } else {
-    promesaImg = Promise.resolve(null);
-  }
-
-  // APK
-  let promesaApk;
-
-  if (apkFile) {
-    promesaApk = upload(storage.ref(`apks/${id}.apk`), apkFile).then(url => ({
-      url,
-      size: (apkFile.size / 1024 / 1024).toFixed(1) + " MB"
-    }));
-  } else {
-    promesaApk = Promise.resolve({
-      url: null,
-      size: prevSize
-    });
-  }
-
-  // Capturas
-  let capturasURLS = [];
-
-  // archivos
-  const promisesCapturas = [];
-
-  for (let i = 0; i < capturas.length; i++) {
-    const file = capturas[i];
-    const ref = storage.ref(`screens/${id}-${i}.jpg`);
-    promisesCapturas.push(
-      upload(ref, file).then(url => capturasURLS.push(url))
-    );
-  }
-
-  // URLs externas
-  if (capturasUrl !== "") {
-    const urlsDesdeTexto = capturasUrl.split(",").map(u => u.trim());
-    capturasURLS.push(...urlsDesdeTexto);
-  }
-
-  Promise.all([promesaImg, promesaApk, ...promisesCapturas]).then(([imgURL, apkData]) => {
-
-    const data = {
-      id,
-      nombre,
-      descripcion,
-      version,
-      categoria,
-      idioma,
-      tipo,
-      internet,
-      sistemaOperativo: sistema,
-      requisitos,
-      fechaActualizacion: fechaAct,
-      edad,
-      anuncios,
-      privacidadUrl: privacidad,
-      fecha: Date.now()
-    };
-
-    if (capturasURLS.length > 0) data.imgSecundarias = capturasURLS;
-    if (imgURL) data.imagen = imgURL;
-    if (apkData.url) data.apk = apkData.url;
-    if (apkData.size) data.size = apkData.size;
-
-    if (!editId) {
-      data.ratingAvg = 0;
-      data.ratingCount = 0;
-      data.starsBreakdown = {1:0,2:0,3:0,4:0,5:0};
-      data.descargasReales = 0;
-    }
-
-    return docRef.set(data, { merge: true });
-  })
+  docRef.set(data, { merge: true })
   .then(() => {
     estado.textContent = "Guardado ✔";
     btn.disabled = false;
@@ -286,6 +214,8 @@ function limpiarFormulario() {
 
   document.getElementById("imagenUrl").value = "";
   document.getElementById("capturasUrl").value = "";
+  document.getElementById("iconoUrl").value = "";  // Limpiar campo del icono
+  document.getElementById("apkUrl").value = "";  // Limpiar campo del APK
 
   document.getElementById("apk").value = "";
   document.getElementById("imagen").value = "";
