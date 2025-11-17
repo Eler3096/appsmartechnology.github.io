@@ -134,7 +134,7 @@ body {
   padding: 20px;
   border-radius: 14px;
   display: grid;
-  grid-template-columns: 1.2fr 0.9fr;
+  grid-template-columns: 1fr 1fr;  /* Ambas columnas ahora tienen el mismo tamaño */
   gap: 20px;
 }
 
