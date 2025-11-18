@@ -608,7 +608,7 @@ body {
   flex-direction: column;
   gap: 14px;
    margin-top: 20px;
-  margin-bottom:10px;
+  
 }
 
 .review-item {
@@ -698,6 +698,7 @@ body {
   color: #e5e7eb;
   margin-top: 2px;
 }
+
 
 
 
