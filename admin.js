@@ -1,3 +1,4 @@
+// =======================
 // PROTECCIÓN DE ACCESO
 // =======================
 auth.onAuthStateChanged(user => {
