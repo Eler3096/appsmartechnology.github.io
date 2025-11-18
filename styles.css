@@ -607,6 +607,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 14px;
+   margin-top: 20px;
   margin-bottom:10px;
 }
 
@@ -697,6 +698,7 @@ body {
   color: #e5e7eb;
   margin-top: 2px;
 }
+
 
 
 
