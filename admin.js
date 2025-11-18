@@ -274,4 +274,3 @@ function limpiarFormulario() {
   document.getElementById("imagen").value = "";
   document.getElementById("capturas").value = "";
 }
-
