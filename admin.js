@@ -38,7 +38,7 @@ db.collection("apps").orderBy("fecha", "desc").onSnapshot(snap => {
     const tr = document.createElement("tr");
 
     tr.innerHTML = `
-      <td><img src="${a.imagen}" class="table-icon"></td>
+      <td><img src="${a.icono}" class="table-icon"></td>
       <td>${a.nombre}</td>
       <td>${a.categoria}</td>
       <td>${a.version}</td>
@@ -217,6 +217,7 @@ function limpiarFormulario() {
   document.getElementById("iconoUrl").value = "";  // Limpiar campo del icono
   document.getElementById("apkUrl").value = "";  // Limpiar campo del APK
 
+  // Desactivar los campos de carga de archivos
   document.getElementById("apk").value = "";
   document.getElementById("imagen").value = "";
   document.getElementById("capturas").value = "";
