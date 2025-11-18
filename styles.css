@@ -581,7 +581,7 @@ body {
   border: 1px solid rgba(75,85,99,0.5);
 }
 h2 {
-  margin-top: 30px;  /* Espacio superior desde el contenido anterior */
+  margin-top: 18px;  /* Espacio superior desde el contenido anterior */
   font-size: 1.2rem;
   font-weight: 600;
   color: #e5e7eb;
@@ -708,5 +708,6 @@ body {
   color: #e5e7eb;
   margin-top: 2px;
 }
+
 
 
