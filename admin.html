@@ -178,31 +178,37 @@
       <div class="form-group">
         <label>URL de Captura 1</label>
         <input id="capturaUrl1" type="text" placeholder="https://...">
+        <button type="button" onclick="openGitHubRepo('capturaUrl1')">Seleccionar Imagen</button>
       </div>
 
       <div class="form-group">
         <label>URL de Captura 2</label>
         <input id="capturaUrl2" type="text" placeholder="https://...">
+        <button type="button" onclick="openGitHubRepo('capturaUrl2')">Seleccionar Imagen</button>
       </div>
 
       <div class="form-group">
         <label>URL de Captura 3</label>
         <input id="capturaUrl3" type="text" placeholder="https://...">
+        <button type="button" onclick="openGitHubRepo('capturaUrl3')">Seleccionar Imagen</button>
       </div>
 
       <div class="form-group">
         <label>URL de Captura 4</label>
         <input id="capturaUrl4" type="text" placeholder="https://...">
+        <button type="button" onclick="openGitHubRepo('capturaUrl4')">Seleccionar Imagen</button>
       </div>
 
       <div class="form-group">
         <label>URL de Captura 5</label>
         <input id="capturaUrl5" type="text" placeholder="https://...">
+        <button type="button" onclick="openGitHubRepo('capturaUrl5')">Seleccionar Imagen</button>
       </div>
 
       <div class="form-group">
         <label>URL de Captura 6</label>
         <input id="capturaUrl6" type="text" placeholder="https://...">
+        <button type="button" onclick="openGitHubRepo('capturaUrl6')">Seleccionar Imagen</button>
       </div>
 
       <!-- ======================= -->
@@ -233,9 +239,6 @@
 
 </div>
 
-<!-- Botón para seleccionar imágenes desde GitHub -->
-<button type="button" onclick="openGitHubRepo()">Seleccionar Imagen desde GitHub</button>
-
 <!-- Modal para seleccionar imágenes -->
 <div id="modal" style="display:none;">
   <div id="modalContent"></div>
@@ -253,7 +256,7 @@
 
 <script>
 // Función para abrir el repositorio de GitHub y mostrar las imágenes
-function openGitHubRepo() {
+function openGitHubRepo(fieldId) {
     const repoUrl = 'https://raw.githubusercontent.com/Eler3096/eler3096.github.io/main/release/';
     
     // Abre el modal
@@ -284,7 +287,7 @@ function openGitHubRepo() {
         // Al hacer clic, asignar la URL de la imagen al campo correspondiente
         imgElement.onclick = function() {
             // Insertar la URL de la imagen seleccionada en el campo adecuado
-            document.getElementById('capturaUrl1').value = imgElement.src;  // Para el campo de la primera captura
+            document.getElementById(fieldId).value = imgElement.src;
             closeModal();
         };
 
