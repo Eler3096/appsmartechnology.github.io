@@ -108,8 +108,6 @@ function eliminarApp(id) {
 // =======================
 // GUARDAR / EDITAR APP
 // =======================
-// =======================
-// =======================
 // GUARDAR / EDITAR APP
 // =======================
 async function guardarApp() {
@@ -276,6 +274,4 @@ function limpiarFormulario() {
   document.getElementById("imagen").value = "";
   document.getElementById("capturas").value = "";
 }
-
-
 
