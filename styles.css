@@ -577,7 +577,7 @@ body {
   padding: 12px;
   border-radius: 14px;
   margin-bottom: 16px;
-  margin-top: 30px;  /* Asegura que haya espacio desde el título anterior */
+  margin-top: 10px;  /* Asegura que haya espacio desde el título anterior */
   border: 1px solid rgba(75,85,99,0.5);
 }
 h2 {
@@ -709,6 +709,7 @@ body {
   color: #e5e7eb;
   margin-top: 2px;
 }
+
 
 
 
