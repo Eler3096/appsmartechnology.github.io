@@ -38,7 +38,7 @@ db.collection("apps").orderBy("fecha", "desc").onSnapshot(snap => {
     const tr = document.createElement("tr");
 
     tr.innerHTML = `
-      <td><img src="${a.icono}" class="table-icon"></td>
+      <td><img src="${a.imagen}" class="table-icon"></td>
       <td>${a.nombre}</td>
       <td>${a.categoria}</td>
       <td>${a.version}</td>
@@ -79,11 +79,9 @@ function cargarParaEditar(id) {
     document.getElementById("anuncios").value = a.anuncios || "no";
     document.getElementById("privacidad").value = a.privacidadUrl || "";
 
-    // Asignación de las URLs de las capturas (hasta 6)
+    // Campos URL
     document.getElementById("imagenUrl").value = a.imagen || "";
-    for (let i = 0; i < 6; i++) {
-      document.getElementById(`capturaUrl${i + 1}`).value = a.imgSecundarias ? a.imgSecundarias[i] || "" : "";
-    }
+    document.getElementById("capturasUrl").value = a.imgSecundarias ? a.imgSecundarias.join(",") : "";
     document.getElementById("iconoUrl").value = a.icono || "";  // Campo para el icono
     document.getElementById("apkUrl").value = a.apk || "";  // Campo para el APK
 
@@ -110,6 +108,7 @@ function eliminarApp(id) {
 // GUARDAR / EDITAR APP
 // =======================
 function guardarApp() {
+
   const nombre = document.getElementById("nombre").value.trim();
   const descripcion = document.getElementById("descripcion").value.trim();
   const version = document.getElementById("version").value.trim();
@@ -127,12 +126,7 @@ function guardarApp() {
 
   // NUEVOS CAMPOS
   const imagenUrl = document.getElementById("imagenUrl").value.trim();
-  const capturasUrl1 = document.getElementById("capturaUrl1").value.trim();
-  const capturasUrl2 = document.getElementById("capturaUrl2").value.trim();
-  const capturasUrl3 = document.getElementById("capturaUrl3").value.trim();
-  const capturasUrl4 = document.getElementById("capturaUrl4").value.trim();
-  const capturasUrl5 = document.getElementById("capturaUrl5").value.trim();
-  const capturasUrl6 = document.getElementById("capturaUrl6").value.trim();
+  const capturasUrl = document.getElementById("capturasUrl").value.trim();
   const iconoUrl = document.getElementById("iconoUrl").value.trim(); // Enlace del icono
   const apkUrl = document.getElementById("apkUrl").value.trim();  // Enlace del APK
 
@@ -157,9 +151,6 @@ function guardarApp() {
     id = editId;
   }
 
-  // Agrupamos las URLs de las capturas
-  const capturas = [capturasUrl1, capturasUrl2, capturasUrl3, capturasUrl4, capturasUrl5, capturasUrl6].filter(url => url);
-
   const data = {
     id,
     nombre,
@@ -177,7 +168,7 @@ function guardarApp() {
     privacidadUrl: privacidad,
     fecha: Date.now(),
     imagen: imagenUrl,
-    imgSecundarias: capturas,
+    imgSecundarias: capturasUrl.split(",").map(u => u.trim()),
     icono: iconoUrl,
     apk: apkUrl,
     size: prevSize || "N/A"
@@ -222,12 +213,11 @@ function limpiarFormulario() {
   document.getElementById("privacidad").value = "";
 
   document.getElementById("imagenUrl").value = "";
-  document.getElementById("capturaUrl1").value = "";
-  document.getElementById("capturaUrl2").value = "";
-  document.getElementById("capturaUrl3").value = "";
-  document.getElementById("capturaUrl4").value = "";
-  document.getElementById("capturaUrl5").value = "";
-  document.getElementById("capturaUrl6").value = "";
+  document.getElementById("capturasUrl").value = "";
   document.getElementById("iconoUrl").value = "";  // Limpiar campo del icono
   document.getElementById("apkUrl").value = "";  // Limpiar campo del APK
+
+  document.getElementById("apk").value = "";
+  document.getElementById("imagen").value = "";
+  document.getElementById("capturas").value = "";
 }
