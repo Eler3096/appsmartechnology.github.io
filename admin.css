@@ -138,6 +138,12 @@ body {
   gap: 20px;
 }
 
+.form-main-fields,
+.form-side-fields {
+  display: flex;
+  flex-direction: column;
+}
+
 .form-group {
   margin-bottom: 12px;
 }
