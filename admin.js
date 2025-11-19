@@ -1,60 +1,63 @@
-// =======================
+// =======================================================
 // PROTECCIÓN DE ACCESO
-// =======================
+// =======================================================
 auth.onAuthStateChanged(user => {
   if (!user) location.href = "admin-login.html";
 });
-function logout() { auth.signOut(); }
 
-// =======================
-// VARIABLES GLOBALES
-// =======================
-let editId = null; 
-let prevSize = null; 
-
-// =======================
-// MOSTRAR / OCULTAR LISTA
-// =======================
-function toggleApps() {
-  const box = document.getElementById("appsContainer");
-  const btn = document.getElementById("toggleBtn");
-
-  box.classList.toggle("hidden");
-  btn.textContent = box.classList.contains("hidden")
-    ? "📦 Apps Subidas"
-    : "📦 Ocultar Apps";
+function logout() {
+  auth.signOut();
 }
 
-// =======================
-// LISTADO DE APPS
-// =======================
+// =======================================================
+// VARIABLES GLOBALES
+// =======================================================
+let editId = null;
+let prevSize = null;
 const appsList = document.getElementById("appsList");
 
+// =======================================================
+// MODAL APPS SUBIDAS
+// =======================================================
+function openAppsModal() {
+  document.getElementById("modalApps").classList.remove("hidden");
+}
+
+function closeAppsModal() {
+  document.getElementById("modalApps").classList.add("hidden");
+}
+
+// =======================================================
+// CARGAR LISTA DE APPS AUTOMÁTICAMENTE
+// =======================================================
 db.collection("apps").orderBy("fecha", "desc").onSnapshot(snap => {
   appsList.innerHTML = "";
 
   snap.forEach(doc => {
     const a = doc.data();
-    const tr = document.createElement("tr");
 
-    tr.innerHTML = `
-      <td><img src="${a.icono}" class="table-icon"></td>
-      <td>${a.nombre}</td>
-      <td>${a.categoria}</td>
-      <td>${a.version}</td>
-      <td>
-        <button class="btn-edit" onclick="cargarParaEditar('${a.id}')">✏️ Editar</button>
-        <button class="btn-delete" onclick="eliminarApp('${a.id}')">🗑 Eliminar</button>
-      </td>
+    const row = `
+      <tr>
+        <td><img src="${a.icono || a.imagen}" class="table-icon"></td>
+        <td>${a.nombre}</td>
+        <td>${a.categoria}</td>
+        <td>${a.version}</td>
+
+        <td>
+          <button class="btn-edit" onclick="cargarParaEditar('${a.id}')">✏️ Editar</button>
+          <button class="btn-delete" onclick="eliminarApp('${a.id}')">🗑 Eliminar</button>
+        </td>
+      </tr>
     `;
 
-    appsList.appendChild(tr);
+    appsList.innerHTML += row;
   });
 });
 
-// =======================
+
+// =======================================================
 // CARGAR APP PARA EDITAR
-// =======================
+// =======================================================
 function cargarParaEditar(id) {
   editId = id;
 
@@ -64,6 +67,7 @@ function cargarParaEditar(id) {
   db.collection("apps").doc(id).get().then(doc => {
     const a = doc.data();
 
+    // Campos principales
     document.getElementById("nombre").value = a.nombre;
     document.getElementById("descripcion").value = a.descripcion;
     document.getElementById("version").value = a.version;
@@ -72,6 +76,7 @@ function cargarParaEditar(id) {
     document.getElementById("tipo").value = a.tipo;
     document.getElementById("internet").value = a.internet;
 
+    // Extras
     document.getElementById("sistema").value = a.sistemaOperativo || "";
     document.getElementById("requisitos").value = a.requisitos || "";
     document.getElementById("fechaAct").value = a.fechaActualizacion || "";
@@ -79,198 +84,164 @@ function cargarParaEditar(id) {
     document.getElementById("anuncios").value = a.anuncios || "no";
     document.getElementById("privacidad").value = a.privacidadUrl || "";
 
-    // Campos URL
+    // URLs
     document.getElementById("imagenUrl").value = a.imagen || "";
     document.getElementById("capturasUrl").value = a.imgSecundarias ? a.imgSecundarias.join(",") : "";
-    document.getElementById("iconoUrl").value = a.icono || "";  // Campo para el icono
-    document.getElementById("apkUrl").value = a.apk || "";  // Campo para el APK
+    document.getElementById("iconoUrl").value = a.icono || "";
+    document.getElementById("apkUrl").value = a.apk || "";
 
+    document.getElementById("size").value = a.size || "";
     prevSize = a.size || null;
-    document.getElementById("size").value = a.size || "";  // Cargar tamaño si existe
 
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
 
-// =======================
+
+// =======================================================
 // ELIMINAR APP
-// =======================
+// =======================================================
 function eliminarApp(id) {
   if (!confirm("¿Eliminar esta aplicación?")) return;
 
-  const ref = db.collection("apps").doc(id);
-
-  ref.delete()
+  db.collection("apps").doc(id).delete()
   .then(() => alert("Aplicación eliminada ✔"))
   .catch(err => alert("Error: " + err.message));
 }
 
-// =======================
+
+// =======================================================
 // GUARDAR / EDITAR APP
-// =======================
-// GUARDAR / EDITAR APP
-// =======================
+// =======================================================
 async function guardarApp() {
-  // Obtener los valores de los campos
-  const nombre = document.getElementById("nombre").value.trim();
-  const descripcion = document.getElementById("descripcion").value.trim();
-  const version = document.getElementById("version").value.trim();
-  const categoria = document.getElementById("categoria").value.trim();
-  const idioma = document.getElementById("idioma").value.trim();
-  const tipo = document.getElementById("tipo").value.trim();
-  const internet = document.getElementById("internet").value;
 
-  const sistema = document.getElementById("sistema").value.trim();
-  const requisitos = document.getElementById("requisitos").value.trim();
-  const fechaAct = document.getElementById("fechaAct").value;
-  const edad = document.getElementById("edad").value.trim();
-  const anuncios = document.getElementById("anuncios").value;
-  const privacidad = document.getElementById("privacidad").value.trim();
-
-  // NUEVOS CAMPOS
-  const imagenFile = document.getElementById("imagen").files[0];
-  const apkFile = document.getElementById("apk").files[0];
-  const capturasFiles = document.getElementById("capturas").files;
-  
-  // Obtener el tamaño de la app ingresado manualmente
-  const size = document.getElementById("size").value.trim();
-
-  // Inicializamos las variables para las URLs
-  let imagenUrl = document.getElementById("imagenUrl").value.trim();  // URL existente
-  let apkUrl = document.getElementById("apkUrl").value.trim();  // URL existente
-  let capturasUrls = capturasFiles.length > 0 ? [] : document.getElementById("capturasUrl").value.split(",").map(u => u.trim()); // URLs existentes
-
-  // Deshabilitar el botón de guardar inmediatamente
   const btn = document.getElementById("subirBtn");
-  btn.disabled = true;
-
-  // Mostrar el estado de "Guardando..."
   const estado = document.getElementById("estado");
+
+  // Desactivar botón
+  btn.disabled = true;
   estado.textContent = "Guardando...";
 
-  // Subir los archivos a Firebase Storage solo si son nuevos
-  const storageRef = firebase.storage().ref();
+  // Capturar campos
+  const campos = {
+    nombre: nombre.value.trim(),
+    descripcion: descripcion.value.trim(),
+    version: version.value.trim(),
+    categoria: categoria.value.trim(),
+    idioma: idioma.value.trim(),
+    tipo: tipo.value.trim(),
+    internet: internet.value,
+    sistemaOperativo: sistema.value.trim(),
+    requisitos: requisitos.value.trim(),
+    fechaActualizacion: fechaAct.value,
+    edad: edad.value.trim(),
+    anuncios: anuncios.value,
+    privacidadUrl: privacidad.value.trim(),
+    imagen: imagenUrl.value.trim(),
+    apk: apkUrl.value.trim(),
+    size: size.value.trim() || "N/A",
+    imgSecundarias: capturasUrl.value.split(",").map(u => u.trim()).filter(u => u !== "")
+  };
 
-  // Variables para almacenar las promesas de las subidas
-  let imagenPromise = Promise.resolve();
-  let apkPromise = Promise.resolve();
-  let capturasPromise = Promise.resolve();
-
-  // Subir Imagen principal si se ha seleccionado un nuevo archivo
-  if (imagenFile) {
-    imagenPromise = storageRef.child('images/' + imagenFile.name).put(imagenFile)
-      .then(() => storageRef.child('images/' + imagenFile.name).getDownloadURL())
-      .then(url => {
-        imagenUrl = url;  // Actualizamos la URL
-      });
-  }
-
-  // Subir APK si se ha seleccionado un nuevo archivo
-  if (apkFile) {
-    apkPromise = storageRef.child('apk/' + apkFile.name).put(apkFile)
-      .then(() => storageRef.child('apk/' + apkFile.name).getDownloadURL())
-      .then(url => {
-        apkUrl = url;  // Actualizamos la URL
-      });
-  }
-
-  // Subir Capturas si se han seleccionado nuevas imágenes
-  if (capturasFiles.length > 0) {
-    capturasPromise = Promise.all(Array.from(capturasFiles).map(file => {
-      const capturaRef = storageRef.child('capturas/' + file.name);
-      return capturaRef.put(file)
-        .then(() => capturaRef.getDownloadURL())
-        .then(url => capturasUrls.push(url));
-    }));
-  }
-
-  // Esperar a que todas las subidas se completen
-  await Promise.all([imagenPromise, apkPromise, capturasPromise]);
-
-  // Verificar campos requeridos antes de guardar
-  if (!nombre || !descripcion || !version) {
-    alert("Completa los campos requeridos");
-    btn.disabled = false;  // Habilitar el botón en caso de error
+  // Validación mínima
+  if (!campos.nombre || !campos.descripcion || !campos.version) {
+    alert("Completa al menos nombre, descripción y versión.");
+    btn.disabled = false;
     estado.textContent = "";
     return;
   }
 
-  let docRef, id;
+  // Archivos nuevos
+  const imagenFile = imagen.files[0];
+  const apkFile = apk.files[0];
+  const capturasFiles = capturas.files;
 
-  if (editId === null) {
-    docRef = db.collection("apps").doc();
-    id = docRef.id;
-  } else {
-    docRef = db.collection("apps").doc(editId);
-    id = editId;
+  const storageRef = firebase.storage().ref();
+
+  // Promesas
+  let promesas = [];
+
+  // Imagen principal
+  if (imagenFile) {
+    promesas.push(
+      storageRef.child("images/" + imagenFile.name)
+        .put(imagenFile)
+        .then(r => r.ref.getDownloadURL())
+        .then(url => campos.imagen = url)
+    );
   }
+
+  // APK
+  if (apkFile) {
+    promesas.push(
+      storageRef.child("apk/" + apkFile.name)
+        .put(apkFile)
+        .then(r => r.ref.getDownloadURL())
+        .then(url => campos.apk = url)
+    );
+  }
+
+  // Capturas
+  if (capturasFiles.length > 0) {
+    campos.imgSecundarias = [];
+    promesas.push(
+      Promise.all(
+        [...capturasFiles].map(file =>
+          storageRef.child("capturas/" + file.name)
+          .put(file)
+          .then(r => r.ref.getDownloadURL())
+          .then(url => campos.imgSecundarias.push(url))
+        )
+      )
+    );
+  }
+
+  // Esperar todas las subidas
+  await Promise.all(promesas);
+
+  // Crear o editar ID
+  let id = editId || db.collection("apps").doc().id;
 
   const data = {
     id,
-    nombre,
-    descripcion,
-    version,
-    categoria,
-    idioma,
-    tipo,
-    internet,
-    sistemaOperativo: sistema,
-    requisitos,
-    fechaActualizacion: fechaAct,
-    edad,
-    anuncios,
-    privacidadUrl: privacidad,
-    fecha: Date.now(),
-    imagen: imagenUrl,  // Usar la URL existente o nueva
-    imgSecundarias: capturasUrls,  // Usar URLs de capturas existentes o nuevas
-    icono: "",  // Puedes añadir un campo para icono si es necesario
-    apk: apkUrl,  // Usar la URL existente o nueva
-    size: size || "N/A"  // Guardar el tamaño de la app
+    ...campos,
+    fecha: Date.now()
   };
 
-  try {
-    await docRef.set(data, { merge: true });
-    estado.textContent = "Guardado ✔";
-    btn.disabled = false;  // Habilitar el botón después de guardar correctamente
-    editId = null;
-    prevSize = null;
+  // Guardar
+  db.collection("apps").doc(id).set(data, { merge: true })
+    .then(() => {
+      estado.textContent = "Guardado ✔";
+      btn.disabled = false;
+      editId = null;
 
-    document.getElementById("formTitle").textContent = "➕ Nueva Aplicación";
-    document.getElementById("subirBtn").textContent = "SUBIR APP";
-    limpiarFormulario();
-  } catch (err) {
-    estado.textContent = "Error: " + err.message;
-    btn.disabled = false;  // Habilitar el botón en caso de error
-  }
+      document.getElementById("formTitle").textContent = "➕ Nueva Aplicación";
+      btn.textContent = "SUBIR APP";
+
+      limpiarFormulario();
+    })
+    .catch(err => {
+      estado.textContent = "Error: " + err.message;
+      btn.disabled = false;
+    });
 }
 
-// =======================
+
+// =======================================================
 // LIMPIAR FORMULARIO
-// =======================
+// =======================================================
 function limpiarFormulario() {
-  document.getElementById("nombre").value = "";
-  document.getElementById("descripcion").value = "";
-  document.getElementById("version").value = "";
-  document.getElementById("categoria").value = "Educación";
-  document.getElementById("idioma").value = "";
-  document.getElementById("tipo").value = "Gratis";
-  document.getElementById("internet").value = "offline";
+  const inputs = document.querySelectorAll("input, textarea, select");
+  inputs.forEach(i => i.value = "");
 
-  document.getElementById("sistema").value = "";
-  document.getElementById("requisitos").value = "";
-  document.getElementById("fechaAct").value = "";
-  document.getElementById("edad").value = "";
-  document.getElementById("anuncios").value = "no";
-  document.getElementById("privacidad").value = "";
+  categoria.value = "Educación";
+  tipo.value = "Gratis";
+  internet.value = "offline";
+  anuncios.value = "no";
 
-  document.getElementById("imagenUrl").value = "";
-  document.getElementById("capturasUrl").value = "";
-  document.getElementById("iconoUrl").value = "";  // Limpiar campo del icono
-  document.getElementById("apkUrl").value = "";  // Limpiar campo del APK
-  document.getElementById("size").value = "";  // Limpiar campo de tamaño
+  imagen.value = "";
+  apk.value = "";
+  capturas.value = "";
 
-  // Desactivar los campos de carga de archivos
-  document.getElementById("apk").value = "";
-  document.getElementById("imagen").value = "";
-  document.getElementById("capturas").value = "";
+  prevSize = null;
 }
