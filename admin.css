@@ -294,7 +294,7 @@ textarea {
 }
 
 .form-group input[type="text"] {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
 }
 
 /* ===================================================
@@ -391,6 +391,7 @@ textarea {
   align-items: center;
   margin-bottom: 12px;
 }
+
 
 
 
