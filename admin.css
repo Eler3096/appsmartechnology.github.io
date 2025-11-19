@@ -164,15 +164,15 @@ select {
   border: 1px solid rgba(55,65,81,0.8);
   border-radius: 8px;
   color: #e5e7eb;
-  min-height: 30px;   /* <<< Ahora TODOS tienen el mismo tamaño */
+  min-height: 20px;   /* <<< Ahora TODOS tienen el mismo tamaño */
 }
 
 select {
-  min-height: 30px;
+  min-height: 20px;
 }
 
 textarea {
-  min-height: 30px;
+  min-height: 20px;
 }
 
 /* ===== CAMPO URLS DE CAPTURAS ===== */
@@ -231,6 +231,7 @@ textarea {
 .btn-toggle:hover {
   background: rgba(59,130,246,0.5);
 }
+
 
 
 
