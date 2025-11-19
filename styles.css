@@ -577,7 +577,6 @@ body {
   padding: 12px;
   border-radius: 14px;
   margin-bottom: 16px;
-  margin-top: 10px;  /* Asegura que haya espacio desde el título anterior */
   border: 1px solid rgba(75,85,99,0.5);
 }
 h2 {
@@ -615,7 +614,6 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  margin-top: 30px; /* Espacio adicional entre las reseñas y el contenido anterior */
 }
 
 .review-item {
@@ -708,6 +706,7 @@ body {
   color: #e5e7eb;
   margin-top: 2px;
 }
+
 
 
 
