@@ -131,7 +131,7 @@ body {
 .form-card {
   background: #0a1126;
   border: 1px solid rgba(75,85,99,0.5);
-  padding: 20px;
+  padding: 10px;
   border-radius: 14px;
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* ★ Ahora son 3 columnas */
@@ -231,6 +231,7 @@ textarea {
 .btn-toggle:hover {
   background: rgba(59,130,246,0.5);
 }
+
 
 
 
