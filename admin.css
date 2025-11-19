@@ -267,7 +267,7 @@ select {
   border: 1px solid rgba(55,65,81,0.9);
   border-radius: 6px;
   color: #e5e7eb;
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   outline: none;
   transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
 }
@@ -389,6 +389,7 @@ textarea {
   align-items: center;
   margin-bottom: 12px;
 }
+
 
 
 
