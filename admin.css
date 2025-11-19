@@ -135,7 +135,7 @@ body {
   border-radius: 14px;
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* ★ Ahora son 3 columnas */
-  row-gap: 15px;
+  row-gap: 4px;
   
 }
 
@@ -160,7 +160,7 @@ input,
 textarea,
 select {
   width: 100%;
-  padding: 8px;
+  padding: 4px;
   background: rgba(15,23,42,0.9);
   border: 1px solid rgba(55,65,81,0.8);
   border-radius: 2px;
@@ -232,6 +232,7 @@ textarea {
 .btn-toggle:hover {
   background: rgba(59,130,246,0.5);
 }
+
 
 
 
