@@ -21,10 +21,10 @@ body {
 /* ===== CONTENEDOR ===== */
 .admin-container {
   width: 100%;
-  max-width: 750px;
+  max-width: 750px;       /* MÁS PEQUEÑO */
   background: #020617;
-  padding: 18px;
-  border-radius: 12px;
+  padding: 18px;          /* MÁS PEQUEÑO */
+  border-radius: 12px;    /* MÁS PEQUEÑO */
   box-shadow: 0 0 25px rgba(0,0,0,0.45);
   border: 1px solid rgba(148,163,184,0.25);
 }
@@ -34,18 +34,18 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 15px;     /* MÁS PEQUEÑO */
 }
 
 .admin-header-left h1 {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 1.15rem;
+  font-size: 1.15rem;      /* MÁS PEQUEÑO */
 }
 
 .admin-header-left p {
-  font-size: 0.75rem;
+  font-size: 0.75rem;      /* MÁS PEQUEÑO */
   color: #94a3b8;
 }
 
@@ -54,10 +54,10 @@ body {
   background: rgba(127, 29, 29, 0.6);
   color: #fecaca;
   border: 1px solid rgba(248, 113, 113, 0.8);
-  padding: 5px 10px;
+  padding: 5px 10px;       /* MÁS PEQUEÑO */
   border-radius: 999px;
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: 0.75rem;      /* MÁS PEQUEÑO */
 }
 
 .btn-logout:hover {
@@ -66,7 +66,7 @@ body {
 
 /* ===== TÍTULOS ===== */
 .panel-section-title {
-  font-size: 0.95rem;
+  font-size: 0.95rem;       /* MÁS PEQUEÑO */
   font-weight: 600;
   margin: 12px 0;
 }
@@ -83,8 +83,8 @@ body {
 
 .apps-table th,
 .apps-table td {
-  padding: 7px;
-  font-size: 0.78rem;
+  padding: 7px;             /* MÁS PEQUEÑO */
+  font-size: 0.78rem;       /* MÁS PEQUEÑO */
   border-bottom: 1px solid rgba(55,65,81,0.5);
 }
 
@@ -93,7 +93,7 @@ body {
 }
 
 .table-icon {
-  width: 35px;
+  width: 35px;              /* MÁS PEQUEÑO */
   height: 35px;
   border-radius: 8px;
   object-fit: cover;
@@ -102,8 +102,8 @@ body {
 /* ===== BOTONES DE ACCIÓN ===== */
 .btn-edit,
 .btn-delete {
-  padding: 4px 8px;
-  font-size: 0.75rem;
+  padding: 4px 8px;         /* MÁS PEQUEÑO */
+  font-size: 0.75rem;       /* MÁS PEQUEÑO */
   border-radius: 6px;
   cursor: pointer;
 }
@@ -132,11 +132,11 @@ body {
 .form-card {
   background: #0a1126;
   border: 1px solid rgba(75,85,99,0.5);
-  padding: 15px;
-  border-radius: 10px;
+  padding: 15px;             /* MÁS PEQUEÑO */
+  border-radius: 10px;        /* MÁS PEQUEÑO */
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* ← 3 columnas */
-  gap: 15px;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;                  /* MÁS PEQUEÑO */
 }
 
 .form-main-fields,
@@ -146,35 +146,31 @@ body {
 }
 
 .form-group {
-  margin-bottom: 10px;
+  margin-bottom: 10px;        /* MÁS PEQUEÑO */
 }
 
 .form-group label {
-  font-size: 0.75rem;
+  font-size: 0.75rem;         /* MÁS PEQUEÑO */
   color: #94a3b8;
   margin-bottom: 3px;
 }
 
+/* CAMPOS REDUCIDOS */
 input,
 textarea,
 select {
   width: 100%;
-  padding: 5px;
+  padding: 5px;               /* MÁS PEQUEÑO */
   background: rgba(15,23,42,0.9);
   border: 1px solid rgba(55,65,81,0.8);
-  border-radius: 4px;
+  border-radius: 4px;         /* MÁS PEQUEÑO */
   color: #e5e7eb;
-  font-size: 0.78rem;
-  min-height: 20px;
+  font-size: 0.78rem;         /* MÁS PEQUEÑO */
+  min-height: 20px;           /* MÁS PEQUEÑO */
 }
 
 textarea {
-  min-height: 40px;
-}
-
-/* ===== CAMPOS ANCHOS ===== */
-.full-width {
-  grid-column: span 3; /* Ocupa las 3 columnas */
+  min-height: 40px;           /* MÁS PEQUEÑO PERO USABLE */
 }
 
 /* ===== CAMPO URLS ===== */
@@ -188,13 +184,12 @@ textarea {
 .btn-primary {
   width: 100%;
   background: linear-gradient(90deg, #2563eb, #4f46e5);
-  padding: 8px;
+  padding: 8px;               /* MÁS PEQUEÑO */
   border: none;
   border-radius: 999px;
   color: white;
   cursor: pointer;
-  font-size: 0.85rem;
-  grid-column: span 3; /* Botón completo */
+  font-size: 0.85rem;         /* MÁS PEQUEÑO */
 }
 
 .btn-primary:hover {
@@ -212,12 +207,11 @@ textarea {
   background: rgba(59,130,246,0.3);
   border: 1px solid #3b82f6;
   color: #bfdbfe;
-  padding: 6px 10px;
+  padding: 6px 10px;           /* MÁS PEQUEÑO */
   border-radius: 8px;
   margin-bottom: 10px;
   cursor: pointer;
   font-size: 0.78rem;
-  grid-column: span 3; /* Por si lo usas arriba del form */
 }
 
 .btn-toggle:hover {
