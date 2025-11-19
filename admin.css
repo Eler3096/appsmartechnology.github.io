@@ -135,8 +135,8 @@ body {
   border-radius: 14px;
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* ★ Ahora son 3 columnas */
-  column-gap: 5px !important; /* ★ separa columnas */
-  row-gap: 4px;
+  column-gap: 8px !important; /* ★ separa columnas */
+  row-gap: 2px;
   
 }
 
@@ -195,14 +195,15 @@ textarea {
 
 /* ===== BOTÓN PRINCIPAL ===== */
 .btn-primary {
-  width: 100%;
+  width: auto;           /* ❗ Ya no ocupa todo el ancho */
+  padding: 6px 14px;     /* ❗ Menos alto y menos ancho */
   background: linear-gradient(90deg, #2563eb, #4f46e5);
-  padding: 12px;
   border: none;
   border-radius: 999px;
   color: white;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 0.65rem;     /* Tamaño de texto más pequeño */
+  display: inline-block;
 }
 
 .btn-primary:hover {
@@ -233,6 +234,7 @@ textarea {
 .btn-toggle:hover {
   background: rgba(59,130,246,0.5);
 }
+
 
 
 
