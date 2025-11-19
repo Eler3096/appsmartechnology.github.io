@@ -193,17 +193,16 @@ textarea {
   margin-bottom: 5px;
 }
 
-/* ===== BOTÓN PRINCIPAL ===== */
 .btn-primary {
-  width: auto;           /* ❗ Ya no ocupa todo el ancho */
-  padding: 6px 14px;     /* ❗ Menos alto y menos ancho */
+  justify-self: start;  /* 🔥 Controla su alineación en el grid */
+  width: fit-content !important; /* 🔥 Asegura que no crezca */
+  padding: 6px 14px;
   background: linear-gradient(90deg, #2563eb, #4f46e5);
   border: none;
   border-radius: 999px;
   color: white;
   cursor: pointer;
-  font-size: 0.65rem;     /* Tamaño de texto más pequeño */
-  display: inline-block;
+  font-size: 0.65rem;
 }
 
 .btn-primary:hover {
@@ -234,6 +233,7 @@ textarea {
 .btn-toggle:hover {
   background: rgba(59,130,246,0.5);
 }
+
 
 
 
