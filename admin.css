@@ -240,7 +240,7 @@ body {
   column-gap: 14px;
   row-gap: 8px;
   margin-top: 6px;
-  position: relative; /* Esto es importante para que el botón se posicione relativo a este contenedor */
+  position: relative; /* Asegura que los elementos posicionados absolutamente estén dentro de este contenedor */
 }
 
 /* Hacemos que todos los form-group participen del grid */
@@ -306,12 +306,6 @@ textarea {
    BOTÓN PRINCIPAL GUARDAR
 =================================================== */
 .btn-primary {
-  position: absolute; /* Esto lo hace estar posicionado de forma absoluta dentro del contenedor */
-  top: 24px; /* Mueve el botón hacia arriba */
-  right: 24px; /* Mueve el botón hacia la derecha */
-  grid-column: span 3;
-  justify-self: flex-start;
-  width: auto;
   padding: 8px 26px;
   background: linear-gradient(90deg, #2563eb, #4f46e5);
   border: none;
@@ -396,5 +390,6 @@ textarea {
     text-align: center;
   }
 }
+
 
 
