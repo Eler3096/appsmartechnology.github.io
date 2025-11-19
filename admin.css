@@ -167,6 +167,9 @@ select {
   min-height: 30px;   /* <<< Ahora TODOS tienen el mismo tamaño */
 }
 
+select {
+  min-height: 30px;
+}
 
 textarea {
   min-height: 30px;
@@ -228,6 +231,7 @@ textarea {
 .btn-toggle:hover {
   background: rgba(59,130,246,0.5);
 }
+
 
 
 
