@@ -135,6 +135,7 @@ body {
   border-radius: 14px;
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* ★ Ahora son 3 columnas */
+  column-gap: 5px !important; /* ★ separa columnas */
   row-gap: 4px;
   
 }
@@ -232,6 +233,7 @@ textarea {
 .btn-toggle:hover {
   background: rgba(59,130,246,0.5);
 }
+
 
 
 
