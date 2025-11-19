@@ -167,7 +167,7 @@ select {
 }
 
 textarea {
-  min-height: 45px;
+  min-height: 30px;
 }
 
 /* ===== CAMPO URLS DE CAPTURAS ===== */
@@ -226,6 +226,7 @@ textarea {
 .btn-toggle:hover {
   background: rgba(59,130,246,0.5);
 }
+
 
 
 
