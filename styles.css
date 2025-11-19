@@ -589,8 +589,7 @@ h2 {
 }
 .review-form h3 {
   font-size: 0.95rem;
-  margin-bottom: 12px; /* Espacio entre el título y el formulario */
-  margin-top: 10px; /* Asegura que el título tenga espacio arriba */
+  margin-bottom: 8px; /* Espacio entre el título y el formulario */
 }
 
 .review-form label {
@@ -709,6 +708,7 @@ body {
   color: #e5e7eb;
   margin-top: 2px;
 }
+
 
 
 
