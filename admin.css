@@ -252,7 +252,7 @@ body {
 }
 
 .form-group label {
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   color: #9ca3af;
   margin-bottom: 3px;
   display: block;
@@ -267,7 +267,7 @@ select {
   border: 1px solid rgba(55,65,81,0.9);
   border-radius: 6px;
   color: #e5e7eb;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   outline: none;
   transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
 }
@@ -389,6 +389,7 @@ textarea {
   align-items: center;
   margin-bottom: 12px;
 }
+
 
 
 
