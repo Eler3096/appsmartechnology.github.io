@@ -4,6 +4,17 @@
   <meta charset="UTF-8">
   <title>AppsMart Admin</title>
   <link rel="stylesheet" href="admin.css">
+
+  <style>
+    /* ✔️ ESTILO PARA EL CUADRO UNIFICADO */
+    .file-box {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      background: #fff;
+      box-sizing: border-box;
+    }
+  </style>
 </head>
 
 <body>
@@ -132,14 +143,10 @@
             <input id="capturasUrl" type="text">
           </div>
 
-          <!-- 📌 Capturas secundarias -->
+          <!-- 📌 Capturas secundarias (CORREGIDO) -->
           <div class="form-group">
             <label>Capturas secundarias</label>
-            <div class="file-unificado">
-              <label for="capturas" class="file-btn-full">Seleccionar</label>
-              <input id="capturasTexto" type="text" placeholder="No se seleccionó archivo" disabled>
-              <input id="capturas" type="file" accept="image/*" multiple hidden>
-            </div>
+            <input id="capturas" type="file" accept="image/*" multiple class="file-box">
           </div>
 
           <div class="form-group">
@@ -152,14 +159,10 @@
             <input id="iconoUrl" type="text">
           </div>
 
-          <!-- 📌 APK -->
+          <!-- 📌 APK (CORREGIDO) -->
           <div class="form-group">
             <label>APK (subir nueva)</label>
-            <div class="file-unificado">
-              <label for="apk" class="file-btn-full">Seleccionar</label>
-              <input id="apkTexto" type="text" placeholder="No se seleccionó archivo" disabled>
-              <input id="apk" type="file" accept=".apk" hidden>
-            </div>
+            <input id="apk" type="file" accept=".apk" class="file-box">
           </div>
 
           <div class="form-group">
@@ -172,14 +175,10 @@
             <input id="apkUrl" type="text">
           </div>
 
-          <!-- 📌 Imagen -->
+          <!-- 📌 Imagen (CORREGIDO) -->
           <div class="form-group">
             <label>Imagen</label>
-            <div class="file-unificado">
-              <label for="imagen" class="file-btn-full">Seleccionar</label>
-              <input id="imagenTexto" type="text" placeholder="No se seleccionó archivo" disabled>
-              <input id="imagen" type="file" accept="image/*" hidden>
-            </div>
+            <input id="imagen" type="file" accept="image/*" class="file-box">
           </div>
 
         </div>
@@ -229,22 +228,6 @@
 
 <script src="firebase.js"></script>
 <script src="admin.js"></script>
-
-<!-- Mostrar nombre archivo -->
-<script>
-function setupFile(idInput, idText) {
-  document.getElementById(idInput).addEventListener("change", function() {
-    const txt = document.getElementById(idText);
-    if (!this.files.length) txt.value = "";
-    else if (this.files.length === 1) txt.value = this.files[0].name;
-    else txt.value = this.files.length + " archivos seleccionados";
-  });
-}
-
-setupFile("imagen", "imagenTexto");
-setupFile("apk", "apkTexto");
-setupFile("capturas", "capturasTexto");
-</script>
 
 </body>
 </html>
