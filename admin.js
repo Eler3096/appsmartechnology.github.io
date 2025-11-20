@@ -28,7 +28,7 @@ let loading = false;
 let exhausted = false;
 let inSearchMode = false;
 
-// Cache local
+// Cache local (items cargados)
 let loadedAppsCache = [];
 
 // =======================================================
@@ -53,6 +53,7 @@ function loadMoreApps() {
   loadingMoreEl.classList.remove("hidden");
 
   let query = db.collection("apps").orderBy("fecha", "desc").limit(PAGE_SIZE);
+
   if (lastVisible) {
     query = db.collection("apps").orderBy("fecha", "desc").startAfter(lastVisible).limit(PAGE_SIZE);
   }
@@ -92,7 +93,8 @@ function loadMoreApps() {
 // RENDERIZADO DE FILAS
 // =======================================================
 function renderApps(items, append = false) {
-  let html = items.map(a => `
+  let html = items.map(a => {
+    return `
       <tr id="app-row-${a.id}">
         <td><img src="${a.icono || a.imagen || ''}" class="table-icon" alt="icono"></td>
         <td>${escapeHtml(a.nombre || '')}</td>
@@ -103,17 +105,29 @@ function renderApps(items, append = false) {
           <button class="btn-delete" onclick="eliminarApp('${a.id}')">🗑 Eliminar</button>
         </td>
       </tr>
-  `).join("");
+    `;
+  }).join("");
 
-  if (append) appsList.insertAdjacentHTML('beforeend', html);
-  else appsList.innerHTML = html;
+  if (append) {
+    appsList.insertAdjacentHTML('beforeend', html);
+  } else {
+    appsList.innerHTML = html;
+  }
 }
 
 function escapeHtml(str) {
-  return (str + '').replace(/[&<>"'`=\/]/g, s => ({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;',
-    '/':'&#x2F;','`':'&#x60','=':'&#x3D;'
-  })[s]);
+  return (str + '').replace(/[&<>"'`=\/]/g, function(s) {
+    return ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+      '/': '&#x2F;',
+      '`': '&#x60;',
+      '=': '&#x3D;'
+    })[s];
+  });
 }
 
 // =======================================================
@@ -191,31 +205,34 @@ function cargarParaEditar(id) {
     document.getElementById("idioma").value = a.idioma || '';
     document.getElementById("tipo").value = a.tipo || '';
     document.getElementById("internet").value = a.internet || 'offline';
-    document.getElementById("sistema").value = a.sistemaOperativo || '';
-    document.getElementById("requisitos").value = a.requisitos || '';
-    document.getElementById("fechaAct").value = a.fechaActualizacion || '';
-    document.getElementById("edad").value = a.edad || '';
-    document.getElementById("anuncios").value = a.anuncios || 'no';
-    document.getElementById("privacidad").value = a.privacidadUrl || '';
-    document.getElementById("imagenUrl").value = a.imagen || '';
-    document.getElementById("capturasUrl").value = a.imgSecundarias ? a.imgSecundarias.join(",") : '';
-    document.getElementById("iconoUrl").value = a.icono || '';
-    document.getElementById("apkUrl").value = a.apk || '';
-    document.getElementById("size").value = a.size || '';
+
+    document.getElementById("sistema").value = a.sistemaOperativo || "";
+    document.getElementById("requisitos").value = a.requisitos || "";
+    document.getElementById("fechaAct").value = a.fechaActualizacion || "";
+    document.getElementById("edad").value = a.edad || "";
+    document.getElementById("anuncios").value = a.anuncios || "no";
+    document.getElementById("privacidad").value = a.privacidadUrl || "";
+
+    document.getElementById("imagenUrl").value = a.imagen || "";
+    document.getElementById("capturasUrl").value = a.imgSecundarias ? a.imgSecundarias.join(",") : "";
+    document.getElementById("iconoUrl").value = a.icono || "";
+    document.getElementById("apkUrl").value = a.apk || "";
+
+    document.getElementById("size").value = a.size || "";
     prevSize = a.size || null;
 
-    // NUEVOS CAMPOS
-    document.getElementById("playstoreUrl").value = a.playstoreUrl || '';
-    document.getElementById("uptodownUrl").value = a.uptodownUrl || '';
-    document.getElementById("megaUrl").value = a.megaUrl || '';
-    document.getElementById("mediafireUrl").value = a.mediafireUrl || '';
+    // NUEVOS CAMPOS DE ENLACES
+    document.getElementById("playstoreUrl").value = a.playstoreUrl || "";
+    document.getElementById("uptodownUrl").value = a.uptodownUrl || "";
+    document.getElementById("megaUrl").value = a.megaUrl || "";
+    document.getElementById("mediafireUrl").value = a.mediafireUrl || "";
 
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
 
 // =======================================================
-// CARGAR FORMULARIO NUEVO
+// CARGAR FORMULARIO DE NUEVA APP
 // =======================================================
 function cargarFormularioNuevo() {
   limpiarFormulario();
@@ -241,30 +258,29 @@ async function guardarApp() {
   btn.disabled = true;
   estado.textContent = "Guardando...";
 
-  // Obtener todos los valores directamente del DOM
   const campos = {
-    nombre: document.getElementById("nombre").value.trim(),
-    descripcion: document.getElementById("descripcion").value.trim(),
-    version: document.getElementById("version").value.trim(),
-    categoria: document.getElementById("categoria").value.trim(),
-    idioma: document.getElementById("idioma").value.trim(),
-    tipo: document.getElementById("tipo").value.trim(),
-    internet: document.getElementById("internet").value,
-    sistemaOperativo: document.getElementById("sistema").value.trim(),
-    requisitos: document.getElementById("requisitos").value.trim(),
-    fechaActualizacion: document.getElementById("fechaAct").value,
-    edad: document.getElementById("edad").value.trim(),
-    anuncios: document.getElementById("anuncios").value,
-    privacidadUrl: document.getElementById("privacidad").value.trim(),
-    imagen: document.getElementById("imagenUrl").value.trim(),
-    apk: document.getElementById("apkUrl").value.trim(),
-    size: document.getElementById("size").value.trim() || "N/A",
-    imgSecundarias: document.getElementById("capturasUrl").value.split(",").map(u => u.trim()).filter(u => u !== ""),
+    nombre: nombre.value.trim(),
+    descripcion: descripcion.value.trim(),
+    version: version.value.trim(),
+    categoria: categoria.value.trim(),
+    idioma: idioma.value.trim(),
+    tipo: tipo.value.trim(),
+    internet: internet.value,
+    sistemaOperativo: sistema.value.trim(),
+    requisitos: requisitos.value.trim(),
+    fechaActualizacion: fechaAct.value,
+    edad: edad.value.trim(),
+    anuncios: anuncios.value,
+    privacidadUrl: privacidad.value.trim(),
+    imagen: imagenUrl.value.trim(),
+    apk: apkUrl.value.trim(),
+    size: size.value.trim() || "N/A",
+    imgSecundarias: capturasUrl.value.split(",").map(u => u.trim()).filter(u => u !== ""),
     // NUEVOS CAMPOS
-    playstoreUrl: document.getElementById("playstoreUrl").value.trim(),
-    uptodownUrl: document.getElementById("uptodownUrl").value.trim(),
-    megaUrl: document.getElementById("megaUrl").value.trim(),
-    mediafireUrl: document.getElementById("mediafireUrl").value.trim()
+    playstoreUrl: playstoreUrl.value.trim(),
+    uptodownUrl: uptodownUrl.value.trim(),
+    megaUrl: megaUrl.value.trim(),
+    mediafireUrl: mediafireUrl.value.trim()
   };
 
   if (!campos.nombre || !campos.descripcion || !campos.version) {
@@ -274,9 +290,9 @@ async function guardarApp() {
     return;
   }
 
-  const imagenFile = document.getElementById("imagen").files[0];
-  const apkFile = document.getElementById("apk").files[0];
-  const capturasFiles = document.getElementById("capturas").files;
+  const imagenFile = imagen.files[0];
+  const apkFile = apk.files[0];
+  const capturasFiles = capturas.files;
   const storageRef = firebase.storage().ref();
   let promesas = [];
 
@@ -304,9 +320,9 @@ async function guardarApp() {
       Promise.all(
         [...capturasFiles].map(file =>
           storageRef.child("capturas/" + file.name)
-            .put(file)
-            .then(r => r.ref.getDownloadURL())
-            .then(url => campos.imgSecundarias.push(url))
+          .put(file)
+          .then(r => r.ref.getDownloadURL())
+          .then(url => campos.imgSecundarias.push(url))
         )
       )
     );
@@ -316,7 +332,11 @@ async function guardarApp() {
 
   let id = editId || db.collection("apps").doc().id;
 
-  const data = { id, ...campos, fecha: Date.now() };
+  const data = {
+    id,
+    ...campos,
+    fecha: Date.now()
+  };
 
   db.collection("apps").doc(id).set(data, { merge: true })
     .then(() => {
@@ -326,8 +346,9 @@ async function guardarApp() {
       document.getElementById("formTitle").textContent = "➕ Nueva Aplicación";
       btn.textContent = "SUBIR APP";
       limpiarFormulario();
-      if (!inSearchMode) loadInitialApps();
-      else {
+      if (!inSearchMode) {
+        loadInitialApps();
+      } else {
         const currentSearch = searchInput.value.trim();
         if (currentSearch) performSearch(currentSearch);
       }
@@ -345,20 +366,23 @@ function limpiarFormulario() {
   const inputs = document.querySelectorAll("input, textarea, select");
   inputs.forEach(i => i.value = "");
 
-  document.getElementById("categoria").value = "Educación";
-  document.getElementById("tipo").value = "Gratis";
-  document.getElementById("internet").value = "offline";
-  document.getElementById("anuncios").value = "no";
+  categoria.value = "Educación";
+  tipo.value = "Gratis";
+  internet.value = "offline";
+  anuncios.value = "no";
 
-  document.getElementById("imagen").value = "";
-  document.getElementById("apk").value = "";
-  document.getElementById("capturas").value = "";
+  const imagenEl = document.getElementById("imagen");
+  const apkEl = document.getElementById("apk");
+  const capturasEl = document.getElementById("capturas");
+  if (imagenEl) imagenEl.value = "";
+  if (apkEl) apkEl.value = "";
+  if (capturasEl) capturasEl.value = "";
 
   prevSize = null;
 }
 
 // =======================================================
-// CANCELAR EDICIÓN
+// Cancelar edición o nueva aplicación
 // =======================================================
 function cancelarEdicion() {
   limpiarFormulario();
@@ -369,20 +393,7 @@ function cancelarEdicion() {
 }
 
 // =======================================================
-// ACTUALIZAR NOMBRE ARCHIVO BOTONES
-// =======================================================
-function updateFileName(inputId, labelId) {
-  const input = document.getElementById(inputId);
-  const label = document.getElementById(labelId);
-
-  input.addEventListener('change', function() {
-    const fileName = input.files[0] ? input.files[0].name : 'Seleccionar';
-    label.textContent = fileName;
-  });
-}
-
-// =======================================================
-// INICIALIZAR
+// Inicializar carga al abrir la página
 // =======================================================
 document.addEventListener('DOMContentLoaded', () => {
   loadInitialApps();
@@ -391,3 +402,16 @@ document.addEventListener('DOMContentLoaded', () => {
   updateFileName('apk', 'apkLabel');
   updateFileName('capturas', 'capturasLabel');
 });
+
+// =======================================================
+// Función para actualizar el nombre del archivo en los botones de selección
+// =======================================================
+function updateFileName(inputId, labelId) {
+  const input = document.getElementById(inputId);
+  const label = document.getElementById(labelId);
+  
+  input.addEventListener('change', function() {
+    const fileName = input.files[0] ? input.files[0].name : 'Seleccionar';
+    label.textContent = fileName;
+  });
+}
