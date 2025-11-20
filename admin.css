@@ -112,7 +112,7 @@ body {
 =================================================== */
 .apps-sidebar {
   width: 360px; /* ancho similar al tamaño del panel actual */
-  flex: 0 0 360px;
+  flex: 0 0 460px;
   background: linear-gradient(180deg, rgba(6,8,12,0.7), rgba(2,6,23,0.75));
   border: 1px solid rgba(75,85,99,0.6);
   padding: 12px;
@@ -393,6 +393,7 @@ textarea {
   align-items: center;
   margin-bottom: 12px;
 }
+
 
 
 
