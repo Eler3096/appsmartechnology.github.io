@@ -25,24 +25,18 @@
   <!-- MAIN -->
   <div class="admin-main">
 
-    <!-- =======================================================
-         FORMULARIO (IZQUIERDA)
-    ======================================================= -->
+    <!-- FORMULARIO (IZQUIERDA) -->
     <div class="form-area">
 
-      <!-- TÍTULO + BOTÓN A LA DERECHA -->
       <div class="form-title-row">
         <h3 class="panel-section-title" id="formTitle">➕ Nueva Aplicación</h3>
 
         <button id="subirBtn" class="btn-primary" onclick="guardarApp()">SUBIR APP</button>
-
-        <!-- Botón de cancelar, solo visible al editar -->
         <button id="cancelarBtn" class="btn-secondary hidden" onclick="cancelarEdicion()">CANCELAR</button>
       </div>
 
       <p class="status-text" id="estado"></p>
 
-      <!-- FORM-CARD -->
       <div class="form-card">
         <div class="form-main-fields">
 
@@ -173,13 +167,32 @@
             <label for="imagen" id="imagenLabel" class="file-btn">Seleccionar</label>
           </div>
 
+          <!-- NUEVOS CAMPOS PARA BOTONES DE DESCARGA -->
+          <div class="form-group">
+            <label>URL Play Store</label>
+            <input id="playstoreUrl" type="text">
+          </div>
+
+          <div class="form-group">
+            <label>URL Uptodown</label>
+            <input id="uptodownUrl" type="text">
+          </div>
+
+          <div class="form-group">
+            <label>URL Mega</label>
+            <input id="megaUrl" type="text">
+          </div>
+
+          <div class="form-group">
+            <label>URL Mediafire</label>
+            <input id="mediafireUrl" type="text">
+          </div>
+
         </div>
       </div>
     </div>
 
-    <!-- =======================================================
-         SIDEBAR APPS (DERECHA)
-    ======================================================= -->
+    <!-- SIDEBAR APPS (DERECHA) -->
     <aside class="apps-sidebar">
 
       <div class="sidebar-header">
