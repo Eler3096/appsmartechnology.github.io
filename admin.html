@@ -35,6 +35,9 @@
         <h3 class="panel-section-title" id="formTitle">➕ Nueva Aplicación</h3>
 
         <button id="subirBtn" class="btn-primary" onclick="guardarApp()">SUBIR APP</button>
+
+        <!-- Botón de cancelar, solo visible al editar -->
+        <button id="cancelarBtn" class="btn-secondary hidden" onclick="cancelarEdicion()">CANCELAR</button>
       </div>
 
       <p class="status-text" id="estado"></p>
@@ -184,7 +187,6 @@
         <input id="searchInput" type="search" placeholder="🔍 Buscar por nombre...">
       </div>
 
-      <!-- 🔥 AÑADÍ EL ID QUE NECESITABA PARA QUE SE MUESTREN LAS APPS -->
       <div id="appsListWrap" class="apps-list-wrap">
 
         <table class="apps-table">
