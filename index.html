@@ -82,15 +82,25 @@
         </div>
       </div>
 
-      <div class="install-share-row">
-      <button id="installBtn" class="install-btn">Descargar</button>
-      <button id="shareBtn" class="share-btn"> Compartir</button>
-      </div>
+      <!-- NUEVO BLOQUE DE DESCARGA CON 4 BOTONES -->
+      <div class="multi-download-block">
+        <h3 class="download-title">Descargar con:</h3>
 
+        <div class="downloads-row">
+          <button id="dlBtn1" class="download-btn">MEGA</button>
+          <button id="dlBtn2" class="download-btn">MediaFire</button>
+          <button id="dlBtn3" class="download-btn">Google Drive</button>
+          <button id="dlBtn4" class="download-btn main-download">Descarga Directa</button>
+        </div>
+
+        <button id="shareBtn" class="share-btn" style="margin-top:10px;">
+          Compartir
+        </button>
+      </div>
 
       <p id="detailStats" class="detail-stats"></p>
 
-      <!-- Bloque estrellas + like (ACTUALIZADO) -->
+      <!-- Bloque estrellas + like -->
       <div class="rating-block">
         <p id="ratingLabel" class="rating-label"></p>
 
@@ -132,103 +142,100 @@
         </div>
       </div>
 
-  <!-- INFORMACIÓN DE LA APP -->
-<h2>Información de la app</h2>
+      <!-- INFORMACIÓN DE LA APP -->
+      <h2>Información de la app</h2>
 
-<div class="info-grid">
+      <div class="info-grid">
+        <div class="info-box">
+          <span class="info-icon">🌐</span>
+          <div>
+            <p class="info-title">Idioma</p>
+            <p id="infoIdioma" class="info-value">—</p>
+          </div>
+        </div>
 
-  <div class="info-box">
-    <span class="info-icon">🌐</span>
-    <div>
-      <p class="info-title">Idioma</p>
-      <p id="infoIdioma" class="info-value">—</p>
-    </div>
-  </div>
+        <div class="info-box">
+          <span class="info-icon">🔢</span>
+          <div>
+            <p class="info-title">Versión</p>
+            <p id="infoVersion" class="info-value">—</p>
+          </div>
+        </div>
 
-  <div class="info-box">
-    <span class="info-icon">🔢</span>
-    <div>
-      <p class="info-title">Versión</p>
-      <p id="infoVersion" class="info-value">—</p>
-    </div>
-  </div>
+        <div class="info-box">
+          <span class="info-icon">🏷️</span>
+          <div>
+            <p class="info-title">Licencia</p>
+            <p id="infoTipo" class="info-value">—</p>
+          </div>
+        </div>
 
-  <div class="info-box">
-    <span class="info-icon">🏷️</span>
-    <div>
-      <p class="info-title">Licencia</p> <!-- antes: Tipo -->
-      <p id="infoTipo" class="info-value">—</p>
-    </div>
-  </div>
+        <div class="info-box">
+          <span class="info-icon">📱</span>
+          <div>
+            <p class="info-title">Sistema operativo</p>
+            <p id="infoSO" class="info-value">—</p>
+          </div>
+        </div>
 
-  <div class="info-box">
-    <span class="info-icon">📱</span>
-    <div>
-      <p class="info-title">Sistema operativo</p>
-      <p id="infoSO" class="info-value">—</p>
-    </div>
-  </div>
+        <div class="info-box">
+          <span class="info-icon">⚙️</span>
+          <div>
+            <p class="info-title">Requisitos del sistema</p>
+            <p id="infoReq" class="info-value">—</p>
+          </div>
+        </div>
 
-  <div class="info-box">
-    <span class="info-icon">⚙️</span>
-    <div>
-      <p class="info-title">Requisitos del sistema</p>
-      <p id="infoReq" class="info-value">—</p>
-    </div>
-  </div>
+        <div class="info-box">
+          <span class="info-icon">📅</span>
+          <div>
+            <p class="info-title">Actualización</p>
+            <p id="infoFechaAct" class="info-value">—</p>
+          </div>
+        </div>
 
-  <div class="info-box">
-    <span class="info-icon">📅</span>
-    <div>
-      <p class="info-title">Actualización</p>
-      <p id="infoFechaAct" class="info-value">—</p>
-    </div>
-  </div>
+        <div class="info-box">
+          <span class="info-icon">🔞</span>
+          <div>
+            <p class="info-title">Edad recomendada</p>
+            <p id="infoEdad" class="info-value">—</p>
+          </div>
+        </div>
 
-  <div class="info-box">
-    <span class="info-icon">🔞</span>
-    <div>
-      <p class="info-title">Edad recomendada</p>
-      <p id="infoEdad" class="info-value">—</p>
-    </div>
-  </div>
+        <div class="info-box">
+          <span class="info-icon">📢</span>
+          <div>
+            <p class="info-title">Anuncios</p>
+            <p id="infoAnuncios" class="info-value">—</p>
+          </div>
+        </div>
 
-  <div class="info-box">
-    <span class="info-icon">📢</span>
-    <div>
-      <p class="info-title">Anuncios</p>
-      <p id="infoAnuncios" class="info-value">—</p>
-    </div>
-  </div>
+        <div class="info-box">
+          <span class="info-icon">🔗</span>
+          <div>
+            <p class="info-title">Política de privacidad</p>
+            <p class="info-value">
+              <a id="infoPrivacidad" href="#" target="_blank">No disponible</a>
+            </p>
+          </div>
+        </div>
 
-  <div class="info-box">
-    <span class="info-icon">🔗</span>
-    <div>
-      <p class="info-title">Política de privacidad</p>
-      <p class="info-value">
-        <a id="infoPrivacidad" href="#" target="_blank">No disponible</a>
-      </p>
-    </div>
-  </div>
+        <div class="info-box">
+          <span class="info-icon">📦</span>
+          <div>
+            <p class="info-title">Tamaño del APK</p>
+            <p id="infoTamañoApk" class="info-value">—</p>
+          </div>
+        </div>
 
-  <div class="info-box">
-    <span class="info-icon">📦</span>
-    <div>
-      <p class="info-title">Tamaño del APK</p>
-      <p id="infoTamañoApk" class="info-value">—</p>
-    </div>
-  </div>
-
-  <div class="info-box">
-    <span class="info-icon">⬇️</span>
-    <div>
-      <p class="info-title">Descargas</p> <!-- antes: N.º descargas reales -->
-      <p id="infoDescargas" class="info-value">0</p>
-    </div>
-  </div>
-
-</div>
-
+        <div class="info-box">
+          <span class="info-icon">⬇️</span>
+          <div>
+            <p class="info-title">Descargas</p>
+            <p id="infoDescargas" class="info-value">0</p>
+          </div>
+        </div>
+      </div>
 
       <h2>Descripción</h2>
       <p id="detailDesc" class="detail-desc"></p>
