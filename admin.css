@@ -25,7 +25,7 @@ body {
 =================================================== */
 .admin-container {
   width: 100%;
-  max-width: 1200px; /* ampliado para caber sidebar + formulario */
+  max-width: 1400px; /* ampliado para caber sidebar + formulario */
   background: radial-gradient(circle at top left, #0f172a, #020617);
   padding: 24px 26px;
   border-radius: 18px;
@@ -73,7 +73,7 @@ body {
 .btn-logout {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
-  border-radius: 999px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 0.85rem;
   padding: 7px 16px;
@@ -208,7 +208,7 @@ body {
 .btn-delete {
   padding: 4px 8px;
   font-size: 0.75rem;
-  border-radius: 999px;
+  border-radius: 8px;
   border: 1px solid transparent;
   cursor: pointer;
   transition: background 0.14s ease, transform 0.14s ease;
@@ -309,7 +309,7 @@ textarea {
   padding: 8px 26px;
   background: linear-gradient(90deg, #2563eb, #4f46e5);
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   color: #f9fafb;
   cursor: pointer;
   font-size: 0.85rem;
@@ -393,6 +393,7 @@ textarea {
   align-items: center;
   margin-bottom: 12px;
 }
+
 
 
 
