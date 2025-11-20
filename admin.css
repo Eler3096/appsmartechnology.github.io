@@ -405,12 +405,13 @@ textarea {
 .file-btn {
   display: inline-block;
   padding: 5px 16px;
-  background: #e5e7eb; /* Blanco */
-  color: #e5e7eb;
+  background: #0f172a,
+  color: white;
   border-radius: 6px;
   font-size: 14px;
   margin-top: 6px;
 }
+
 
 
 
