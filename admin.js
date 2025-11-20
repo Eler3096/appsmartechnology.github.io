@@ -76,7 +76,6 @@ function loadMoreApps() {
 
       renderApps(items, true);
 
-      // si menos de PAGE_SIZE, se acabó
       if (items.length < PAGE_SIZE) {
         exhausted = true;
         noMoreEl.classList.remove("hidden");
@@ -378,7 +377,7 @@ function limpiarFormulario() {
 }
 
 // =======================================================
-// Cancelar edición
+// Cancelar edición o nueva aplicación
 // =======================================================
 function cancelarEdicion() {
   limpiarFormulario();
@@ -412,4 +411,3 @@ document.addEventListener('DOMContentLoaded', () => {
   updateFileName('apk', 'apkLabel');
   updateFileName('capturas', 'capturasLabel');
 });
-
