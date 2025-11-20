@@ -705,28 +705,7 @@ body {
    ESTILOS NUEVOS PARA LOS BOTONES OPCIONALES
    ================================================== */
 
-.playstore-btn,
-.uptodown-btn,
-.mega-btn,
-.mediafire-btn {
-  background: rgba(15,23,42,0.9);
-  border: 1px solid rgba(75,85,99,0.8);
-  border-radius: 12px;
-  padding: 10px 20px;
-  color: #e5e7eb;
-  font-size: 0.9rem;
-  cursor: pointer;
-  display: inline-flex; /* MOSTRARLOS */
-  transition: 0.15s ease;
-}
 
-.playstore-btn:hover,
-.uptodown-btn:hover,
-.mega-btn:hover,
-.mediafire-btn:hover {
-  border-color: rgba(59,130,246,0.9);
-  color: #fff;
-}
 /* ==================================================
   botnes imagen
    ================================================== */
@@ -755,12 +734,14 @@ body {
   width: 90px;
   height: 30px;
   object-fit: contain;
+  border-radius: 8px;
   transition: transform 0.2s;
 }
 
 .install-share-row button:hover img {
   transform: scale(1.1);
 }
+
 
 
 
