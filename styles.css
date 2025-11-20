@@ -427,9 +427,14 @@ body {
 .install-share-row {
   display: flex;
   gap: 10px;
+
+  /* 👇 NECESARIO PARA QUE SE VEAN TODOS */
+  flex-wrap: wrap;
+
   margin-bottom: 10px;
   align-items: center;
 }
+
 .share-btn {
   background: linear-gradient(to right,#22c55e,#16a34a);
   border: none;
@@ -557,7 +562,6 @@ body {
   height: 10px;
   background: rgba(148,163,184,0.2);
   border-radius: 40px;
-  overflow: hidden;
 }
 
 .bar-fill {
@@ -712,7 +716,7 @@ body {
   color: #e5e7eb;
   font-size: 0.9rem;
   cursor: pointer;
-  display: none; /* Se muestran solo si hay enlace */
+  display: inline-flex; /* MOSTRARLOS */
   transition: 0.15s ease;
 }
 
