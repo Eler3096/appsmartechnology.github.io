@@ -727,13 +727,29 @@ body {
   border-color: rgba(59,130,246,0.9);
   color: #fff;
 }
-
+/* ==================================================
+  botnes imagen
+   ================================================== */
 .install-share-row button {
-  border: none;
   background: transparent;
   padding: 8px;
   cursor: pointer;
+
+  /* 🔥 Borde blanco */
+  border: 2px solid #ffffff;
+
+  /* 🔥 Bordes redondeados */
+  border-radius: 8px;
+
+  /* Para que el borde rodee bien al contenido */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Evita que el botón se deforme */
+  width: auto;
 }
+
 
 .install-share-row button img {
   width: 90px;
@@ -745,6 +761,7 @@ body {
 .install-share-row button:hover img {
   transform: scale(1.1);
 }
+
 
 
 
