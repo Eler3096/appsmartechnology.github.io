@@ -4,17 +4,6 @@
   <meta charset="UTF-8">
   <title>AppsMart Admin</title>
   <link rel="stylesheet" href="admin.css">
-
-  <style>
-    /* ✔️ ESTILO PARA EL CUADRO UNIFICADO */
-    .file-box {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      background: #fff;
-      box-sizing: border-box;
-    }
-  </style>
 </head>
 
 <body>
@@ -143,11 +132,11 @@
             <input id="capturasUrl" type="text">
           </div>
 
-          <!-- 📌 Capturas secundarias (CORREGIDO) -->
-          <div class="form-group">
-            <label>Capturas secundarias</label>
-            <input id="capturas" type="file" accept="image/*" multiple class="file-box">
-          </div>
+        <div class="form-group">
+          <label>Capturas secundarias</label>
+          <input id="capturas" type="file" accept="image/*" multiple hidden>
+          <label for="capturas" class="file-btn">Seleccionar</label>
+        </div>
 
           <div class="form-group">
             <label>Edad recomendada</label>
@@ -159,10 +148,10 @@
             <input id="iconoUrl" type="text">
           </div>
 
-          <!-- 📌 APK (CORREGIDO) -->
           <div class="form-group">
             <label>APK (subir nueva)</label>
-            <input id="apk" type="file" accept=".apk" class="file-box">
+            <input id="apk" type="file" accept=".apk" hidden>
+            <label for="apk" class="file-btn">Seleccionar</label>
           </div>
 
           <div class="form-group">
@@ -175,15 +164,11 @@
             <input id="apkUrl" type="text">
           </div>
 
-          <!-- 📌 Imagen (CORREGIDO) -->
-
-<div class="form-group">
-  <label>Imagen</label>
-  <input id="imagen" type="file" accept="image/*" class="file-input">
-</div>
-          
-            </div>
-</div>
+          <div class="form-group">
+            <label>Imagen</label>
+            <input id="imagen" type="file" accept="image/*" hidden>
+            <label for="imagen" class="file-btn">Seleccionar</label>
+        </div>
 
         </div>
       </div>
@@ -199,6 +184,7 @@
         <input id="searchInput" type="search" placeholder="🔍 Buscar por nombre...">
       </div>
 
+      <!-- 🔥 AÑADÍ EL ID QUE NECESITABA PARA QUE SE MUESTREN LAS APPS -->
       <div id="appsListWrap" class="apps-list-wrap">
 
         <table class="apps-table">
@@ -224,7 +210,7 @@
 
 </div>
 
-<!-- Firebase -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -235,6 +221,3 @@
 
 </body>
 </html>
-
-
-
