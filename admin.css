@@ -406,17 +406,12 @@ textarea {
   padding: 8px 16px;
   background: #2563eb; /* Fondo azul */
   color: white; /* Texto blanco */
-  border-radius: 6px; /* Bordes redondeados */
   font-size: 14px;
   margin-top: 6px;
   border: 2px dashed white; /* Borde de rayas blancas */
   cursor: pointer; /* Aparece como un puntero cuando se pasa el mouse sobre él */
 }
 
-.file-btn:hover {
-  background: #4f46e5; /* Cambia el color de fondo al pasar el mouse */
-  border-color: #4f46e5; /* Cambia el color del borde al pasar el mouse */
-}
 
 
 
