@@ -94,7 +94,6 @@ function loadMoreApps() {
 
 // =======================================================
 // RENDERIZADO DE FILAS
-// append = true para añadir al final
 // =======================================================
 function renderApps(items, append = false) {
   let html = items.map(a => {
@@ -119,7 +118,7 @@ function renderApps(items, append = false) {
   }
 }
 
-// Pequeña función de escape para evitar inyección
+// Función de escape para evitar inyección
 function escapeHtml(str) {
   return (str + '').replace(/[&<>"'`=\/]/g, function(s) {
     return ({
@@ -136,9 +135,7 @@ function escapeHtml(str) {
 }
 
 // =======================================================
-// BÚSQUEDA POR NOMBRE (usa consulta por prefijo en Firestore)
-// Si hay texto, entramos en modo búsqueda y mostramos resultados.
-// Si el campo queda vacío, volvemos a paginación normal.
+// BÚSQUEDA POR NOMBRE
 // =======================================================
 let searchTimer = null;
 searchInput.addEventListener('input', e => {
@@ -146,7 +143,6 @@ searchInput.addEventListener('input', e => {
   clearTimeout(searchTimer);
   searchTimer = setTimeout(() => {
     if (!term) {
-      // volver a paginación normal
       inSearchMode = false;
       noMoreEl.classList.add("hidden");
       loadInitialApps();
@@ -165,7 +161,6 @@ function performSearch(term) {
   const start = term;
   const end = term + '\uf8ff';
 
-  // Usamos orderBy "nombre" y startAt/endAt para un prefijo simple (necesita index si lo requiere)
   db.collection("apps").orderBy("nombre").startAt(start).endAt(end).limit(100).get()
     .then(snap => {
       if (snap.empty) {
@@ -174,7 +169,6 @@ function performSearch(term) {
         return;
       }
       const items = snap.docs.map(d => d.data());
-      // opcional: ordenar por fecha descendente localmente si lo deseas
       items.sort((a,b) => (b.fecha || 0) - (a.fecha || 0));
       renderApps(items, false);
       loadingMoreEl.classList.add("hidden");
@@ -186,10 +180,10 @@ function performSearch(term) {
 }
 
 // =======================================================
-// SCROLL INFINITO: cuando el contenedor de apps se acerque al final, cargar más
+// SCROLL INFINITO
 // =======================================================
 appsListWrap.addEventListener('scroll', () => {
-  if (inSearchMode) return; // no paginar durante búsqueda
+  if (inSearchMode) return;
   const { scrollTop, scrollHeight, clientHeight } = appsListWrap;
   if (scrollTop + clientHeight >= scrollHeight - 160) {
     loadMoreApps();
@@ -201,15 +195,13 @@ appsListWrap.addEventListener('scroll', () => {
 // =======================================================
 function cargarParaEditar(id) {
   editId = id;
-
   document.getElementById("formTitle").textContent = "✏️ Editar Aplicación";
   document.getElementById("subirBtn").textContent = "GUARDAR";
-  document.getElementById("cancelarBtn").classList.remove("hidden");  // Mostrar el botón de cancelar
+  document.getElementById("cancelarBtn").classList.remove("hidden");
 
   db.collection("apps").doc(id).get().then(doc => {
     const a = doc.data();
 
-    // Campos principales
     document.getElementById("nombre").value = a.nombre || '';
     document.getElementById("descripcion").value = a.descripcion || '';
     document.getElementById("version").value = a.version || '';
@@ -218,7 +210,6 @@ function cargarParaEditar(id) {
     document.getElementById("tipo").value = a.tipo || '';
     document.getElementById("internet").value = a.internet || 'offline';
 
-    // Extras
     document.getElementById("sistema").value = a.sistemaOperativo || "";
     document.getElementById("requisitos").value = a.requisitos || "";
     document.getElementById("fechaAct").value = a.fechaActualizacion || "";
@@ -226,7 +217,6 @@ function cargarParaEditar(id) {
     document.getElementById("anuncios").value = a.anuncios || "no";
     document.getElementById("privacidad").value = a.privacidadUrl || "";
 
-    // URLs
     document.getElementById("imagenUrl").value = a.imagen || "";
     document.getElementById("capturasUrl").value = a.imgSecundarias ? a.imgSecundarias.join(",") : "";
     document.getElementById("iconoUrl").value = a.icono || "";
@@ -248,10 +238,8 @@ function eliminarApp(id) {
   db.collection("apps").doc(id).delete()
   .then(() => {
     alert("Aplicación eliminada ✔");
-    // eliminar de la UI
     const row = document.getElementById(`app-row-${id}`);
     if (row) row.remove();
-    // actualizar cache local
     loadedAppsCache = loadedAppsCache.filter(a => a.id !== id);
   })
   .catch(err => alert("Error: " + err.message));
@@ -264,11 +252,9 @@ async function guardarApp() {
   const btn = document.getElementById("subirBtn");
   const estado = document.getElementById("estado");
 
-  // Desactivar botón
   btn.disabled = true;
   estado.textContent = "Guardando...";
 
-  // Capturar campos
   const campos = {
     nombre: nombre.value.trim(),
     descripcion: descripcion.value.trim(),
@@ -289,7 +275,6 @@ async function guardarApp() {
     imgSecundarias: capturasUrl.value.split(",").map(u => u.trim()).filter(u => u !== "")
   };
 
-  // Validación mínima
   if (!campos.nombre || !campos.descripcion || !campos.version) {
     alert("Completa al menos nombre, descripción y versión.");
     btn.disabled = false;
@@ -297,17 +282,14 @@ async function guardarApp() {
     return;
   }
 
-  // Archivos nuevos
   const imagenFile = imagen.files[0];
   const apkFile = apk.files[0];
   const capturasFiles = capturas.files;
 
   const storageRef = firebase.storage().ref();
 
-  // Promesas
   let promesas = [];
 
-  // Imagen principal
   if (imagenFile) {
     promesas.push(
       storageRef.child("images/" + imagenFile.name)
@@ -317,7 +299,6 @@ async function guardarApp() {
     );
   }
 
-  // APK
   if (apkFile) {
     promesas.push(
       storageRef.child("apk/" + apkFile.name)
@@ -327,7 +308,6 @@ async function guardarApp() {
     );
   }
 
-  // Capturas
   if (capturasFiles.length > 0) {
     campos.imgSecundarias = [];
     promesas.push(
@@ -342,10 +322,8 @@ async function guardarApp() {
     );
   }
 
-  // Esperar todas las subidas
   await Promise.all(promesas);
 
-  // Crear o editar ID
   let id = editId || db.collection("apps").doc().id;
 
   const data = {
@@ -354,20 +332,16 @@ async function guardarApp() {
     fecha: Date.now()
   };
 
-  // Guardar
   db.collection("apps").doc(id).set(data, { merge: true })
     .then(() => {
       estado.textContent = "Guardado ✔";
       btn.disabled = false;
       editId = null;
-
       document.getElementById("formTitle").textContent = "➕ Nueva Aplicación";
       btn.textContent = "SUBIR APP";
 
-      // Limpiar formulario
       limpiarFormulario();
 
-      // Actualizar UI: si no estamos en búsqueda, recargar inicial para ver cambios
       if (!inSearchMode) {
         loadInitialApps();
       } else {
@@ -393,7 +367,6 @@ function limpiarFormulario() {
   internet.value = "offline";
   anuncios.value = "no";
 
-  // Resetear archivos
   const imagenEl = document.getElementById("imagen");
   const apkEl = document.getElementById("apk");
   const capturasEl = document.getElementById("capturas");
@@ -405,26 +378,19 @@ function limpiarFormulario() {
 }
 
 // =======================================================
+// Cancelar edición
+// =======================================================
+function cancelarEdicion() {
+  limpiarFormulario();
+  document.getElementById("formTitle").textContent = "➕ Nueva Aplicación";
+  document.getElementById("subirBtn").textContent = "SUBIR APP";
+  document.getElementById("cancelarBtn").classList.add("hidden");  // Ocultar el botón de cancelar
+  editId = null;
+}
+
+// =======================================================
 // Inicializar carga al abrir la página
 // =======================================================
 document.addEventListener('DOMContentLoaded', () => {
   loadInitialApps();
-});
-
-// Función para actualizar el nombre del archivo en los botones de selección
-function updateFileName(inputId, labelId) {
-  const input = document.getElementById(inputId);
-  const label = document.getElementById(labelId);
-  
-  input.addEventListener('change', function() {
-    const fileName = input.files[0] ? input.files[0].name : 'Seleccionar';
-    label.textContent = fileName; // Cambia el texto del botón
-  });
-}
-
-// Llamar a la función para cada uno de los campos de archivo
-document.addEventListener('DOMContentLoaded', () => {
-  updateFileName('imagen', 'imagenLabel');
-  updateFileName('apk', 'apkLabel');
-  updateFileName('capturas', 'capturasLabel');
 });
