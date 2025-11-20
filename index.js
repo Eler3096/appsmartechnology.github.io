@@ -27,6 +27,13 @@ const sendReviewBtn = document.getElementById("sendReviewBtn");
 const reviewText = document.getElementById("reviewText");
 const reviewStarsContainer = document.getElementById("reviewStars");
 
+// Botones extra
+const playstoreBtn = document.getElementById("playstoreBtn");
+const uptodownBtn = document.getElementById("uptodownBtn");
+const megaBtn = document.getElementById("megaBtn");
+const mediafireBtn = document.getElementById("mediafireBtn");
+const shareBtn = document.getElementById("shareBtn");
+
 // Info de la app
 const infoIdioma = document.getElementById("infoIdioma");
 const infoVersion = document.getElementById("infoVersion");
@@ -39,7 +46,6 @@ const infoAnuncios = document.getElementById("infoAnuncios");
 const infoPrivacidad = document.getElementById("infoPrivacidad");
 const infoTamañoApk = document.getElementById("infoTamañoApk");
 const infoDescargas = document.getElementById("infoDescargas");
-const shareBtn = document.getElementById("shareBtn");
 
 let allApps = [];
 let currentCat = "all";
@@ -247,43 +253,26 @@ function openDetails(app) {
       });
   };
 
-  // ===== ENLACES OPCIONALES (PlayStore, Uptodown, Mega, Mediafire) =====
-  const playstoreBtn = document.getElementById("playstoreBtn");
-  const uptodownBtn = document.getElementById("uptodownBtn");
-  const megaBtn = document.getElementById("megaBtn");
-  const mediafireBtn = document.getElementById("mediafireBtn");
-
-  // PLAYSTORE
+  // ===== ENLACES OPCIONALES =====
   if (app.playstore && app.playstore.trim() !== "") {
     playstoreBtn.style.display = "inline-block";
     playstoreBtn.onclick = () => window.open(app.playstore, "_blank");
-  } else {
-    playstoreBtn.style.display = "none";
-  }
+  } else playstoreBtn.style.display = "none";
 
-  // UPTODOWN
   if (app.uptodown && app.uptodown.trim() !== "") {
     uptodownBtn.style.display = "inline-block";
     uptodownBtn.onclick = () => window.open(app.uptodown, "_blank");
-  } else {
-    uptodownBtn.style.display = "none";
-  }
+  } else uptodownBtn.style.display = "none";
 
-  // MEGA
   if (app.mega && app.mega.trim() !== "") {
     megaBtn.style.display = "inline-block";
     megaBtn.onclick = () => window.open(app.mega, "_blank");
-  } else {
-    megaBtn.style.display = "none";
-  }
+  } else megaBtn.style.display = "none";
 
-  // MEDIAFIRE
   if (app.mediafire && app.mediafire.trim() !== "") {
     mediafireBtn.style.display = "inline-block";
     mediafireBtn.onclick = () => window.open(app.mediafire, "_blank");
-  } else {
-    mediafireBtn.style.display = "none";
-  }
+  } else mediafireBtn.style.display = "none";
 
   // compartir
   shareBtn.onclick = () => {
