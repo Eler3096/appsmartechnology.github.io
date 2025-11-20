@@ -407,14 +407,12 @@ textarea {
   background: #2563eb;
   color: white;
   border-radius: 6px;
-  cursor: pointer;
   font-size: 14px;
   margin-top: 6px;
 }
 
-.file-btn:hover {
-  background: #1e4db7;
-}
+
+
 
 
 
