@@ -246,7 +246,7 @@ function openDetails(app) {
   });
 
   // Likes
-  likeBtn.textContent = myVote.liked ? `❤️ Ya te gusta (${app.likes || 0})` : `❤️ Me gusta (${app.likes || 0})`;
+  likeBtn.textContent = myVote.liked ? `👍 Ya te gusta (${app.likes || 0})` : `👍 Me gusta (${app.likes || 0})`;
   likeBtn.disabled = !!myVote.liked;
   likeBtn.onclick = () => handleLike(app);
 
@@ -280,7 +280,7 @@ function handleLike(app) {
       const descReal = currentApp.descargasReales ?? currentApp.descargas ?? 0;
       detailStats.textContent = `Descargas: ${descReal.toLocaleString("es-ES")} • Likes: ${currentApp.likes.toLocaleString("es-ES")}`;
 
-      likeBtn.textContent = `❤️ Ya te gusta (${currentApp.likes})`;
+      likeBtn.textContent = `👍 Ya te gusta (${currentApp.likes})`;
       likeBtn.disabled = true;
       renderApps();
     });
@@ -368,6 +368,7 @@ function handleSendReview() {
     alert("¡Tu reseña fue publicada!");
   });
 }
+
 
 
 
