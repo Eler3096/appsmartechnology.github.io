@@ -711,7 +711,7 @@ body {
    ================================================== */
 .install-share-row button {
   aspect-ratio: 1890 / 709; /* RELACIÓN REAL DE TU IMAGEN */
-  width: 150px;             /* ancho ajustable */
+  width: 100px;             /* ancho ajustable */
   padding: 0;
   border: 2px solid white;
   border-radius: 12px;
@@ -731,6 +731,7 @@ body {
 .install-share-row button:hover img {
   transform: scale(1.1);
 }
+
 
 
 
